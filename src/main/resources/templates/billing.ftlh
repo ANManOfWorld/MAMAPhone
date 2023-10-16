@@ -13,6 +13,10 @@
     <br/>
     <h1> MAMAPhone </h1>
     <h5>Удобное приложение по оплате счетов связи для беспрерывного общения с любимыми людьми. </h5>
+    <form action = "/" method="get">
+        Поиск тарифов: <input type = "text" name = "name"> <br>
+        <input type="submit" value="Поиск">
+    </form>
     <#list rates as rate>
         <div>
             <p>${rate.name} || ${rate.description} ${rate.price} руб. | <a href = "/rate/${rate.id}">Подробнее</a></p>
