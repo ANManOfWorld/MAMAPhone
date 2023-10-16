@@ -32,7 +32,7 @@ public class Rate {
     private int countOfTrafficInternet;
 
     //------------------------------- Фотографии
-   /* @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "rate")
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "rate")
     private List<Image> images = new ArrayList<>();
     private Long previewImageId;
     private LocalDateTime dateOfCreated;;
@@ -46,7 +46,7 @@ public class Rate {
     public void addImage(Image image) {
         image.setRate(this);
         images.add(image);
-    }*/
+    }
     //-------------------------------- Фотографии
 
 

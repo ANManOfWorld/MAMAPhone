@@ -25,6 +25,7 @@ public class Image {
     @Column(name = "isPreviewImage")
     private boolean isPreviewImage;
     @Lob
+    //@Column(name="bytes", columnDefinition = "longblob") //для разрешения проблемы малости массива байтов - вылетает 500
     private byte[] bytes;
 
     @ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.EAGER)

@@ -32,7 +32,7 @@
         Количество трафика (в ГБ): <input type = "number" name = "countOfTrafficInternet"/> <br>
 
         <!-- фотография -->
-        <#--Фотография: <input type = "file" name = "file1"/> <br>-->
+        Фотография: <input type = "file" name = "file1"/> <br>
         <!-- фотография -->
 
         <input type = "submit" value = "Добавить тариф"/>

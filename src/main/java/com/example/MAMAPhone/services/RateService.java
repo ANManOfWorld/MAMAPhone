@@ -30,15 +30,15 @@ public class RateService {
         return rateRepository.findAll();
     }
 
-    public void saveRate(Rate rate) {     // До картинок
+    /*public void saveRate(Rate rate) {     // До картинок
         //rate.setId(++id);
         //rates.add(rate);
         log.info("Saving new {}" + rate);
         rateRepository.save(rate);
-    }
+    }*/
 
     // ---------------------------------------------- Фотографии
-    /*public void saveRate(Rate rate, MultipartFile file) throws IOException {
+    public void saveRate(Rate rate, MultipartFile file) throws IOException {
         Image image;
         if (file.getSize() != 0) {
             image = toImageEntity(file);
@@ -60,7 +60,6 @@ public class RateService {
         image.setBytes(file.getBytes());
         return image;
     }
-*/
 
     // ---------------------------------------------- Фотографии
 

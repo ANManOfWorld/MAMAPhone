@@ -30,24 +30,23 @@ public class WebController { //прием HTTP запросов
     public String rateInfo(@PathVariable Long id, Model model) {
         Rate rate = rateService.getRateById(id);
         model.addAttribute("rate", rate);
-        /////////////////////////////model.addAttribute("images", rate.getImages());  // Фотография функция по передаче её в "Подробнее"
+        model.addAttribute("images", rate.getImages());  // Фотография функция по передаче её в "Подробнее"
         return "rate-info";
     }
 
 // ---------------------------------- ДО картинок
-    @PostMapping("/rate/create")
+   /* @PostMapping("/rate/create")
     public String createRate (Rate rate) {
         rateService.saveRate(rate);
         return "redirect:/"; //обновление страницы
     }
-
+*/
     // ---------------------------------- Картинки
-   /* @PostMapping("/rate/create")
+    @PostMapping("/rate/create")
     public String createRate (@RequestParam("file1")MultipartFile file1, Rate rate) throws IOException {
         rateService.saveRate(rate, file1);
         return "redirect:/"; //обновление страницы
     }
-*/
     // ---------------------------------- Картинки
 
     @PostMapping("/rate/delete/{id}")

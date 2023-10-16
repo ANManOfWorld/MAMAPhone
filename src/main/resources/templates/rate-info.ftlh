@@ -10,12 +10,12 @@
 
 <body>
 <h1> MAMAPhone </h1>
-<h5>Информация о товаре. </h5>
+<h5>Информация о тарифе. </h5>
 
 <!-- ФОТОГРАФИЯ -->
-<#--<#list images as img>
-    <img src = "/images/${img.id}" height="100px"/> <br>
-</#list>-->
+<#list images as img>
+    <img src = "/images/${img.id}" height="200px"/> <br>
+</#list>
 <!-- ФОТОГРАФИЯ -->
 
 <b>Название тарифа: </b>${rate.name}
