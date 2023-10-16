@@ -15,7 +15,7 @@
     <h5>Удобное приложение по оплате счетов связи для беспрерывного общения с любимыми людьми. </h5>
     <#list rates as rate>
         <div>
-            <p>${rate.description} ${rate.price} руб. | <a href = "/rate/${rate.id}">Подробнее</a></p>
+            <p>${rate.name} || ${rate.description} ${rate.price} руб. | <a href = "/rate/${rate.id}">Подробнее</a></p>
         </div>
     </#list>
     <hr>

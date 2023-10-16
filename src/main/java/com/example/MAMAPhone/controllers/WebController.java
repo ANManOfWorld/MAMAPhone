@@ -22,7 +22,7 @@ public class WebController { //прием HTTP запросов
         return "billing";
     }
 
-    @GetMapping("/product/{id}")
+    @GetMapping("/rate/{id}")
     public String rateInfo(@PathVariable Long id, Model model) {
         model.addAttribute("rate", rateService.getRateById(id));
         return "rate-info";

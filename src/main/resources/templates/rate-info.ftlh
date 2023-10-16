@@ -15,13 +15,17 @@ Hello, MAMAPhone
 <h5>Информация о товаре. </h5>
 
 <b>Название тарифа: </b>${rate.name}
+<br>
 <b>Описание тарифа: </b>${rate.description}
+<br>
 <b>Количество минут тарифа: </b>${rate.countOfMinutes}
+<br>
 <b>Количество интернет трафика тарифа: </b>${rate.countOfTrafficInternet}
-<b>Цена тарифа: </b>${rate.cost}
+<br>
+<b>Цена тарифа: </b>${rate.price}
 
 <hr>
-<form action="/rate/delete/{rate.id}" method="post">
+<form action="/rate/delete/${rate.id}" method="post">
    <input type = "submit" value = "Удалить тариф"/>
 </form>
 </body>
