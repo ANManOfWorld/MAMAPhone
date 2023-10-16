@@ -24,12 +24,17 @@
     </#list>
     <hr>
     <h3> Создать новый тариф</h3>
-    <form action="/rate/create" method="post">
+    <form action="/rate/create" method="post" enctype="multipart/form-data">  <!-- "enctype="multipart/form-data"  " атрибут для фото-->
         Название тарифа: <input type = "text" name = "name"/> <br>
         Описание тарифа: <input type = "text" name = "description"/> <br>
         Цена: <input type = "number" name = "price"/> <br>
         Количество минут: <input type = "number" name = "countOfMinutes"/> <br>
-        Количество трафика (в ГБ): <input type = "number" name = "countOfTrafficInternet"/> <br>>
+        Количество трафика (в ГБ): <input type = "number" name = "countOfTrafficInternet"/> <br>
+
+        <!-- фотография -->
+        <#--Фотография: <input type = "file" name = "file1"/> <br>-->
+        <!-- фотография -->
+
         <input type = "submit" value = "Добавить тариф"/>
     </form>
     </body>
