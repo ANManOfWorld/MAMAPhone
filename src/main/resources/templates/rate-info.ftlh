@@ -9,8 +9,6 @@
 </head>
 
 <body>
-Hello, MAMAPhone
-<br/>
 <h1> MAMAPhone </h1>
 <h5>Информация о товаре. </h5>
 
