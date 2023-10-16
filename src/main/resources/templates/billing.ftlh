@@ -22,7 +22,7 @@
     <h3> Создать новый тариф</h3>
     <form action="/rate/create" method="post">
         Название тарифа: <input type = "text" name = "name"/> <br>
-        Описание тарифа: <input type = "text" name = "descroption"/> <br>
+        Описание тарифа: <input type = "text" name = "description"/> <br>
         Цена: <input type = "number" name = "price"/> <br>
         Количество минут: <input type = "number" name = "countOfMinutes"/> <br>
         Количество трафика (в ГБ): <input type = "number" name = "countOfTrafficInternet"/> <br>>
