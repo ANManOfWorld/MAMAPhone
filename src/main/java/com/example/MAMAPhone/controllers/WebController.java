@@ -7,6 +7,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 public class WebController { //прием HTTP запросов
@@ -17,8 +18,8 @@ public class WebController { //прием HTTP запросов
     }
 
     @GetMapping("/")
-    public String billing(Model model) {
-        model.addAttribute("rates", RateService.listRates());
+    public String billing(@RequestParam(name = "name", required = false) String name, Model model) {
+        model.addAttribute("rates", rateService.listRates(name));
         return "billing";
     }
 
