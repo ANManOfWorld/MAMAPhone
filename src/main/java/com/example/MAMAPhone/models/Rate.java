@@ -5,6 +5,11 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
 @Table(name = "rates")
 @Data
@@ -25,6 +30,25 @@ public class Rate {
     private int countOfMinutes;
     @Column(name = "countOfTrafficInternet")
     private int countOfTrafficInternet;
+
+    //------------------------------- Фотографии
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "rate")
+    private List<Image> images = new ArrayList<>();
+    private Long previewImageId;
+    private LocalDateTime dateOfCreated;;
+
+    @PrePersist
+    private void init() {
+        dateOfCreated = LocalDateTime.now();
+    }
+
+
+    public void addImage(Image image) {
+        image.setRate(this);
+        images.add(image);
+    }
+    //-------------------------------- Фотографии
+
 
     public Long getId() {
         return this.id;
