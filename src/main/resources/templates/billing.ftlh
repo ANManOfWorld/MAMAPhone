@@ -9,7 +9,7 @@
     </head>
 
     <body>
-    Hello, MAMAPhone
+    Hello, MAMAPhone!!
     <br/>
     <h1> MAMAPhone </h1>
     <h5>Удобное приложение по оплате счетов связи для беспрерывного общения с любимыми людьми. </h5>
