@@ -72,7 +72,6 @@ public class RateService {
         /*for (Rate rate: rates) {
             if (rate.getId().equals(id)) return rate;
         }*/
-
         return rateRepository.findById(id).orElse(null);
     }
 }
