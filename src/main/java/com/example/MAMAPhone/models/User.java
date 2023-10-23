@@ -1,5 +1,4 @@
 package com.example.MAMAPhone.models;
-/*
 
 import com.example.MAMAPhone.models.enums.Role;
 import jakarta.persistence.*;
@@ -75,4 +74,3 @@ public class User implements UserDetails {
         return active;
     }
 }
-*/

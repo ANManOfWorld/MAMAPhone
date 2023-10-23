@@ -11,6 +11,15 @@
     <body>
     Hello, MAMAPhone!!
     <br/>
+
+
+    <a href = "/login"><h4>Войти</h4></a>
+
+    <form action="/logout" method="post">
+        <input type="hidden" name="_csrf" value="${_csrf.token}"/>
+        <input type = "submit" value = "Выйти"/>
+    </form>
+
     <h1> MAMAPhone </h1>
     <h5>Удобное приложение по оплате счетов связи для беспрерывного общения с любимыми людьми. </h5>
     <form action = "/" method="get">
