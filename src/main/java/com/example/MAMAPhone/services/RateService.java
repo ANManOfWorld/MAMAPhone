@@ -47,7 +47,7 @@ public class RateService {
         }
         log.info("Saving new rate. name: {} || description: {}", rate.getName(), rate.getDescription());
         Rate rateFromBaseData = rateRepository.save(rate);
-        if (rate.getPreviewImageId() != null) {
+        if (rate.getPreviewImageId() != null) { // если нет картинки
             rateFromBaseData.setPreviewImageId(rateFromBaseData.getImages().get(0).getId());
             rateRepository.save(rate);
         }
