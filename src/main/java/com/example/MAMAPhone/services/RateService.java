@@ -12,7 +12,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-@Service
+@Service //выполнение бизнес-логики, выполнение вычислений и вызов внешних API
 @Slf4j //логирование
 @RequiredArgsConstructor
 public class RateService {
@@ -30,12 +30,12 @@ public class RateService {
         return rateRepository.findAll();
     }
 
-    /*public void saveRate(Rate rate) {     // До картинок
+    public void saveRate(Rate rate) {     // До картинок
         //rate.setId(++id);
         //rates.add(rate);
         log.info("Saving new {}" + rate);
         rateRepository.save(rate);
-    }*/
+    }
 
     // ---------------------------------------------- Фотографии
     public void saveRate(Rate rate, MultipartFile file) throws IOException {
@@ -47,8 +47,10 @@ public class RateService {
         }
         log.info("Saving new rate. name: {} || description: {}", rate.getName(), rate.getDescription());
         Rate rateFromBaseData = rateRepository.save(rate);
-        rateFromBaseData.setPreviewImageId(rateFromBaseData.getImages().get(0).getId());
-        rateRepository.save(rate);
+        if (rate.getPreviewImageId() != null) {
+            rateFromBaseData.setPreviewImageId(rateFromBaseData.getImages().get(0).getId());
+            rateRepository.save(rate);
+        }
     }
 
     private Image toImageEntity(MultipartFile file) throws IOException {

@@ -17,7 +17,7 @@
 		<java.version>21</java.version>
 	</properties>
 	<dependencies>
-		<dependency> <!--сохранение объектов, данных в удобнов виде в БД (с помощью библиотеки Hibernate, для доступа к БД)-->
+		<dependency> <!--сохранение сущностей и их данных в удобном виде в БД (с помощью Hibernate автоматизируется генерацию SQL-запросов)-->
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-data-jpa</artifactId>
 		</dependency>
@@ -25,17 +25,17 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-freemarker</artifactId>
 		</dependency>
-		<dependency>
+		<dependency> <!-- спецификация для кодирования информации и форматирования сообщений таким образом, чтобы их можно было пересылать по интернету -->
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-mail</artifactId>
 		</dependency>
-		<dependency>
+		<!--<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-security</artifactId>
-		</dependency>
+		</dependency>-->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-web</artifactId>
+			<artifactId>spring-boot-starter-web</artifactId> <!--для работы в сети-->
 		</dependency>
 
 		<dependency>

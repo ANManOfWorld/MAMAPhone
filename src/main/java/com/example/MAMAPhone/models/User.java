@@ -1,4 +1,5 @@
 package com.example.MAMAPhone.models;
+/*
 
 import com.example.MAMAPhone.models.enums.Role;
 import jakarta.persistence.*;
@@ -11,9 +12,9 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 
-@Entity //аннотация
+@Entity //аннотация, задающая
 @Table(name = "users")
-@Data
+@Data //аннотация сгенирует при компиляции необходимый код от LOMBOK
 public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -74,3 +75,4 @@ public class User implements UserDetails {
         return active;
     }
 }
+*/
