@@ -1,9 +1,78 @@
 package com.example.MAMAPhone.models;
+/*
 
-public class User {
+import com.example.MAMAPhone.models.enums.Role;
+import jakarta.persistence.*;
+import lombok.Data;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+
+import java.time.LocalDateTime;
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.Set;
+
+@Entity //аннотация, задающая
+@Table(name = "users")
+@Data //аннотация сгенирует при компиляции необходимый код от LOMBOK
+public class User implements UserDetails {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
+    private Long id;
+    @Column(name = "email", unique = true)
+    private String email;
+    @Column(name = "active")
+    private boolean active;
+    @Column(name = "password", length = 2000)
+    private String password;
+    @Column(name = "phoneNum")
+    private String phoneNum;
+    @ElementCollection(targetClass = Role.class, fetch = FetchType.EAGER)
+    @CollectionTable(name = "user_Role", joinColumns = @JoinColumn(name = "user_Id"))
+    @Enumerated(EnumType.STRING)
+    private Set<Role> roles = new HashSet<>();
+    private LocalDateTime dateOfCreated;
+    @Column(name = "name")
     private String name;
-    private String role;
-    private String author;
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinColumn(name = "image_Id")
+    private Image imageOfUser;
 
+    @PrePersist
+    private void init() {
+        dateOfCreated = LocalDateTime.now();
+    }
 
+    //отимплементированные методы
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return roles;
+    }
+
+    @Override
+    public String getUsername() {
+        return email;
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return false;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return false;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return false;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return active;
+    }
 }
+*/
