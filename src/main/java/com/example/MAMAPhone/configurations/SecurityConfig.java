@@ -1,21 +1,6 @@
 package com.example.MAMAPhone.configurations;
 
-import com.example.MAMAPhone.services.OurUserDetailsService;
-import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
-import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.web.SecurityFilterChain;
-
-import javax.sql.DataSource;
-
-@Configuration
+/*@Configuration
 @EnableWebSecurity
 @RequiredArgsConstructor //удаляет конструктор из класса
 public class SecurityConfig {
@@ -51,25 +36,35 @@ public class SecurityConfig {
                 .build();
     }
 
-    /*@Bean
+    *//*@Bean
     public JdbcUserDetailsManager user(PasswordEncoder encoder) {
         JdbcUserDetailsManager jdbcUserDetailsManager = new JdbcUserDetailsManager(dataSource);
         return jdbcUserDetailsManager;
-    }*/
+    }*//*
 
-    /*protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+    *//*protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(ourUserDetailsService)
                 .passwordEncoder(passwordEncoder());
-    }*/
+    }*//*
 
     @Bean
     PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder(8);
     }
-}
+}*/
 
 
-/*//HERE!!
+import com.example.MAMAPhone.services.OurUserDetailsService;
+import lombok.RequiredArgsConstructor;
+import org.springframework.context.annotation.Bean;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
+
+//HERE!!
 @EnableWebSecurity
 @RequiredArgsConstructor //удаляет конструктор из класса
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
@@ -100,4 +95,4 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder(8);
     }
-}*/
+}

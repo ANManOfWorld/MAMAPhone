@@ -1,15 +1,17 @@
 package com.example.MAMAPhone.models;
 
 import com.example.MAMAPhone.models.enums.Role;
-import jakarta.persistence.*;
 import lombok.Data;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
+
+
 
 @Entity //аннотация, задающая
 @Table(name = "users")
