@@ -2,6 +2,7 @@ package com.example.MAMAPhone.controllers;
 
 import com.example.MAMAPhone.models.Rate;
 import com.example.MAMAPhone.services.RateService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,9 +13,10 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 
-@Controller
+@Controller //связь между компонентами и выполнение (обработка запросов) действий согласно переданных запросов
 public class WebController { //прием HTTP запросов
     private final RateService rateService;
+
 
     public WebController(RateService rateService) {
         this.rateService = rateService;
