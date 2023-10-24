@@ -11,6 +11,8 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 @Slf4j
 @RequiredArgsConstructor
@@ -37,5 +39,25 @@ public class UserService implements UserDetailsService {
         User user = userRepository.findByEmail(username);
         if (user == null) {throw new UsernameNotFoundException("User not found");}
         return user;
+    }
+
+    //----admin
+    public List<User> list() {
+        return userRepository.findAll();
+    }
+
+    public void userBan(Long id) {
+        User user = userRepository.findById(id).orElse(null);
+        if (user != null) {
+            if (user.isActive()) {
+                user.setActive(false);
+                log.info("User was banned; emal: {}", user.getEmail());
+            } else {
+                user.setActive(true);
+                log.info("User was UNbanned; emal: {}", user.getEmail());
+            }
+
+        }
+        userRepository.save(user);
     }
 }
