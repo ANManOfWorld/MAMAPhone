@@ -32,5 +32,10 @@
 <br>
 <b>Цена тарифа: </b>${rate.price}
 
+<hr>
+<form action="/rate/delete/${rate.id}" method="post">
+    <input type="submit" value="Удалить тариф"/>
+</form>
+
 </body>
 </html>

@@ -51,7 +51,7 @@ public class User implements UserDetails {
 
     //понятие РОЛИ
     public boolean isAdmin() {return roles.contains(Role.ROLE_ADMIN);}
-
+    public boolean isUser() {return roles.contains(Role.ROLE_USER);}
 
     //отимплементированные методы
     @Override

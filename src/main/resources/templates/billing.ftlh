@@ -21,7 +21,7 @@
         </#if>
 
         <form action="/logout" method="post">
-            <input type="hidden" name="_csrf" value="${_csrf.token}"/>
+            <#--<input type="hidden" name="_csrf" value="${_csrf.token}"/>-->
             <input type="submit" value="Выйти"/>
         </form>
     </a>
@@ -36,6 +36,15 @@
     <input type="submit" value="Поиск">
 </form>
 
+<#if user.isAdmin()>
+<hr>
+<#list rates as rate>
+    <div>
+        <p>${rate.name} || ${rate.description} ${rate.price} руб. | <a href="/rate/admin/${rate.id}">Подробнее</a></p>
+    </div>
+</#list>
+<hr>
+<#else>
 <hr>
 <#list rates as rate>
     <div>
@@ -43,6 +52,7 @@
     </div>
 </#list>
 <hr>
+</#if>
 
 
 <#if user.isAdmin()>                                                                    <#--user.email??-->
