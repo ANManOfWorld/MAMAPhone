@@ -1,20 +1,25 @@
 package com.example.MAMAPhone.models;
-/*
 
 import com.example.MAMAPhone.models.enums.Role;
-import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 
+
+
 @Entity //аннотация, задающая
 @Table(name = "users")
 @Data //аннотация сгенирует при компиляции необходимый код от LOMBOK
+@AllArgsConstructor
+@NoArgsConstructor
 public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -44,6 +49,10 @@ public class User implements UserDetails {
         dateOfCreated = LocalDateTime.now();
     }
 
+    //понятие РОЛИ
+    public boolean isAdmin() {return roles.contains(Role.ROLE_ADMIN);}
+    public boolean isUser() {return roles.contains(Role.ROLE_USER);}
+
     //отимплементированные методы
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -57,17 +66,17 @@ public class User implements UserDetails {
 
     @Override
     public boolean isAccountNonExpired() {
-        return false;
+        return true;
     }
 
     @Override
     public boolean isAccountNonLocked() {
-        return false;
+        return true;
     }
 
     @Override
     public boolean isCredentialsNonExpired() {
-        return false;
+        return true;
     }
 
     @Override
@@ -75,4 +84,3 @@ public class User implements UserDetails {
         return active;
     }
 }
-*/

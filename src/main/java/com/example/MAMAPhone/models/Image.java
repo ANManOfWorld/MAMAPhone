@@ -1,7 +1,8 @@
 package com.example.MAMAPhone.models;
 
-import jakarta.persistence.*;
+//import jakarta.persistence.*;
 
+import javax.persistence.*;
 @Entity
 @Table(name = "images")
 public class Image {

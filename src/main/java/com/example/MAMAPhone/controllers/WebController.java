@@ -2,7 +2,6 @@ package com.example.MAMAPhone.controllers;
 
 import com.example.MAMAPhone.models.Rate;
 import com.example.MAMAPhone.services.RateService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.security.Principal;
 
 @Controller //связь между компонентами и выполнение (обработка запросов) действий согласно переданных запросов
 public class WebController { //прием HTTP запросов
@@ -23,8 +23,9 @@ public class WebController { //прием HTTP запросов
     }
 
     @GetMapping("/")
-    public String billing(@RequestParam(name = "name", required = false) String name, Model model) {
+    public String billing(@RequestParam(name = "name", required = false) String name, Model model, Principal principal) {
         model.addAttribute("rates", rateService.listRates(name));
+        model.addAttribute("user", rateService.getUserByPrincipal(principal));
         return "billing";
     }
 
@@ -36,6 +37,14 @@ public class WebController { //прием HTTP запросов
         return "rate-info";
     }
 
+    @GetMapping("/rate/admin/{id}")
+    public String rateInfoAdmin(@PathVariable Long id, Model model) {
+        Rate rate = rateService.getRateById(id);
+        model.addAttribute("rate", rate);
+        model.addAttribute("images", rate.getImages());  // Фотография функция по передаче её в "Подробнее"
+        return "rate-info-admin";
+    }
+
 // ---------------------------------- ДО картинок
    /* @PostMapping("/rate/create")
     public String createRate (Rate rate) {
@@ -45,8 +54,8 @@ public class WebController { //прием HTTP запросов
 */
     // ---------------------------------- Картинки
     @PostMapping("/rate/create")
-    public String createRate (@RequestParam("file1")MultipartFile file1, Rate rate) throws IOException {
-        rateService.saveRate(rate, file1);
+    public String createRate (@RequestParam("file1")MultipartFile file1, Rate rate, Principal principal) throws IOException {
+        rateService.saveRate(rate, file1, principal);
         return "redirect:/"; //обновление страницы
     }
     // ---------------------------------- Картинки
