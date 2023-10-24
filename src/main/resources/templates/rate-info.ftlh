@@ -12,9 +12,13 @@
 <h1> MAMAPhone </h1>
 <h5>Информация о тарифе. </h5>
 
+<a href="/">На главную</a>
+
+<hr>
+
 <!-- ФОТОГРАФИЯ -->
 <#list images as img>
-    <img src = "/images/${img.id}" height="200px"/> <br>
+    <img src="/images/${img.id}" height="200px"/> <br>
 </#list>
 <!-- ФОТОГРАФИЯ -->
 
@@ -28,9 +32,11 @@
 <br>
 <b>Цена тарифа: </b>${rate.price}
 
-<hr>
-<form action="/rate/delete/${rate.id}" method="post">
-   <input type = "submit" value = "Удалить тариф"/>
-</form>
+<#--<#if user.isAdmin()>-->
+    <hr>
+    <form action="/rate/delete/${rate.id}" method="post">
+        <input type="submit" value="Удалить тариф"/>
+    </form>
+<#--</#if>-->
 </body>
 </html>
