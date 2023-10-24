@@ -37,6 +37,14 @@ public class WebController { //прием HTTP запросов
         return "rate-info";
     }
 
+    @GetMapping("/rate/admin/{id}")
+    public String rateInfoAdmin(@PathVariable Long id, Model model) {
+        Rate rate = rateService.getRateById(id);
+        model.addAttribute("rate", rate);
+        model.addAttribute("images", rate.getImages());  // Фотография функция по передаче её в "Подробнее"
+        return "rate-info-admin";
+    }
+
 // ---------------------------------- ДО картинок
    /* @PostMapping("/rate/create")
     public String createRate (Rate rate) {
