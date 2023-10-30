@@ -30,7 +30,7 @@
 			<!--<version>3.1.0</version>-->
 		</dependency>
 		<dependency> <!-- спецификация для кодирования информации и форматирования сообщений таким образом, чтобы их можно было пересылать по интернету -->
-			<groupId>org.springframework.boot</groupId>
+			<groupId>org.springframework.boot</groupId> <!-- работа с эл.почтой -->
 			<artifactId>spring-boot-starter-mail</artifactId>
 			<!--<version>3.0.4</version>-->
 		</dependency>

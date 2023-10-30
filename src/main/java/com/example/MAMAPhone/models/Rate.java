@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-@Entity
+@Entity // класс является сущностью и будет сохраняться в БД
 @Table(name = "rates")
 @Data //аннотация сгенирует при компиляции необходимый код от LOMBOK
 @AllArgsConstructor

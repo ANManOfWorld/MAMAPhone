@@ -3,7 +3,7 @@ package com.example.MAMAPhone.models;
 //import jakarta.persistence.*;
 
 import javax.persistence.*;
-@Entity
+@Entity // класс является сущностью и будет сохраняться в БД
 @Table(name = "images")
 public class Image {
     @Id
