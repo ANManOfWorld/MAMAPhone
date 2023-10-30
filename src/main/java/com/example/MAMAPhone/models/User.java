@@ -15,7 +15,7 @@ import java.util.Set;
 
 
 
-@Entity //аннотация, задающая
+@Entity // класс является сущностью и будет сохраняться в БД
 @Table(name = "users")
 @Data //аннотация сгенирует при компиляции необходимый код от LOMBOK
 @AllArgsConstructor
