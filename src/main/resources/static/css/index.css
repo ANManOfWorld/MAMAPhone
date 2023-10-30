@@ -2,7 +2,7 @@
   top: 0;
   /*left: 1px;*/
   background-color: var(--color-black);
-  width: 1433px;/*1290px;*/
+  width: 100%;/*1433px;*//*1290px;*/
   height: 1080px;
 }
 .button,
@@ -13,7 +13,7 @@
 .icon {
   top: 1px;
   left: 0;
-  width: 1433px;/*1291px;*/
+  width: 100%;/*1433px;*//*1291px;*/
   height: 1080px;
   object-fit: cover;
 }
