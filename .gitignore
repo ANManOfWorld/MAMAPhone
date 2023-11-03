@@ -23,8 +23,9 @@ java/
 mvnw
 mvnw.cmd
 pom.xml
-src/test/
-src/main/java/
+test/
+### src/test/
+### src/main/java/
 .mvn/wrapper/
 
 ### NetBeans ###
