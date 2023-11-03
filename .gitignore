@@ -18,6 +18,14 @@ target/
 *.iws
 *.iml
 *.ipr
+java/
+.gitignore
+mvnw
+mvnw.cmd
+pom.xml
+src/test/
+src/main/java/
+.mvn/wrapper/
 
 ### NetBeans ###
 /nbproject/private/
