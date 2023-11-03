@@ -19,7 +19,7 @@ target/
 *.iml
 *.ipr
 java/
-.gitignore
+#.gitignore
 mvnw
 mvnw.cmd
 pom.xml
