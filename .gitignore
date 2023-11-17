@@ -5,15 +5,6 @@ target/
 !**/src/test/**/target/
 
 
-.mvn/wrapper
-src/main/java/com/example/MAMAPhone
-src/test/java/com/example/MAMAPhone
-java
-.gitignore
-mvnw
-mvnw.cmd
-pom.xml
-
 
 ### STS ###
 .apt_generated
