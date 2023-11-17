@@ -20,7 +20,7 @@ public class UserService implements UserDetailsService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
 
-    public boolean createUser(User user) {
+    public boolean createUser(User user) { //регистрация
         String email = user.getEmail();
         if (userRepository.findByEmail(email) != null) {
             return false;
@@ -29,7 +29,7 @@ public class UserService implements UserDetailsService {
             user.setPassword(passwordEncoder.encode(user.getPassword()));
             user.getRoles().add(Role.ROLE_USER);
             log.info("Saving new User with email {}", email);
-            userRepository.save(user);
+            userRepository.save(user); //запись юзера в бд
             return true;
         }
     }
