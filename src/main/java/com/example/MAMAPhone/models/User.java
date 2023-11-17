@@ -25,7 +25,7 @@ public class User implements UserDetails {
 
     @Column(name = "email", unique = true)
     @NotEmpty(message = "Email должен быть заполнен.") //validator
-    @Email(message = "Email должен быть валидным.")
+    @Email(message = "Email должен быть валидным.", regexp = "^[a-zA-Z0-9_!#$%&'*+/=?`{|}~^.-]+@[a-zA-Z0-9.-]+$")
     private String email;
 
     @Column(name = "active")
