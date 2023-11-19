@@ -39,6 +39,25 @@ public class User implements UserDetails {
     @NotEmpty(message = "Телефон должен быть введён.") //validator
     private String phoneNum;
 
+
+    // динамические данные
+
+
+
+    @Column(name = "balance")
+    private Double balance = 0.00;
+
+    @Column(name = "internet")
+    //@Value("0.0")
+    private Double internet = 0.00;
+
+    @Column(name = "minutes")
+    //@Value("0")
+    private Integer minutes = 0;
+
+    // динамические данные
+
+
     @ElementCollection(targetClass = Role.class, fetch = FetchType.EAGER)
     @CollectionTable(name = "user_Role", joinColumns = @JoinColumn(name = "user_Id"))
     @Enumerated(EnumType.STRING)
@@ -54,6 +73,43 @@ public class User implements UserDetails {
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name = "image_Id")
     private Image imageOfUser;
+
+
+
+
+
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinColumn(name = "currentRate")
+    private Rate currentRate;
+
+    public void chooseRate (Rate rate) {
+        this.currentRate = rate;
+    }
+
+    public boolean isThatRate(Rate rate) {
+        return this.currentRate.equals(rate);
+    }
+
+    public Rate getCurrentRate() {
+        return currentRate;
+    }
+
+    public void setCurrentRate(Rate currentRate) {
+        this.currentRate = currentRate;
+    }
+
+
+
+    @Column(name = "numOfCard")
+    private String numOfCard;
+
+    @Column(name = "CVC")
+    private Integer CVC;
+
+
+
+
+
 
     public User(Long id, @NotEmpty @Email(message = "Email должен быть валидным.") String email, boolean active, @NotEmpty String password, @NotEmpty(message = "Телефон должен быть введён корректно.") String phoneNum, Set<Role> roles, LocalDateTime dateOfCreated, @NotEmpty(message = "ФИО должно быть заполнено") @Size(min = 2, max = 32, message = "Имя должно быть не менее 2 символов и не более 32") String name, Image imageOfUser) {
         this.id = id;
@@ -87,6 +143,56 @@ public class User implements UserDetails {
 
 
     //отимплементированные методы
+
+    public String getNumOfCard() {
+        return numOfCard;
+    }
+
+    public void setNumOfCard(String numOfCard) {
+        this.numOfCard = numOfCard;
+    }
+
+    public Integer getCVC() {
+        return CVC;
+    }
+
+    public void setCVC(Integer CVC) {
+        this.CVC = CVC;
+    }
+
+
+
+
+
+    public Double getBalance() {
+        return balance;
+    }
+
+    public void setBalance(Double balance) {
+        this.balance = balance;
+    }
+
+
+
+
+    public Double getInternet() {
+        return internet;
+    }
+
+    public void setInternet(Double internet) {
+        this.internet = internet;
+    }
+
+    public Integer getMinutes() {
+        return minutes;
+    }
+
+    public void setMinutes(Integer minutes) {
+        this.minutes = minutes;
+    }
+
+
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return roles;

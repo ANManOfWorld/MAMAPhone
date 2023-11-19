@@ -1,0 +1,155 @@
+::placeholder {
+
+}
+
+.group-child {
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-color: var(--color-black);
+  width: 100%;
+  height: 100%;
+}
+.laptop-1 {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url(/static/img/89560-2@2x.png);
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: top;
+}
+.group-child1,
+.group-inner,
+.group-item,
+.rectangle-input {
+  border: 0;
+  background-color: var(--color-white);
+  position: absolute;
+  top: 293px;
+  left: 0;
+  border-radius: var(--br-24xl);
+  width: 515px;
+  height: 57px;
+}
+.group-child1,
+.group-inner,
+.rectangle-input {
+  top: 204px;
+}
+.group-child1,
+.rectangle-input {
+  top: 382px;
+}
+.group-child1 {
+  top: 471px;
+}
+::placeholder,
+.div,
+.div1 {
+  font-size: var(--font-size-8xl);
+  color: var(--color-silver);
+}
+.div {
+  position: absolute;
+  top: 305px;
+  left: 226px;
+  font-family: var(--font-inter);
+  text-align: left;
+  display: inline-block;
+  width: 63px;
+}
+::placeholder,
+.div1 {
+  top: 214px;
+  left: 146px;
+}
+::placeholder,
+.b,
+.div1,
+.div2,
+.email {
+  position: absolute;
+  font-family: var(--font-inter);
+  text-align: center/*left*/;
+}
+.b {
+  top: 133px;
+  left: 153px;
+  font-size: 32px;
+  display: inline-block;
+  color: var(--color-white);
+  width: 209px;
+}
+.div2,
+.email {
+  top: 394px;
+  left: 208px;
+  font-size: var(--font-size-8xl);
+  color: var(--color-silver);
+}
+.email {
+  top: 483px;
+  left: 224px;
+  display: inline-block;
+  width: 68px;
+}
+.rectangle-button {
+  cursor: pointer;
+  border: 0;
+  padding: 0;
+  background-color: #06f2b1;
+  position: absolute;
+  top: 560px;
+  left: 57px;
+  border-radius: var(--br-24xl);
+  width: 401px;
+  height: 57px;
+}
+.div3,
+.icon {
+  position: absolute;
+}
+.div3 {
+  top: 572px;
+  left: 119px;
+  font-size: var(--font-size-8xl);
+  font-family: var(--font-inter);
+  color: var(--color-black);
+  text-align: left;
+  display: inline-block;
+  width: 277px;
+}
+.icon {
+  top: 0;
+  left: 147px;
+  width: 222px;
+  height: 140px;
+  object-fit: cover;
+}
+.group-wrapper,
+.rectangle-group {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 515px;
+  height: 617px;
+}
+.group-wrapper {
+  top: 0;
+  left: 30%;
+}
+.rectangle-parent {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+.group-parent {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+}

@@ -1,5 +1,6 @@
 package com.example.MAMAPhone.services;
 
+import com.example.MAMAPhone.models.Rate;
 import com.example.MAMAPhone.models.User;
 import com.example.MAMAPhone.models.enums.Role;
 import com.example.MAMAPhone.repositories.UserRepository;
@@ -27,7 +28,7 @@ public class UserService implements UserDetailsService {
         } else {
             user.setActive(true);
             user.setPassword(passwordEncoder.encode(user.getPassword()));
-            user.getRoles().add(Role.ROLE_USER);
+            user.getRoles().add(Role.ROLE_USER);     // ROLE_USER   ROLE_ADMIN
             log.info("Saving new User with email {}", email);
             userRepository.save(user); //запись юзера в бд
             return true;
@@ -51,13 +52,25 @@ public class UserService implements UserDetailsService {
         if (user != null) {
             if (user.isActive()) {
                 user.setActive(false);
-                log.info("User was banned; emal: {}", user.getEmail());
+                log.info("User was banned; email: {}", user.getEmail());
             } else {
                 user.setActive(true);
-                log.info("User was UNbanned; emal: {}", user.getEmail());
+                log.info("User was Unbanned; email: {}", user.getEmail());
             }
 
         }
+        userRepository.save(user);
+    }
+
+    public void chooseRate (User user, Rate rate) {
+        user.chooseRate(rate);
+        user.setInternet(rate.getCountOfTrafficInternet());
+        user.setMinutes(rate.getCountOfMinutes());
+        userRepository.save(user);
+    }
+
+    public void topUpBalance(User user, Double sum) {
+        user.setBalance(sum);
         userRepository.save(user);
     }
 }

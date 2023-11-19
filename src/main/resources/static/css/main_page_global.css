@@ -1,0 +1,29 @@
+body {
+  margin: 0;
+  line-height: normal;
+}
+
+.container {transform: scale(0.8);}
+
+:root {
+  /* fonts */
+  --font-inter: Inter;
+
+  /* font sizes */
+  --font-size-16xl: 35px;
+  --font-size-3xl: 22px;
+  --font-size-13xl: 32px;
+
+  /* Colors */
+  --color-darkgray-100: #9299a3;
+  --color-darkgray-200: rgba(146, 153, 163, 0.19);
+  --color-white: #fff;
+  --color-mediumspringgreen: #06f2b1;
+  --color-gray: #212121;
+  --color-darkslategray: #333;
+  --color-black: #000;
+
+  /* Border radiuses */
+  --br-mid: 17px;
+  --br-24xl: 43px;
+}

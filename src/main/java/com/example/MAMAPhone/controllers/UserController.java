@@ -1,22 +1,24 @@
 package com.example.MAMAPhone.controllers;
 
+import com.example.MAMAPhone.models.Rate;
 import com.example.MAMAPhone.models.User;
+import com.example.MAMAPhone.services.RateService;
 import com.example.MAMAPhone.services.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.Errors;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.security.Principal;
 
 @Controller //связь между компонентами и выполнение действий согласно переданных запросов
 @RequiredArgsConstructor //удаляет конструктор из класса
 public class UserController {
     private final UserService userService;
+    private final RateService rateService;
 
     @GetMapping("/registration")
     public String registration(Model model) {
@@ -108,9 +110,32 @@ public class UserController {
         return "redirect:/login";
     }
 
-    @GetMapping("/hello")
-    public String securityUrl() {
-        return "hello";
+    @GetMapping("/callsFinance")
+    public String showCallsAndFinance() {
+        return "calls_finance";
+    }
+
+
+    @GetMapping("/changeRate")
+    public String changeRate(@RequestParam(name = "name", required = false) String name,  Model model, Principal principal) {
+        model.addAttribute("rates", rateService.listRates(name));
+        model.addAttribute("user", rateService.getUserByPrincipal(principal));
+        return "change_rate";
+    }
+
+    @PostMapping("/chooseRate/{id}")
+    public String chooseRate(@PathVariable Long id, @ModelAttribute("rate") Rate rate, Principal principal) {
+        User user = rateService.getUserByPrincipal(principal);
+        userService.chooseRate(user, rateService.getRateById(id));
+        //return "redirect:/rate-info";
+        return "redirect:/";
+    }
+
+    @PostMapping("/top_up_balance")
+    public String topUpBalance(@PathVariable Double balance, Principal principal) {
+        User user = rateService.getUserByPrincipal(principal);
+        userService.topUpBalance(user, balance);
+        return "redirect:/";
     }
 
 }
