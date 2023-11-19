@@ -2,6 +2,14 @@
 
 }
 
+.group-div {
+  top: 374px;
+  left: 0;
+  width: 401px;
+  height: 57px;
+  position: absolute;
+}
+
 .group-child {
   position: absolute;
   top: 0;
@@ -113,8 +121,8 @@
   position: absolute;
 }
 .div3 {
-  top: 572px;
-  left: 119px;
+  top: 15px;
+  left: 55px;
   font-size: var(--font-size-8xl);
   font-family: var(--font-inter);
   color: var(--color-black);

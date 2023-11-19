@@ -15,7 +15,7 @@
   left: 0;
   width: 100%;/*1433px;*//*1291px;*/
   height: 100%/*1080px*/;
-  object-fit: fill /*cover*/;
+  object-fit: /*fill*/ cover;
 }
 .button {
   cursor: pointer;

@@ -89,8 +89,10 @@
                 <#--<div class="div2">Пароль</div>
                 <div class="email">Email</div>-->
 
-                <button class="rectangle-button"></button>
-                <div class="div3">Зарегистрироваться</div>
+
+
+                <button class="rectangle-button"><div class="div3">Зарегистрироваться</div></button>
+
 
                 <img class="icon" alt="" src="/static/img/sign_up_public/-3@2x.png" />
             </div>
