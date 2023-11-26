@@ -37,8 +37,16 @@ public class UserController {
         String phone = user.getPhoneNum();
 
         if (bindingResult.hasFieldErrors("name")) {
-            //error.rejectValue("name", "user.exist", "Имя должно быть не менее 2 символов и не более 32");
-            model.addAttribute("errorName", "ФИО должно быть заполнено; Имя должно быть не менее 2 символов и не более 32");
+            //error.rejectValue("name", "user.exist", "Имя должно быть не менее 2 символов и не более 12");
+            model.addAttribute("errorName", "Имя должно быть заполнено; Имя должно быть не менее 2 символов и не более 12");
+
+            if (bindingResult.hasFieldErrors("lastName")) {
+                model.addAttribute("errorLastName", "Фамилия должна быть заполнена; Фамилия должна быть не менее 2 символов и не более 12");
+            }
+
+            if (bindingResult.hasFieldErrors("fatherName")) {
+                model.addAttribute("errorFatherName", "Отчество должно быть не более 12");
+            }
 
             if (bindingResult.hasFieldErrors("email")) {
                 model.addAttribute("errorEmail", "Email должен быть заполнен; Email должен быть валидным");
@@ -53,12 +61,72 @@ public class UserController {
             return "registration";
         }
 
+        if (bindingResult.hasFieldErrors("lastName")) {
+            model.addAttribute("errorLastName", "Фамилия должна быть заполнена; Фамилия должна быть не менее 2 символов и не более 12");
+
+            if (bindingResult.hasFieldErrors("name")) {
+                model.addAttribute("errorName", "Имя должно быть заполнено; Имя должно быть не менее 2 символов и не более 12");
+            }
+
+            if (bindingResult.hasFieldErrors("fatherName")) {
+                model.addAttribute("errorFatherName", "Отчество должно быть не более 12");
+            }
+
+            if (bindingResult.hasFieldErrors("email")) {
+                model.addAttribute("errorEmail", "Email должен быть заполнен; Email должен быть валидным");
+            }
+
+            if ((bindingResult.hasFieldErrors("phoneNum")) || (!phone.matches(PHONE_TEMPLATE))) {
+                model.addAttribute("errorNum", "Телефон должен быть введён; Телефон должен быть введён корректно (+7(***)***-**-**)");
+            }
+            if (bindingResult.hasFieldErrors("password")) {
+                model.addAttribute("errorPas", "Пароль должен быть введён");
+            }
+
+            return "registration";
+        }
+
+        if (bindingResult.hasFieldErrors("fatherName")) {
+            model.addAttribute("errorFatherName", "Отчество должно быть не более 12");
+
+            if (bindingResult.hasFieldErrors("name")) {
+                model.addAttribute("errorName", "Имя должно быть заполнено; Имя должно быть не менее 2 символов и не более 12");
+            }
+
+            if (bindingResult.hasFieldErrors("lastName")) {
+                model.addAttribute("errorLastName", "Фамилия должна быть заполнена; Фамилия должна быть не менее 2 символов и не более 12");
+            }
+
+            if (bindingResult.hasFieldErrors("email")) {
+                model.addAttribute("errorEmail", "Email должен быть заполнен; Email должен быть валидным");
+            }
+
+            if ((bindingResult.hasFieldErrors("phoneNum")) || (!phone.matches(PHONE_TEMPLATE))) {
+                model.addAttribute("errorNum", "Телефон должен быть введён; Телефон должен быть введён корректно (+7(***)***-**-**)");
+            }
+            if (bindingResult.hasFieldErrors("password")) {
+                model.addAttribute("errorPas", "Пароль должен быть введён");
+            }
+
+            return "registration";
+        }
+
+
         if (bindingResult.hasFieldErrors("email")) {
             model.addAttribute("errorEmail", "Email должен быть заполнен; Email должен быть валидным");
 
             if (bindingResult.hasFieldErrors("name")) {
-                model.addAttribute("errorName", "ФИО должно быть заполнено; Имя должно быть не менее 2 символов и не более 32");
+                model.addAttribute("errorName", "Имя должно быть заполнено; Имя должно быть не менее 2 символов и не более 12");
             }
+
+            if (bindingResult.hasFieldErrors("lastName")) {
+                model.addAttribute("errorLastName", "Фамилия должна быть заполнена; Фамилия должна быть не менее 2 символов и не более 12");
+            }
+
+            if (bindingResult.hasFieldErrors("fatherName")) {
+                model.addAttribute("errorFatherName", "Отчество должно быть не более 12");
+            }
+
             if ((bindingResult.hasFieldErrors("phoneNum")) || (!phone.matches(PHONE_TEMPLATE))) {
                 model.addAttribute("errorNum", "Телефон должен быть введён; Телефон должен быть введён корректно (+7(***)***-**-**)");
             }
@@ -74,7 +142,15 @@ public class UserController {
             model.addAttribute("errorNum", "Телефон должен быть введён; Телефон должен быть введён корректно (+7(***)***-**-**)");
 
             if (bindingResult.hasFieldErrors("name")) {
-                model.addAttribute("errorName", "ФИО должно быть заполнено; Имя должно быть не менее 2 символов и не более 32");
+                model.addAttribute("errorName", "Имя должно быть заполнено; Имя должно быть не менее 2 символов и не более 12");
+            }
+
+            if (bindingResult.hasFieldErrors("lastName")) {
+                model.addAttribute("errorLastName", "Фамилия должна быть заполнена; Фамилия должна быть не менее 2 символов и не более 12");
+            }
+
+            if (bindingResult.hasFieldErrors("fatherName")) {
+                model.addAttribute("errorFatherName", "Отчество должно быть не более 12");
             }
             if (bindingResult.hasFieldErrors("email")) {
                 model.addAttribute("errorEmail", "Email должен быть заполнен; Email должен быть валидным");
@@ -87,9 +163,19 @@ public class UserController {
 
         if (bindingResult.hasFieldErrors("password")) {
             model.addAttribute("errorPas", "Пароль должен быть введён");
+
             if (bindingResult.hasFieldErrors("name")) {
-                model.addAttribute("errorName", "ФИО должно быть заполнено; Имя должно быть не менее 2 символов и не более 32");
+                model.addAttribute("errorName", "Имя должно быть заполнено; Имя должно быть не менее 2 символов и не более 12");
             }
+
+            if (bindingResult.hasFieldErrors("lastName")) {
+                model.addAttribute("errorLastName", "Фамилия должна быть заполнена; Фамилия должна быть не менее 2 символов и не более 12");
+            }
+
+            if (bindingResult.hasFieldErrors("fatherName")) {
+                model.addAttribute("errorFatherName", "Отчество должно быть не более 12");
+            }
+
             if (bindingResult.hasFieldErrors("email")) {
                 model.addAttribute("errorEmail", "Email должен быть заполнен; Email должен быть валидным");
             }
@@ -131,9 +217,12 @@ public class UserController {
         return "redirect:/";
     }
 
+
+    final String NUM_OF_CARD = "[0-9][0-9][0-9][0-9]-[0-9][0-9][0-9][0-9]-[0-9][0-9][0-9][0-9]-[0-9][0-9][0-9][0-9]";
     @PostMapping("/top_up_balance")
-    public String topUpBalance(@PathVariable Double balance, Principal principal) {
+    public String topUpBalance(Double balance, Principal principal, Model model) {
         User user = rateService.getUserByPrincipal(principal);
+        model.addAttribute("user", user);
         userService.topUpBalance(user, balance);
         return "redirect:/";
     }

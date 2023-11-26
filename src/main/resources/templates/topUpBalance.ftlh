@@ -14,13 +14,12 @@
 
 <a href="/">На главную</a>
 
-<form action="/registration" method="post">
-    Номер карты: ${user.numOfCard}
-    CVV/CVC: ${user.CVC}
-    Пароль: <input type="number" name="balance"><br><br>
-    <#-- <input type="hidden" name="_csrf" value="${_csrf.token}">--> <#-- Защита приложения от "взлома".
-                                                                Токен создаёт уникальный ключ,
-                                                                который проверяется SPR.SECURITY. -->
+<form action="/top_up_balance" method="post">
+    Номер карты: <input <#--class="group-child3"--> type="text" name="numOfCard" placeholder="${user.numOfCard}"></input>
+    <hr>
+    CVV/CVC: <input <#--class="group-child3"--> type="text" name="CVC" placeholder=" ${user.CVC}"></input>
+    <hr>
+    Сумма: <input type="number" name="balance" placeholder=" ${user.balance}"><br><br>
     <input type="submit" value="Оплатить"/>
 </form>
 

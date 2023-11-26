@@ -34,7 +34,80 @@
 </head>
 <body>
 
-<div class="group-parent">
+<div class="rectangle-parent">
+    <section class="group-child"></section>
+    <section class="laptop-1"></section>
+    <form class="group-wrapper" action="/registration" method="post" th:object="${user}">
+        <div class="rectangle-group">
+            <b class="b">Регистрация</b>
+            <input class="group-inner" type="text" name = "phoneNum" placeholder="Номер телефона" style="text-align:center"></input>
+            <#if errorNum??>
+            <#--<h3 style = "color: green"> ${errorNum} </h3>-->
+                <script>
+                    alert("${errorNum}");
+                </script>
+            </#if>
+
+
+            <input class="group-item" type="text" name="name" placeholder="Имя" style="text-align:center"></input>
+            <#if errorName??>
+            <#--<h3 style = "color: green">${errorName}</h3>-->
+                <script>
+                    alert("${errorName}");
+                </script>
+            </#if>
+
+            <input class="group-child1" type="text" name="lastName" placeholder="Фамилия" style="text-align:center"></input>
+            <#if errorName??>
+            <#--<h3 style = "color: green">${errorName}</h3>-->
+                <script>
+                    alert("${errorLastName}");
+                </script>
+            </#if>
+
+
+            <input class="rectangle-input" type="text" name="fatherName" placeholder="Отчество" style="text-align:center"></input>
+            <#if errorFatherName??>
+            <#--<h3 style = "color: green">${errorName}</h3>-->
+                <script>
+                    alert("${errorFatherName}");
+                </script>
+            </#if>
+
+
+            <input class="group-child2" type="password" name="password" placeholder="Пароль" style="text-align:center"></input>
+            <#if errorPas??>
+            <#--<h3 style = "color: green"> ${errorPas} </h3>-->
+                <script>
+                    alert("${errorPas}");
+                </script>
+            </#if>
+
+
+            <input class="group-child3" type="email" name="email" placeholder="Email" style="text-align:center"></input>
+            <#if errorEmail??>
+            <#--<h3 style = "color: green"> ${errorEmail} </h3>-->
+                <script>
+                    alert("${errorEmail}");
+                </script>
+            </#if>
+
+            <#if errorMessage??>
+                <script>
+                    alert("${errorMessage}");
+                </script>
+            </#if>
+
+            <button class="rectangle-button">
+                <div class="div5">Зарегистрироваться</div>
+            </button>
+            <img class="icon" alt="" src="/static/img/sign_up_public/-3@2x.png" />
+        </div>
+    </form>
+</div>
+
+
+<#--<div class="group-parent">
     <div class="rectangle-parent">
         <section class="group-child"></section>
         <section class="laptop-1"></section>
@@ -42,40 +115,40 @@
             <div class="rectangle-group">
 
 
-                <#--<input class="group-inner" type="text" />-->
-                <input class="group-inner" type="text" <#--th:field="*{name}"--> name = "phoneNum" placeholder="Номер телефона">
+                &lt;#&ndash;<input class="group-inner" type="text" />&ndash;&gt;
+                <input class="group-inner" type="text" &lt;#&ndash;th:field="*{name}"&ndash;&gt; name = "phoneNum" placeholder="Номер телефона">
                 <#if errorNum??>
-                    <#--<h3 style = "color: green"> ${errorNum} </h3>-->
+                    &lt;#&ndash;<h3 style = "color: green"> ${errorNum} </h3>&ndash;&gt;
                     <script>
                         alert("${errorNum}");
                     </script>
                 </#if>
 
 
-                <#--<input class="group-item" type="text" />-->
+                &lt;#&ndash;<input class="group-item" type="text" />&ndash;&gt;
                 <input class="group-item" type="text" name="name" placeholder="ФИО">
                 <#if errorName??>
-                    <#--<h3 style = "color: green">${errorName}</h3>-->
+                    &lt;#&ndash;<h3 style = "color: green">${errorName}</h3>&ndash;&gt;
                     <script>
                         alert("${errorName}");
                     </script>
                 </#if>
 
 
-                <#--<input class="rectangle-input" type="text" />-->
+                &lt;#&ndash;<input class="rectangle-input" type="text" />&ndash;&gt;
                 <input class="rectangle-input" type="password" name="password" placeholder="Пароль">
                 <#if errorPas??>
-                    <#--<h3 style = "color: green"> ${errorPas} </h3>-->
+                    &lt;#&ndash;<h3 style = "color: green"> ${errorPas} </h3>&ndash;&gt;
                     <script>
                         alert("${errorPas}");
                     </script>
                 </#if>
 
 
-                <#--<input class="group-child1" type="text" />-->
+                &lt;#&ndash;<input class="group-child1" type="text" />&ndash;&gt;
                 <input class="group-child1" type="email" name="email" placeholder="Email">
                 <#if errorEmail??>
-                    <#--<h3 style = "color: green"> ${errorEmail} </h3>-->
+                    &lt;#&ndash;<h3 style = "color: green"> ${errorEmail} </h3>&ndash;&gt;
                     <script>
                         alert("${errorEmail}");
                     </script>
@@ -83,11 +156,11 @@
 
 
 
-                <#--<div class="div">ФИО</div>
-                <div id="hiddenPhone" class="div1">Номер телефона</div>-->
+                &lt;#&ndash;<div class="div">ФИО</div>
+                <div id="hiddenPhone" class="div1">Номер телефона</div>&ndash;&gt;
                 <b class="b">Регистрация</b>
-                <#--<div class="div2">Пароль</div>
-                <div class="email">Email</div>-->
+                &lt;#&ndash;<div class="div2">Пароль</div>
+                <div class="email">Email</div>&ndash;&gt;
 
 
 
@@ -98,7 +171,7 @@
             </div>
         </form>
     </div>
-</div>
+</div>-->
 
 
 

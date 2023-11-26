@@ -36,7 +36,7 @@
     <input type="submit" value="Поиск">
 </form>
 
-<#if user.isAdmin()>
+<#if user.isModerator()>
 <hr>
 <#list rates as rate>
     <div>
@@ -55,7 +55,7 @@
 </#if>
 
 
-<#if user.isAdmin()>                                                                    <#--user.email??-->
+<#if user.isModerator()>                                                                    <#--user.email??-->
     <h3> Создать новый тариф</h3>
     <form action="/rate/create" method="post" enctype="multipart/form-data">
         <!-- "enctype="multipart/form-data"  " атрибут для фото-->

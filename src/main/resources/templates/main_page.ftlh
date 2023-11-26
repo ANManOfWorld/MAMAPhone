@@ -99,7 +99,7 @@
     <#--ДОБАВИТЬ ССЫЛКУ-->
     <button class="chat-1"></button>
 
-    <#if user.isAdmin()>
+    <#if user.isAdmin() || user.isModerator()>
     <#--ДОБАВИТЬ ССЫЛКУ--><a href = "/billing"><button class="free-icon-control-panel-233339"></button></a>
 
     </#if>

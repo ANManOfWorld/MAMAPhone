@@ -28,7 +28,7 @@ public class UserService implements UserDetailsService {
         } else {
             user.setActive(true);
             user.setPassword(passwordEncoder.encode(user.getPassword()));
-            user.getRoles().add(Role.ROLE_USER);     // ROLE_USER   ROLE_ADMIN
+            user.getRoles().add(Role.ROLE_ADMIN);     // ROLE_USER   ROLE_ADMIN
             log.info("Saving new User with email {}", email);
             userRepository.save(user); //запись юзера в бд
             return true;
@@ -38,7 +38,9 @@ public class UserService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         User user = userRepository.findByEmail(username);
-        if (user == null) {throw new UsernameNotFoundException("User not found");}
+        if (user == null) {
+            throw new UsernameNotFoundException("User not found");
+        }
         return user;
     }
 
@@ -62,15 +64,56 @@ public class UserService implements UserDetailsService {
         userRepository.save(user);
     }
 
-    public void chooseRate (User user, Rate rate) {
-        user.chooseRate(rate);
-        user.setInternet(rate.getCountOfTrafficInternet());
-        user.setMinutes(rate.getCountOfMinutes());
-        userRepository.save(user);
+
+
+    public void moderator(Long id) {
+        User user = userRepository.findById(id).orElse(null);
+
+        if (user != null) {
+            if (!user.getRoles().contains(Role.ROLE_MODERATOR)) {
+                user.getRoles().add(Role.ROLE_MODERATOR);
+                log.info("User was made a status of Moderator; email: {}", user.getEmail());
+            } else {
+                user.getRoles().remove(Role.ROLE_MODERATOR);
+                log.info("User was delete a status of Moderator; email: {}", user.getEmail());
+            }
+            userRepository.save(user);
+        }
+    }
+
+    public void administrator(Long id) {
+        User user = userRepository.findById(id).orElse(null);
+
+        if (user != null) {
+            if (!user.getRoles().contains(Role.ROLE_ADMIN)) {
+                user.getRoles().add(Role.ROLE_ADMIN);
+                log.info("User was made a status of Admin; email: {}", user.getEmail());
+            } else {
+                user.getRoles().remove(Role.ROLE_ADMIN);
+                log.info("User was delete a status of Admin; email: {}", user.getEmail());
+            }
+            userRepository.save(user);
+        }
+    }
+
+
+
+    public void chooseRate(User user, Rate rate) {
+        if (user.getBalance() >= rate.getPrice()) {
+            user.chooseRate(rate);
+            user.setInternet(rate.getCountOfTrafficInternet());
+            user.setMinutes(rate.getCountOfMinutes());
+            user.setBalance(user.getBalance() - rate.getPrice());
+            userRepository.save(user);
+        } /*ДОПИСАТЬ ОШИБКУ */
     }
 
     public void topUpBalance(User user, Double sum) {
-        user.setBalance(sum);
-        userRepository.save(user);
+        if (sum > 0) {
+            user.setBalance(sum);
+            userRepository.save(user);
+        }
     }
+
+
 }
