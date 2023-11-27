@@ -33,6 +33,8 @@
         <th>Имя</th>
         <th>Роль</th>
         <th>Бан</th>
+        <th>Модератор</th>
+        <th>Администратор</th>
     </tr>
     <#list users as user>
         <tr>
@@ -51,8 +53,19 @@
                 </form>
             </th>
             <#--ДОБАВИТЬ ПОДРОБНУЮ ИНФОРМАЦИЮ О ЮЗЕРЕ-->
-            <th><a href="/admin/user/edit/${user.id}">Изменение роли</a></th>
+            <th>
+                <form action="/admin/user/edit/moderator/${user.id}" method="post">
+                    <input type="submit" value="Модератор!">
+                </form>
+                <#--<a href="/admin/user/edit/moderator/${user.id}">Модератор&lt;#&ndash;Изменение роли&ndash;&gt;</a>-->
+            </th>
+            <th>
+                <form action="/admin/user/edit/administrator/${user.id}" method="post">
+                    <input type="submit" value="Администратор!">
+                </form>
+            </th>
         </tr>
+
     <#else> <h4>Юзеров нет.</h4>
     </#list>
 </table>
