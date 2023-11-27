@@ -47,4 +47,13 @@ public class CardService {
         return cardRepository.findAll();
     }
 
+
+    public Card loadCardByNumOfCard(String numOfCard) /*throws Exception*/{
+        Card card = cardRepository.findByNumOfCard(numOfCard);
+        if (card == null) {
+            /*throw new Exception("Card was not FOUND!");*/
+            log.info("CARD WASN'T FOUND!!");
+        }
+        return card;
+    }
 }

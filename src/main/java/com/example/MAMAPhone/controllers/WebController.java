@@ -105,6 +105,33 @@ public class WebController { //прием HTTP запросов
         return "security";
     }
 
+    @GetMapping("/change_security")
+    public String change_security(Model model, Principal principal) {
+        model.addAttribute("user", rateService.getUserByPrincipal(principal));
+        return "change_security";
+    }
+
+    @PostMapping("/security/change")
+    public String func_change_security(Model model, Principal principal, String CVC, String numOfCard) {
+        User user = rateService.getUserByPrincipal(principal);
+        model.addAttribute("user", user);
+        model.addAttribute("CVC", CVC);
+        model.addAttribute("numOfCard", numOfCard);
+
+        /*ДОБАВИТЬ ПАРОЛЬ*/
+
+        if (CVC != "") {
+            userService.changeCVC(user, CVC);
+        }
+
+        if (numOfCard != "") {
+            userService.changeNumOfCard(user, numOfCard);
+        }
+
+        return "redirect:/security";
+    }
+
+
     @GetMapping("/top_up_balance")
     public String appSettings(Model model, Principal principal) {
         User user = rateService.getUserByPrincipal(principal);

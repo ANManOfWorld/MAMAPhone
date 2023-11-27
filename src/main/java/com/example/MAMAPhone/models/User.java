@@ -186,7 +186,7 @@ public class User implements UserDetails {
         return balance;
     }
 
-    public void setBalance(Double balance) {
+    public void setBalance(double balance) {
         this.balance = balance;
     }
 

@@ -1,10 +1,14 @@
 package com.example.MAMAPhone.controllers;
 
+import com.example.MAMAPhone.models.Card;
 import com.example.MAMAPhone.models.Rate;
 import com.example.MAMAPhone.models.User;
+import com.example.MAMAPhone.services.CardService;
 import com.example.MAMAPhone.services.RateService;
+import com.example.MAMAPhone.services.TransactionService;
 import com.example.MAMAPhone.services.UserService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -16,9 +20,12 @@ import java.security.Principal;
 
 @Controller //связь между компонентами и выполнение действий согласно переданных запросов
 @RequiredArgsConstructor //удаляет конструктор из класса
+@Slf4j
 public class UserController {
     private final UserService userService;
     private final RateService rateService;
+    private final TransactionService transactionService;
+    private final CardService cardService;
 
     @GetMapping("/registration")
     public String registration(Model model) {
@@ -221,10 +228,19 @@ public class UserController {
     final String NUM_OF_CARD = "[0-9][0-9][0-9][0-9]-[0-9][0-9][0-9][0-9]-[0-9][0-9][0-9][0-9]-[0-9][0-9][0-9][0-9]";
     final String CVC = "[0-9][0-9][0-9]";
     @PostMapping("/top_up_balance")
-    public String topUpBalance(Double balance, Principal principal, Model model) {
+    public String topUpBalance(Integer balance, Principal principal, Model model, String numOfCard) {
         User user = rateService.getUserByPrincipal(principal);
         model.addAttribute("user", user);
-        userService.topUpBalance(user, balance);
+        model.addAttribute("balance", balance);
+        model.addAttribute("numOfCard", numOfCard);
+        Card card = cardService.loadCardByNumOfCard(numOfCard);
+        log.info("Баланс = " + balance + "; Номер карты = " + numOfCard);
+        if (balance < 99000) {
+            log.info("Прохождение транзакции");
+            transactionService.createTransaction(user, card, balance);
+            cardService.updateBalanceCard(card.getId(), ((-1)*balance));
+            userService.topUpBalance(user, balance);
+        }
         return "redirect:/";
     }
 

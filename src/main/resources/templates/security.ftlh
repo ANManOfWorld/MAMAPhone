@@ -13,7 +13,8 @@
 <a href = "/">На главную</a>
 <br>
 Пароль:
-*  <#--${user.password}-->
+<hr>
+*  ${user.password}
 
 <br>
 Данные карты:
@@ -22,6 +23,10 @@
 <hr>
 *  ${user.CVC}
 <hr>
+
+<a href="/change_security"><button>Изменить</button></a>
+
+
 
 
 </body>
