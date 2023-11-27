@@ -9,6 +9,7 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
 import java.time.LocalDateTime;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
@@ -39,23 +40,91 @@ public class User implements UserDetails {
     @NotEmpty(message = "Телефон должен быть введён.") //validator
     private String phoneNum;
 
+
+    // динамические данные
+
+
+
+    @Column(name = "balance")
+    //@Size(max = 99000.00, message = "Баланс нельзя пополнить больше, чем на 99 тыс. рублей")
+    private Double balance = 0.00;
+
+    @Column(name = "internet")
+    //@Value("0.0")
+    private Double internet = 0.00;
+
+    @Column(name = "minutes")
+    //@Value("0")
+    private Integer minutes = 0;
+
+    // динамические данные
+
+
     @ElementCollection(targetClass = Role.class, fetch = FetchType.EAGER)
     @CollectionTable(name = "user_Role", joinColumns = @JoinColumn(name = "user_Id"))
     @Enumerated(EnumType.STRING)
-    private Set<Role> roles = new HashSet<>();
-
+    private Set<Role> roles = new HashSet<>(Arrays.asList(Role.ROLE_USER));
     private LocalDateTime dateOfCreated;
 
     @Column(name = "name")
-    @NotEmpty(message = "ФИО должно быть заполнено") //validator
-    @Size(min = 2, max = 32, message = "Имя должно быть не менее 2 символов и не более 32")
+    @NotEmpty(message = "Имя должно быть заполнено") //validator
+    @Size(min = 2, max = 12, message = "Имя должно быть не менее 2 символов и не более 12")
     private String name;
+
+    @Column(name = "lastName")
+    @NotEmpty(message = "Фамилия должна быть заполнена") //validator
+    @Size(min = 2, max = 12, message = "Фамилия должна быть не менее 2 символов и не более 12")
+    private String lastName;
+
+
+    @Column(name = "fatherName")
+    //@NotEmpty(message = "Отчество должно быть заполнено") //validator
+    @Size(min = 0, max = 12, message = "Отчество должно быть не более 12")
+    private String fatherName = "-";
+
 
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name = "image_Id")
     private Image imageOfUser;
 
-    public User(Long id, @NotEmpty @Email(message = "Email должен быть валидным.") String email, boolean active, @NotEmpty String password, @NotEmpty(message = "Телефон должен быть введён корректно.") String phoneNum, Set<Role> roles, LocalDateTime dateOfCreated, @NotEmpty(message = "ФИО должно быть заполнено") @Size(min = 2, max = 32, message = "Имя должно быть не менее 2 символов и не более 32") String name, Image imageOfUser) {
+
+
+
+
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinColumn(name = "currentRate")
+    private Rate currentRate;
+
+    public void chooseRate (Rate rate) {
+        this.currentRate = rate;
+    }
+
+    public boolean isThatRate(Rate rate) {
+        return this.currentRate.equals(rate);
+    }
+
+    public Rate getCurrentRate() {
+        return currentRate;
+    }
+
+    public void setCurrentRate(Rate currentRate) {
+        this.currentRate = currentRate;
+    }
+
+
+
+    @Column(name = "numOfCard")
+    private String numOfCard = "XXXX-XXXX-XXX-XXXX";
+
+    @Column(name = "CVC")
+    private String CVC = "XXX";
+
+
+
+
+
+
+    public User(Long id, @NotEmpty @Email(message = "Email должен быть валидным.") String email, boolean active, @NotEmpty String password, @NotEmpty(message = "Телефон должен быть введён корректно.") String phoneNum, Set<Role> roles, LocalDateTime dateOfCreated, @NotEmpty(message = "ФИО должно быть заполнено") @Size(min = 2, max = 12, message = "Имя должно быть не менее 2 символов и не более 12") String name, Image imageOfUser) {
         this.id = id;
         this.email = email;
         this.active = active;
@@ -76,7 +145,12 @@ public class User implements UserDetails {
         dateOfCreated = LocalDateTime.now();
     }
 
+
     //понятие РОЛИ
+    public boolean isModerator() {
+        return roles.contains(Role.ROLE_MODERATOR);
+    }
+
     public boolean isAdmin() {
         return roles.contains(Role.ROLE_ADMIN);
     }
@@ -87,6 +161,73 @@ public class User implements UserDetails {
 
 
     //отимплементированные методы
+
+    public String getNumOfCard() {
+        return numOfCard;
+    }
+
+    public void setNumOfCard(String numOfCard) {
+        this.numOfCard = numOfCard;
+    }
+
+    public String getCVC() {
+        return CVC;
+    }
+
+    public void setCVC(String CVC) {
+        this.CVC = CVC;
+    }
+
+
+
+
+
+    public Double getBalance() {
+        return balance;
+    }
+
+    public void setBalance(double balance) {
+        this.balance = balance;
+    }
+
+
+
+
+    public Double getInternet() {
+        return internet;
+    }
+
+    public void setInternet(Double internet) {
+        this.internet = internet;
+    }
+
+    public Integer getMinutes() {
+        return minutes;
+    }
+
+    public void setMinutes(Integer minutes) {
+        this.minutes = minutes;
+    }
+
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    public String getFatherName() {
+        return fatherName;
+    }
+
+    public void setFatherName(String fatherName) {
+        this.fatherName = fatherName;
+    }
+
+
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return roles;
@@ -149,7 +290,7 @@ public class User implements UserDetails {
         return this.dateOfCreated;
     }
 
-    public @NotEmpty(message = "ФИО должно быть заполнено") @Size(min = 2, max = 32, message = "Имя должно быть не менее 2 символов и не более 32") String getName() {
+    public @NotEmpty(message = "ФИО должно быть заполнено") @Size(min = 2, max = 12, message = "Имя должно быть не менее 2 символов и не более 12") String getName() {
         return this.name;
     }
 
@@ -185,7 +326,7 @@ public class User implements UserDetails {
         this.dateOfCreated = dateOfCreated;
     }
 
-    public void setName(@NotEmpty(message = "ФИО должно быть заполнено") @Size(min = 2, max = 32, message = "Имя должно быть не менее 2 символов и не более 32") String name) {
+    public void setName(@NotEmpty(message = "Имя должно быть заполнено") @Size(min = 2, max = 12, message = "Имя должно быть не менее 2 символов и не более 12") String name) {
         this.name = name;
     }
 

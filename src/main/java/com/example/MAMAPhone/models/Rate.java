@@ -29,13 +29,43 @@ public class Rate {
     @Column(name = "countOfMinutes")
     private int countOfMinutes;
     @Column(name = "countOfTrafficInternet")
-    private int countOfTrafficInternet;
+    private Double countOfTrafficInternet;
 
     //------------------------------- Фотографии
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "rate") //LAZY - при загрузке родительской сущности, дочерняя сущность загружена не будет
     private List<Image> images = new ArrayList<>();
     private Long previewImageId;
     private LocalDateTime dateOfCreated;;
+
+
+
+    /*@OneToOne(optional = false, mappedBy="rate")
+    public User user;
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }*/
+
+
+
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "currentRate") //LAZY - при загрузке родительской сущности, дочерняя сущность загружена не будет
+    private List<User> users = new ArrayList<>();
+
+    public List<User> getUsers() {
+        return users;
+    }
+
+    public void setUsers(List<User> users) {
+        this.users = users;
+    }
+
+
+
+
 
     @PrePersist
     private void init() {

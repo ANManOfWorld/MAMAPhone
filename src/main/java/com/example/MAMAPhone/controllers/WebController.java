@@ -1,7 +1,11 @@
 package com.example.MAMAPhone.controllers;
 
 import com.example.MAMAPhone.models.Rate;
+import com.example.MAMAPhone.models.User;
 import com.example.MAMAPhone.services.RateService;
+import com.example.MAMAPhone.services.UserService;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,17 +20,25 @@ import java.security.Principal;
 @Controller //связь между компонентами и выполнение (обработка запросов) действий согласно переданных запросов
 public class WebController { //прием HTTP запросов
     private final RateService rateService;
+    private final UserService userService;
 
 
-    public WebController(RateService rateService) {
+    public WebController(RateService rateService, UserService userService) {
         this.rateService = rateService;
+        this.userService = userService;
     }
 
     @GetMapping("/")
-    public String billing(@RequestParam(name = "name", required = false) String name, Model model, Principal principal) {
-        model.addAttribute("rates", rateService.listRates(name));
+    public String billing(/*@RequestParam(name = "name", required = false) String name,*/ Model model, Principal principal) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+       // model.addAttribute("rates", rateService.listRates(name));
         model.addAttribute("user", rateService.getUserByPrincipal(principal));
-        return "billing";
+        if (principal == null) {
+            return "main_page_unauthorized";
+        } else {
+            //return "billing";
+            return "main_page";
+        }
     }
 
     @GetMapping("/rate/{id}")
@@ -61,8 +73,70 @@ public class WebController { //прием HTTP запросов
     // ---------------------------------- Картинки
 
     @PostMapping("/rate/delete/{id}")
-    public String deleteProduct(@PathVariable Long id) {
+    public String deleteRate(@PathVariable Long id) {
         rateService.deleteRate(id);
         return "redirect:/"; //обновление страницы
     }
+
+
+
+    @GetMapping("/billing")
+    public String billing(@RequestParam(name = "name", required = false) String name, Model model, Principal principal) {
+        model.addAttribute("rates", rateService.listRates(name));
+        model.addAttribute("user", rateService.getUserByPrincipal(principal));
+
+        return "billing";
+    }
+
+
+
+    @GetMapping("/settings")
+    public String settings() {
+        return "settings";
+    }
+    @GetMapping("/personalData")
+    public String personalData() {
+        return "personal_data";
+    }
+
+    @GetMapping("/security")
+    public String security(Model model, Principal principal) {
+        model.addAttribute("user", rateService.getUserByPrincipal(principal));
+        return "security";
+    }
+
+    @GetMapping("/change_security")
+    public String change_security(Model model, Principal principal) {
+        model.addAttribute("user", rateService.getUserByPrincipal(principal));
+        return "change_security";
+    }
+
+    @PostMapping("/security/change")
+    public String func_change_security(Model model, Principal principal, String CVC, String numOfCard) {
+        User user = rateService.getUserByPrincipal(principal);
+        model.addAttribute("user", user);
+        model.addAttribute("CVC", CVC);
+        model.addAttribute("numOfCard", numOfCard);
+
+        /*ДОБАВИТЬ ПАРОЛЬ*/
+
+        if (CVC != "") {
+            userService.changeCVC(user, CVC);
+        }
+
+        if (numOfCard != "") {
+            userService.changeNumOfCard(user, numOfCard);
+        }
+
+        return "redirect:/security";
+    }
+
+
+    @GetMapping("/top_up_balance")
+    public String appSettings(Model model, Principal principal) {
+        User user = rateService.getUserByPrincipal(principal);
+        model.addAttribute("user", user);
+        return "topUpBalance";
+    }
+
 }
