@@ -38,8 +38,9 @@ public class UserController {
     }
 
     final String PHONE_TEMPLATE = "\\+7\\([0-9][0-9][0-9]\\)[0-9][0-9][0-9]-[0-9][0-9]-[0-9][0-9]"/*"+7\\d{10}"*/;
+
     @PostMapping("/registration")
-    public  String createUser (@Valid @ModelAttribute("user") User user, BindingResult bindingResult, Model model) {
+    public String createUser(@Valid @ModelAttribute("user") User user, BindingResult bindingResult, Model model) {
         String phone = user.getPhoneNum();
 
         if (bindingResult.hasFieldErrors("name")) {
@@ -209,7 +210,7 @@ public class UserController {
 
 
     @GetMapping("/changeRate")
-    public String changeRate(@RequestParam(name = "name", required = false) String name,  Model model, Principal principal) {
+    public String changeRate(@RequestParam(name = "name", required = false) String name, Model model, Principal principal) {
         model.addAttribute("rates", rateService.listRates(name));
         model.addAttribute("user", rateService.getUserByPrincipal(principal));
         return "change_rate";
@@ -224,21 +225,58 @@ public class UserController {
     }
 
 
+
     final String NUM_OF_CARD = "[0-9][0-9][0-9][0-9]-[0-9][0-9][0-9][0-9]-[0-9][0-9][0-9][0-9]-[0-9][0-9][0-9][0-9]";
-    final String CVC = "[0-9][0-9][0-9]";
+    final String CVCstatic = "[0-9][0-9][0-9]";
     @PostMapping("/top_up_balance")
-    public String topUpBalance(Integer balance, Principal principal, Model model, String numOfCard) {
+    public String topUpBalance(/*BindingResult bindingResult,*/ Principal principal, Model model, Integer balance, String numOfCard, String CVC) {
         User user = rateService.getUserByPrincipal(principal);
         model.addAttribute("user", user);
         model.addAttribute("balance", balance);
         model.addAttribute("numOfCard", numOfCard);
+        model.addAttribute("CVC", CVC);
+        if (!numOfCard.matches(NUM_OF_CARD)) {
+            if (!CVC.matches(CVCstatic)) {
+                model.addAttribute("errorCVC", "CVC должен быть введён корректно (***)");
+            }
+            model.addAttribute("errorNum", "Номер карты должен быть введён корректно (****-****-****-****)");
+            return "topUpBalance";
+        }
+        if (!CVC.matches(CVCstatic)) {
+            if (!numOfCard.matches(NUM_OF_CARD)) {
+                model.addAttribute("errorNum", "Номер карты должен быть введён корректно (****-****-****-****)");
+            }
+            model.addAttribute("errorCVC", "CVC должен быть введён корректно (***)");
+            return "topUpBalance";
+        }
         Card card = cardService.loadCardByNumOfCard(numOfCard);
+        if (card == null) {
+            model.addAttribute("errorNum", "Номер карты не существует.");
+            return "topUpBalance";
+        }
+        if (balance <= 0) {
+            model.addAttribute("errorBalance", "Заполните поле баланса.");
+            return "topUpBalance";
+        }
+        log.info("Баланс счёта телефона " + user.getPhoneNum() + " равен = " + user.getBalance());
+        if ((user.getBalance() + balance) > 99000) {
+            model.addAttribute("errorBalanceHigh", "Нельзя пополнить баланс мобильного счёта выше 99000 рублей.");
+            return "topUpBalance";
+        }
+
         log.info("Баланс = " + balance + "; Номер карты = " + numOfCard);
-        if (balance < 99000) {
-            log.info("Прохождение транзакции");
-            transactionService.createTransaction(user, card, balance);
-            cardService.updateBalanceCard(card.getId(), ((-1)*balance));
-            userService.topUpBalance(user, balance);
+        log.info("Прохождение транзакции");
+
+        String answerOfTransaction = transactionService.createTransaction(user, numOfCard, CVC, balance);
+        if (answerOfTransaction != "") {
+            model.addAttribute("errorAnswerOfTransaction", answerOfTransaction);
+            return "topUpBalance";
+        }
+        cardService.updateBalanceCard(card.getId(), ((-1) * balance));
+        String answerUserTopUpBalance = userService.topUpBalance(user, balance);
+        if (answerUserTopUpBalance != "") {
+            model.addAttribute("errorAnswerUserTopUpBalance", answerUserTopUpBalance);
+            return "topUpBalance";
         }
         return "redirect:/";
     }

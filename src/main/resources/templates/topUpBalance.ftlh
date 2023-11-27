@@ -16,12 +16,44 @@
 
 <form action="/top_up_balance" method="post">
     Номер карты: <input <#--class="group-child3"--> type="text" name="numOfCard" value="${user.numOfCard}" placeholder="${user.numOfCard}"></input>
+    <#if errorNum??>
+        <script>
+            alert("${errorNum}");
+        </script>
+    </#if>
     <hr>
     CVV/CVC: <input <#--class="group-child3"--> type="text" name="CVC" value="${user.CVC}" placeholder="${user.CVC}"></input>
+    <#if errorCVC??>
+        <script>
+            alert("${errorCVC}");
+        </script>
+    </#if>
     <hr>
-    Сумма: <input type="number" name="balance" <#--placeholder=" ${user.balance}"-->><br><br>
+    Сумма: <input type="number" name="balance" value="0" <#--placeholder=" ${user.balance}"-->> Руб.<br><br>
+    <#if errorBalance??>
+        <script>
+            alert("${errorBalance}");
+        </script>
+    </#if>
+    <#if errorBalanceHigh??>
+        <script>
+            alert("${errorBalanceHigh}");
+        </script>
+    </#if>
     <input type="submit" value="Оплатить"/>
 </form>
+
+<#if errorAnswerOfTransaction??>
+    <script>
+        alert("${errorAnswerOfTransaction}");
+    </script>
+</#if>
+
+<#if answerUserTopUpBalance??>
+    <script>
+        alert("${errorAnswerUserTopUpBalance}");
+    </script>
+</#if>
 
 </body>
 </html>

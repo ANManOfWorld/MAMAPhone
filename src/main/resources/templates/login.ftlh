@@ -17,7 +17,7 @@
             href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap"
     />
 </head>
-<body>
+<body link="#6495ed" vlink="#6495ed" alink="#6495ed">
 
 <div class="rectangle-parent">
     <div class="group-child"></div>

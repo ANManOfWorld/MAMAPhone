@@ -108,11 +108,14 @@ public class UserService implements UserDetailsService {
         } /*ДОПИСАТЬ ОШИБКУ */
     }
 
-    public void topUpBalance(User user, Integer sum) {
+    public String topUpBalance(User user, Integer sum) {
         if (sum > 0) {
             user.setBalance(user.getBalance() + sum);
             userRepository.save(user);
+        } else {
+            return "Баланс не больше 0.";
         }
+        return "";
     }
 
     public void changeCVC(User user, String CVC) {
