@@ -110,7 +110,7 @@ public class UserService implements UserDetailsService {
 
     public void topUpBalance(User user, Integer sum) {
         if (sum > 0) {
-            user.setBalance(sum);
+            user.setBalance(user.getBalance() + sum);
             userRepository.save(user);
         }
     }

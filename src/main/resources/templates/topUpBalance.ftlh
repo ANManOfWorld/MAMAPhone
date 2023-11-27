@@ -15,11 +15,11 @@
 <a href="/">На главную</a>
 
 <form action="/top_up_balance" method="post">
-    Номер карты: <input <#--class="group-child3"--> type="text" name="numOfCard" placeholder="${user.numOfCard}"></input>
+    Номер карты: <input <#--class="group-child3"--> type="text" name="numOfCard" value="${user.numOfCard}" placeholder="${user.numOfCard}"></input>
     <hr>
-    CVV/CVC: <input <#--class="group-child3"--> type="text" name="CVC" placeholder=" ${user.CVC}"></input>
+    CVV/CVC: <input <#--class="group-child3"--> type="text" name="CVC" value="${user.CVC}" placeholder="${user.CVC}"></input>
     <hr>
-    Сумма: <input type="number" name="balance" placeholder=" ${user.balance}"><br><br>
+    Сумма: <input type="number" name="balance" <#--placeholder=" ${user.balance}"-->><br><br>
     <input type="submit" value="Оплатить"/>
 </form>
 

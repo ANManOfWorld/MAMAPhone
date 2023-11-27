@@ -31,6 +31,9 @@ public class CardService {
         if (cardRepository.findById(id) == null) {
             return false;
         } else {
+            if ((balance < 0) && (card.getBalance() < ((-1)*balance))) {
+                return false;
+            }
             card.setBalance(card.getBalance() + balance);
             log.info("2) Баланс на карте: ", card.getBalance());
             cardRepository.save(card);

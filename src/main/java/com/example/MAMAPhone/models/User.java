@@ -19,6 +19,7 @@ import java.util.Set;
 @Table(name = "users")
 //аннотация сгенирует при компиляции необходимый код от LOMBOK
 public class User implements UserDetails {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
@@ -36,18 +37,16 @@ public class User implements UserDetails {
     @NotEmpty(message = "Пароль должен быть введён.") //validator
     private String password;
 
-    @Column(name = "phoneNum")
+    @Column(name = "phoneNum", unique = true)
     @NotEmpty(message = "Телефон должен быть введён.") //validator
     private String phoneNum;
 
 
     // динамические данные
 
-
-
     @Column(name = "balance")
     //@Size(max = 99000.00, message = "Баланс нельзя пополнить больше, чем на 99 тыс. рублей")
-    private Double balance = 0.00;
+    private Integer balance = 0;
 
     @Column(name = "internet")
     //@Value("0.0")
@@ -182,11 +181,11 @@ public class User implements UserDetails {
 
 
 
-    public Double getBalance() {
+    public Integer getBalance() {
         return balance;
     }
 
-    public void setBalance(double balance) {
+    public void setBalance(Integer balance) {
         this.balance = balance;
     }
 

@@ -25,8 +25,9 @@ public class Card {
     private String CVC;
 
     @Column(name = "balance")
-    @Value("0.0")
+    @Value("0")
     private Integer balance = 0;
+
 
 
 

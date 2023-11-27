@@ -42,7 +42,6 @@
             <b class="b">Регистрация</b>
             <input class="group-inner" type="text" name = "phoneNum" placeholder="Номер телефона" style="text-align:center"></input>
             <#if errorNum??>
-            <#--<h3 style = "color: green"> ${errorNum} </h3>-->
                 <script>
                     alert("${errorNum}");
                 </script>
@@ -51,7 +50,6 @@
 
             <input class="group-item" type="text" name="name" placeholder="Имя" style="text-align:center"></input>
             <#if errorName??>
-            <#--<h3 style = "color: green">${errorName}</h3>-->
                 <script>
                     alert("${errorName}");
                 </script>
@@ -59,7 +57,6 @@
 
             <input class="group-child1" type="text" name="lastName" placeholder="Фамилия" style="text-align:center"></input>
             <#if errorName??>
-            <#--<h3 style = "color: green">${errorName}</h3>-->
                 <script>
                     alert("${errorLastName}");
                 </script>
@@ -68,7 +65,6 @@
 
             <input class="rectangle-input" type="text" name="fatherName" placeholder="Отчество" style="text-align:center"></input>
             <#if errorFatherName??>
-            <#--<h3 style = "color: green">${errorName}</h3>-->
                 <script>
                     alert("${errorFatherName}");
                 </script>
@@ -77,7 +73,6 @@
 
             <input class="group-child2" type="password" name="password" placeholder="Пароль" style="text-align:center"></input>
             <#if errorPas??>
-            <#--<h3 style = "color: green"> ${errorPas} </h3>-->
                 <script>
                     alert("${errorPas}");
                 </script>
@@ -86,7 +81,6 @@
 
             <input class="group-child3" type="email" name="email" placeholder="Email" style="text-align:center"></input>
             <#if errorEmail??>
-            <#--<h3 style = "color: green"> ${errorEmail} </h3>-->
                 <script>
                     alert("${errorEmail}");
                 </script>
