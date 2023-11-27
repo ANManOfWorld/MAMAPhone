@@ -11,15 +11,17 @@
 <h1> MAMAPhone </h1>
 <h3 color="darkred">Безопасность.</h3>
 <a href = "/">На главную</a>
-
+<br>
 Пароль:
 *  <#--${user.password}-->
 
+<br>
 Данные карты:
+<hr>
 *  ${user.numOfCard}
-
+<hr>
 *  ${user.CVC}
-
+<hr>
 
 
 </body>
