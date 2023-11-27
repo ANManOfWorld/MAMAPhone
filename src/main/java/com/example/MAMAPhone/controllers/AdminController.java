@@ -27,4 +27,16 @@ public class AdminController {
         userService.userBan(id);
         return "redirect:/admin";
     }
+
+    @PostMapping("/admin/user/edit/moderator/{id}")
+    public String changeRoleModerator(@PathVariable("id") Long id) {
+        userService.moderator(id);
+        return "redirect:/admin";
+    }
+
+    @PostMapping("/admin/user/edit/administrator/{id}")
+    public String changeRoleAdministrator(@PathVariable("id") Long id) {
+        userService.administrator(id);
+        return "redirect:/admin";
+    }
 }

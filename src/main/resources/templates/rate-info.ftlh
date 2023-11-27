@@ -32,5 +32,10 @@
 <br>
 <b>Цена тарифа: </b>${rate.price}
 
+
+<form action="/chooseRate/${rate.id}" method="post">
+    <input type="submit" value="Подключить"/>
+</form>
+
 </body>
 </html>
