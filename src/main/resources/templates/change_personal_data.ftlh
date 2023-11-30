@@ -15,7 +15,7 @@
 <form action="/change_personal_data/change" method="post" th:object="${user}">
     <br>
     <hr>
-    * <input type="text" name="name" placeholder="${user.name}" value="${user.name}">
+    * <input type="text" name="name" placeholder="${user.name}" value="${user.name}" maxlength="12">
     <#if errorValidName??>
         <script>
             alert("${errorValidName}");
@@ -23,7 +23,7 @@
     </#if>
     <hr>
     <hr>
-    * <input type="text" name="lastName" placeholder="${user.lastName}" value="${user.lastName}">
+    * <input type="text" name="lastName" placeholder="${user.lastName}" value="${user.lastName}" maxlength="12">
     <#if errorValidLastName??>
         <script>
             alert("${errorValidLastName}");
@@ -31,7 +31,7 @@
     </#if>
     <hr>
     <hr>
-    * <input type="text" name="fatherName" placeholder="${user.fatherName}" value="${user.fatherName}">
+    * <input type="text" name="fatherName" placeholder="${user.fatherName}" value="${user.fatherName}" maxlength="12">
     <#if errorValidFatherName??>
         <script>
             alert("${errorValidFatherName}");

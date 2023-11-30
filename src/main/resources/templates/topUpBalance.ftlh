@@ -62,7 +62,7 @@
 
 
         <div class="rectangle-div">
-            <b class="b1">${user.name} ${user.lastName}</b>
+            <b class="b1">${user.name}</b>
             <div class="div7">${user.phoneNum}</div>
         </div>
         <img class="user-4-icon" alt="" src="/static/img/topupbalance_public/user-4@2x.png"/>

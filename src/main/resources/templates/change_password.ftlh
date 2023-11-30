@@ -48,7 +48,7 @@
 
 
         <div class="rectangle-div">
-            <b class="b1">${user.name} ${user.lastName}</b>
+            <b class="b1">${user.name}</b>
             <div class="div4">${user.phoneNum}</div>
         </div>
         <img class="user-3-icon" alt="" src="/static/img/change_password_public/user-3@2x.png"/>

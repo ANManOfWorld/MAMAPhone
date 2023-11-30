@@ -55,7 +55,7 @@
 
 
         <div class="rectangle-div"></div>
-        <b class="b2">${user.name} ${user.lastName}</b>
+        <b class="b2">${user.name}</b>
         <div class="div3">${user.phoneNum}</div>
         <img class="user-1-icon" alt="" src="/static/img/main_page_public/user-1@2x.png"/>
 

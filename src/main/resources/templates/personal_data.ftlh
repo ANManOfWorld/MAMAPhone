@@ -41,7 +41,7 @@
 
 
         <div class="rectangle-div">
-            <b class="b1">${user.name} ${user.lastName}</b>
+            <b class="b1">${user.name}</b>
             <div class="div9">${user.phoneNum}</div>
         </div>
 

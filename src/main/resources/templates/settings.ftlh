@@ -42,7 +42,7 @@
         </a>
 
         <div class="rectangle-div">
-            <b class="b3">${user.name} ${user.lastName}</b>
+            <b class="b3">${user.name}</b>
             <div class="div">${user.phoneNum}</div>
         </div>
         <img class="user-3-icon" alt="" src="/static/img/settings_public/user-3@2x.png"/>
