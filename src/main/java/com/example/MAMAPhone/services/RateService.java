@@ -28,6 +28,8 @@ public class RateService {
     private final RateRepository rateRepository;
     private final UserRepository userRepository;
 
+    public List<Rate> takeAll() {return rateRepository.findAll();}
+
     public List<Rate> listRates(String name) {
         if (name != null) return rateRepository.searchByName(name);
         return rateRepository.findAll();

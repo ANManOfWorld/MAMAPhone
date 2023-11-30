@@ -209,12 +209,12 @@ public class UserController {
     }
 
 
-    @GetMapping("/changeRate")
+    /*@GetMapping("/changeRate")
     public String changeRate(@RequestParam(name = "name", required = false) String name, Model model, Principal principal) {
         model.addAttribute("rates", rateService.listRates(name));
         model.addAttribute("user", rateService.getUserByPrincipal(principal));
         return "change_rate";
-    }
+    }*/
 
     @PostMapping("/chooseRate/{id}")
     public String chooseRate(@PathVariable Long id, @ModelAttribute("rate") Rate rate, Principal principal, Model model) {

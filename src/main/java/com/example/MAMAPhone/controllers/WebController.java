@@ -17,7 +17,9 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.security.Principal;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @Slf4j
 @Controller //связь между компонентами и выполнение (обработка запросов) действий согласно переданных запросов
@@ -44,13 +46,101 @@ public class WebController { //прием HTTP запросов
         }
     }
 
-    @GetMapping("/rate/{id}")
+
+    private Integer index = 0;
+    private Integer max = 0;
+    private Boolean flag = false;
+    List<Rate> list;
+    @GetMapping("/changeRate")
+    public String rateInfo(/*@PathVariable Long id,*/ Model model/*, Boolean next, Boolean pre*/) {
+        list = new ArrayList<Rate>(rateService.takeAll());
+        max = list.size();
+        /*log.info("Вывод всех тарифов: " + list.toString());*/
+        /*model.addAttribute("next", next);
+        model.addAttribute("pre", pre);*/
+
+        Rate rate = list.get(index);
+        model.addAttribute("rate", rate);
+        flag = true;
+        return "change_rate";
+
+        /*while (flag) {
+            if ((next == false) && (pre == false)) {
+                index = 0;
+                flag = false;
+                break;
+            }
+            if (next == true) {
+                index++;
+                rate = list.get(index);
+                model.addAttribute("rate", rate);
+                return "change_rate";
+            }
+            if (pre == true) {
+                index--;
+                rate = list.get(index);
+                model.addAttribute("rate", rate);
+                return "change_rate";
+            }
+        }*/
+
+       /* Rate rate = rateService.getRateById(id);
+        model.addAttribute("rate", rate);
+
+        return "redirect:/main-page";*/
+    }
+    @PostMapping("/changeRate/next")
+    public String rateInfoNext(/*@PathVariable Long id,*/ Model model, String next/*, String pre*/) {
+        log.info("СЧЁТ!: " + index);
+        model.addAttribute("next", next);
+
+        Rate rate;
+        if (flag) {
+            if ((next == "")) {
+                index = 0;
+                flag = false;
+            }
+            if ((next != "")) {
+                index = (index + 1 + max) % max;
+                rate = list.get(index);
+                model.addAttribute("rate", rate);
+                return "change_rate";
+            }
+        }
+        return "change_rate";
+    }
+    @PostMapping("/changeRate/pre")
+    public String rateInfoPre(/*@PathVariable Long id,*/ Model model/*, String next*/, String pre) {
+        log.info("СЧЁТ!: " + index);
+        model.addAttribute("pre", pre);
+
+        Rate rate;
+
+        if (flag) {
+            if ((pre == "")) {
+                index = 0;
+                flag = false;
+            }
+            if ((pre != "")){
+                index = (index - 1 + max) % max;
+                rate = list.get(index);
+                model.addAttribute("rate", rate);
+                return "change_rate";
+            }
+        }
+        return "change_rate";
+    }
+
+
+
+    /*@GetMapping("/rate/{id}")
     public String rateInfo(@PathVariable Long id, Model model) {
         Rate rate = rateService.getRateById(id);
         model.addAttribute("rate", rate);
         model.addAttribute("images", rate.getImages());  // Фотография функция по передаче её в "Подробнее"
         return "rate-info";
     }
+    */
 
     @GetMapping("/rate/admin/{id}")
     public String rateInfoAdmin(@PathVariable Long id, Model model) {
