@@ -1,0 +1,19 @@
+body {
+    margin: 0;
+    line-height: normal;
+}
+
+:root {
+    /* fonts */
+    --font-inter: Inter;
+
+    /* font sizes */
+    --font-size-6xl: 25px;
+
+    /* Colors */
+    --color-white: #fff;
+    --color-gray: #212121;
+
+    /* Border radiuses */
+    --br-mid: 17px;
+}

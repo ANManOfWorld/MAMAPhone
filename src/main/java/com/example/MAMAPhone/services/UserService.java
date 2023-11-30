@@ -98,14 +98,17 @@ public class UserService implements UserDetailsService {
 
 
 
-    public void chooseRate(User user, Rate rate) {
+    public String chooseRate(User user, Rate rate) {
         if (user.getBalance() >= rate.getPrice()) {
             user.chooseRate(rate);
             user.setInternet(rate.getCountOfTrafficInternet());
             user.setMinutes(rate.getCountOfMinutes());
             user.setBalance(user.getBalance() - rate.getPrice());
             userRepository.save(user);
-        } /*ДОПИСАТЬ ОШИБКУ */
+            return "Тариф успешно изменён";
+        } else {
+            return "Недостаточно средств на балансе для изменения тарифа.";
+        }
     }
 
     public String topUpBalance(User user, Integer sum) {
@@ -127,6 +130,153 @@ public class UserService implements UserDetailsService {
         user.setNumOfCard(numOfCard);
         userRepository.save(user);
     }
+
+
+    public String changePassword(User user, String oldPassword, String newPassword) {
+        log.info("(!из функции с encoder) Новый пароль: " + newPassword + "; Старый пароль: " + oldPassword);
+        if (!passwordEncoder.matches(oldPassword, user.getPassword())) {
+            return "Старый пароль введён неверно!";
+        }
+        log.info("Был хеш: " + user.getPassword());
+        user.setPassword(passwordEncoder.encode(newPassword));
+        userRepository.save(user);
+        log.info("Стал хеш: " + user.getPassword());
+        return "Пароль успешно изменён!";
+    }
+
+
+
+
+    /*ИЗМЕНЕНИЕ ПЕРСОНАЛЬНЫХ ДАННЫХ*/
+
+    public String changeName (User user, String name) {
+        log.info("Пришедшее имя: " + name);
+        if (name == "") {
+            return "Имя не должно быть пустым";
+        }
+        if (!((name.length() <= 12) && (name.length() >= 2))) {
+            return "Имя должно быть не менее 2 символов и не более 12";
+        }
+
+        if (!user.getName().equals(name)) {
+            user.setName(name);
+            userRepository.save(user);
+        } else {
+            log.info("Пришедшее имя: " + name + " == (уже установленному) " + user.getName());
+        }
+        return "";
+    }
+
+    public String changeLastName (User user, String lastName) {
+        log.info("Пришедшая фамилия: " + lastName);
+        if (lastName.equals("")) {
+            return "Фамилия не должна быть пустой";
+        }
+        if (!((lastName.length() <= 12) && (lastName.length() >= 2))) {
+            return "Фамилия должна быть не менее 2 символов и не более 12";
+        }
+
+        if (!user.getLastName().equals(lastName)) {
+
+            user.setLastName(lastName);
+            userRepository.save(user);
+        } else {
+            log.info("Пришедшая фамилия: " + lastName + " == (уже установленной) " + user.getLastName());
+        }
+        return "";
+    }
+
+    public String changeFartherName (User user, String fartherName) {
+        log.info("Пришедшее отчество: " + fartherName);
+        if (fartherName.equals("")) {
+            return "";
+        }
+
+        if (!((fartherName.length() <= 12) && (fartherName.length() >= 2))) {
+            return "Отчество должно быть не менее 2 символов и не более 12";
+        }
+
+        if (!user.getFatherName().equals(fartherName)) {
+
+            user.setFatherName(fartherName);
+            userRepository.save(user);
+        } else {
+            log.info("Пришедшее отчёство: " + fartherName + " == (уже установленному) " + user.getFatherName());
+        }
+        return "";
+    }
+
+    /*ДОПИСАТЬ ДАТУ!!!*/
+
+    /*String EMAIL_TEMPLATE = "^[a-zA-Z0-9_!#$%&'*+/=?`{|}~^.-]+@[a-zA-Z0-9.-]+$";*/
+    String EMAIL_TEMPLATE = "[a-zA-Z0-9\\+\\.\\_\\%\\-\\+]{1,256}" +
+            "\\@" +
+            "[a-zA-Z0-9][a-zA-Z0-9\\-]{0,64}" +
+            "(" +
+            "\\." +
+            "[a-zA-Z0-9][a-zA-Z0-9\\-]{0,25}" +
+            ")+";
+    public String changeEmail (User user, String email) {
+        log.info("Пришедший email: " + email);
+        if (email.equals("")) {
+            return "Email не должен быть пустым";
+        }
+        if (!email.matches(EMAIL_TEMPLATE)) {
+            return "Введите email правильно";
+        }
+
+
+        if (!user.getEmail().equals(email)) {
+            if (userRepository.findByEmail(email) != null) {
+                return "Эта эл. почта занята. Выберите другую.";
+            }
+            user.setEmail(email);
+            userRepository.save(user);
+            return "good";
+        } else {
+            log.info("Пришедший email: " + email + " == (уже установленному) " + user.getEmail());
+            return "";
+        }
+        //return "";
+    }
+
+
+
+   /* public void changePersonalData(User user, String name, String lastName, String fatherName, Date date) {
+        log.info("Данные: Имя = " + name + " ; Фамилия = " + lastName + " ; Отчество = " + " ; Дата = " + date + " ; Email = " + user.getEmail());
+
+        log.info("Пришедшее имя: " + name);
+        if (!user.getName().equals(name)) {
+
+            user.setName(name);
+            //userRepository.save(user);
+        } else {
+            log.info("Пришедшее имя: " + name + " == (уже установленному)" + user.getName());
+        }
+
+        log.info("Пришедшая фамилия: " + lastName);
+        if (!user.getLastName().equals(lastName)) {
+
+            user.setLastName(lastName);
+            //userRepository.save(user);
+        } else {
+            log.info("Пришедшая фамилия: " + lastName + " == (уже установленной)" + user.getLastName());
+        }
+
+        log.info("Пришедшее отчество: " + fatherName);
+        if (!user.getFatherName().equals(fatherName)) {
+
+            user.setFatherName(fatherName);
+            //userRepository.save(user);
+        } else {
+            log.info("Пришедшее отчёство: " + fatherName + " == (уже установленному)" + user.getFatherName());
+        }
+
+        userRepository.save(user);
+    }
+*/
+            /*ИЗМЕНЕНИЕ ПЕРСОНАЛЬНЫХ ДАННЫХ*/
+
 
 
 }

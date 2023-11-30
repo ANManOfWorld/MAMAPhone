@@ -4,6 +4,7 @@ import com.example.MAMAPhone.models.Rate;
 import com.example.MAMAPhone.models.User;
 import com.example.MAMAPhone.services.RateService;
 import com.example.MAMAPhone.services.UserService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -16,7 +17,9 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.security.Principal;
+import java.util.Date;
 
+@Slf4j
 @Controller //связь между компонентами и выполнение (обработка запросов) действий согласно переданных запросов
 public class WebController { //прием HTTP запросов
     private final RateService rateService;
@@ -89,15 +92,98 @@ public class WebController { //прием HTTP запросов
     }
 
 
-
+/* ВКЛАДКА НАСТРОЙКИ */
     @GetMapping("/settings")
-    public String settings() {
+    public String settings(Model model, Principal principal) {
+        model.addAttribute("user", rateService.getUserByPrincipal(principal));
         return "settings";
     }
+
     @GetMapping("/personalData")
-    public String personalData() {
+    public String personalData(Model model, Principal principal) {
+        model.addAttribute("user", rateService.getUserByPrincipal(principal));
         return "personal_data";
     }
+
+    @GetMapping("/change_personal_data")
+    public String change_personal_data(Model model, Principal principal) {
+        model.addAttribute("user", rateService.getUserByPrincipal(principal));
+        return "change_personal_data";
+    }
+
+    @PostMapping("/change_personal_data/change")
+    public String func_change_personal_data(Model model, Principal principal, String name, String lastName, String fatherName, Date date, String email) {
+        User user = rateService.getUserByPrincipal(principal);
+        model.addAttribute("user", user);
+
+        model.addAttribute("name", name);
+        model.addAttribute("lastName", lastName);
+        model.addAttribute("fatherName", fatherName);
+        model.addAttribute("date", date);
+        model.addAttribute("email", email);
+
+
+        /*log.info("Проверка почты на уникальность и не повторяемость.");
+        if (!user.getEmail().equals(email) ) {
+            log.info("Первая проверка: " + user.getEmail().equals(email));
+            if (userService.loadUserByUsername(email) != null) {
+                log.info("Вторая проверка: " + userService.loadUserByUsername(email).toString());
+                model.addAttribute("errorMessage", "Email: " + user.getEmail() + " уже используется. Выберите другую эл. почту");
+                return "change_personal_data";
+            }
+        }*/
+       /* if ((userService.loadUserByUsername(email) != null) && (user.getEmail() == email)) {
+            model.addAttribute("errorMessage", "Email: " + user.getEmail() + " уже используется. Выберите другую эл. почту");
+            return "change_personal_data";
+        }*/
+
+        log.info("Передача данных в метод для дальнейшего изменения параметров пользователя.");
+        String errorValidName = userService.changeName(user, name);
+        String errorValidLastName =  userService.changeLastName(user, lastName);
+        String errorValidFatherName =  userService.changeFartherName(user, fatherName);
+
+        String errorValidEmail = userService.changeEmail(user, email);
+
+        log.info("errorValidName: " + errorValidName);
+        log.info("errorValidLastName: " + errorValidLastName);
+        log.info("errorValidFatherName: " + errorValidFatherName);
+        log.info("errorValidEmail: " + errorValidEmail);
+
+        if (!errorValidName.equals("")) {
+            model.addAttribute("errorValidName", errorValidName);
+        }
+
+        if (!errorValidLastName.equals("")) {
+            model.addAttribute("errorValidLastName", errorValidLastName);
+        }
+
+        if (!errorValidFatherName.equals("")) {
+            model.addAttribute("errorValidFatherName", errorValidFatherName);
+        }
+
+        if (!errorValidEmail.equals("")) {
+            if (errorValidEmail.equals("good")) {
+                String good = "good";
+                model.addAttribute("good", good);
+            } else {
+                model.addAttribute("errorValidEmail", errorValidEmail);
+            }
+        }
+
+        if ((!errorValidName.equals("")) || (!errorValidLastName.equals("")) || (!errorValidFatherName.equals("")) || (!errorValidEmail.equals(""))) {
+            return "change_personal_data";
+        }
+
+        //userService.changePersonalData(user, name, lastName, fatherName, date);
+
+
+
+
+        //return "redirect:/personal_data";
+        return "personal_data";
+    }
+
+
 
     @GetMapping("/security")
     public String security(Model model, Principal principal) {
@@ -111,6 +197,8 @@ public class WebController { //прием HTTP запросов
         return "change_security";
     }
 
+    final String NUM_OF_CARD = "[0-9][0-9][0-9][0-9]-[0-9][0-9][0-9][0-9]-[0-9][0-9][0-9][0-9]-[0-9][0-9][0-9][0-9]";
+    final String CVCstatic = "[0-9][0-9][0-9]";
     @PostMapping("/security/change")
     public String func_change_security(Model model, Principal principal, String CVC, String numOfCard) {
         User user = rateService.getUserByPrincipal(principal);
@@ -118,18 +206,35 @@ public class WebController { //прием HTTP запросов
         model.addAttribute("CVC", CVC);
         model.addAttribute("numOfCard", numOfCard);
 
-        /*ДОБАВИТЬ ПАРОЛЬ*/
-
-        if (CVC != "") {
-            userService.changeCVC(user, CVC);
+        if (!numOfCard.matches(NUM_OF_CARD)) {
+            if (!CVC.matches(CVCstatic)) {
+                model.addAttribute("errorCVC", "CVC должен быть введён корректно (***)");
+            }
+            model.addAttribute("errorNum", "Номер карты должен быть введён корректно (****-****-****-****)");
+            return "change_security";
         }
-
-        if (numOfCard != "") {
-            userService.changeNumOfCard(user, numOfCard);
+        if (!CVC.matches(CVCstatic)) {
+            if (!numOfCard.matches(NUM_OF_CARD)) {
+                model.addAttribute("errorNum", "Номер карты должен быть введён корректно (****-****-****-****)");
+            }
+            model.addAttribute("errorCVC", "CVC должен быть введён корректно (***)");
+            return "change_security";
         }
-
+        userService.changeCVC(user, CVC);
+        userService.changeNumOfCard(user, numOfCard);
         return "redirect:/security";
     }
+
+    @PostMapping("/security/delete")
+    public String delete_change_security(Model model, Principal principal) {
+        User user = rateService.getUserByPrincipal(principal);
+        userService.changeCVC(user, "XXX");
+        userService.changeNumOfCard(user, "XXXX-XXXX-XXXX-XXXX");
+        return "redirect:/security";
+    }
+    /* ВКЛАДКА НАСТРОЙКИ */
+
+
 
 
     @GetMapping("/top_up_balance")

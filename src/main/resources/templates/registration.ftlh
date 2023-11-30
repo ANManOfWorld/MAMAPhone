@@ -86,11 +86,11 @@
                 </script>
             </#if>
 
-            <#if errorMessage??>
+           <#-- <#if errorMessage??>
                 <script>
                     alert("${errorMessage}");
                 </script>
-            </#if>
+            </#if>-->
 
             <button class="rectangle-button">
                 <div class="div5">Зарегистрироваться</div>

@@ -217,9 +217,9 @@ public class UserController {
     }
 
     @PostMapping("/chooseRate/{id}")
-    public String chooseRate(@PathVariable Long id, @ModelAttribute("rate") Rate rate, Principal principal) {
+    public String chooseRate(@PathVariable Long id, @ModelAttribute("rate") Rate rate, Principal principal, Model model) {
         User user = rateService.getUserByPrincipal(principal);
-        userService.chooseRate(user, rateService.getRateById(id));
+        String answerChooseRate = userService.chooseRate(user, rateService.getRateById(id));
         //return "redirect:/rate-info";
         return "redirect:/";
     }
@@ -279,6 +279,23 @@ public class UserController {
             return "topUpBalance";
         }
         return "redirect:/";
+    }
+
+
+    @GetMapping("/change_password")
+    public String changePassword(Model model, Principal principal) {
+        model.addAttribute("user", rateService.getUserByPrincipal(principal));
+        return "change_password";
+    }
+
+
+    @PostMapping("/change_password")
+    public String funcChangePassword(@RequestParam String newPassword, @RequestParam String oldPassword, Model model, Principal principal) {
+        model.addAttribute("user", rateService.getUserByPrincipal(principal));
+        log.info("Новый пароль: " + newPassword + "; Старый пароль: " + oldPassword);
+        String answerOfPassword = userService.changePassword(rateService.getUserByPrincipal(principal), oldPassword, newPassword);
+        model.addAttribute("errorAnswerOfPassword", answerOfPassword);
+        return "/change_password";
     }
 
 }
