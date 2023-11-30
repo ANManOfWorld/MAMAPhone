@@ -1,3 +1,16 @@
+.group-child-custom {
+    cursor: pointer;
+    border: 0;
+    padding: 0;
+    background-color: #04b3c2 /*#ff7465*/;
+    position: absolute;
+    top: 105.5%/*558px*/;
+    left: 23%/*490px*/;
+    border-radius: var(--br-24xl);
+    box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+    width: 300.7px;
+    height: 43px;
+}
 .custom{
     position: absolute;
     left: 5%;

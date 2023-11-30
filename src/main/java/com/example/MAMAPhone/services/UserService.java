@@ -228,6 +228,7 @@ public class UserService implements UserDetailsService {
 
         if (!user.getEmail().equals(email)) {
             if (userRepository.findByEmail(email) != null) {
+                log.info("Эл. почта " + email + " занята!");
                 return "Эта эл. почта занята. Выберите другую.";
             }
             user.setEmail(email);

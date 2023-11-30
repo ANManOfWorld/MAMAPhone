@@ -58,8 +58,9 @@
   color: var(--color-darkgray-100);
 }
 .div1 {
+  text-align: center;
   top: 82px;
-  left: 757.1px;
+  left: 735px/*757.1px*/;
   display: inline-block;
   width: 64.5px;
 }
@@ -204,6 +205,9 @@
 }
 .div7,
 .div8 {
+  width: 125px;
+  height: 31px;
+  text-align: center;
   position: relative;
   top: 570px;
   left: 860px;
