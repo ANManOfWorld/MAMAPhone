@@ -9,10 +9,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
@@ -36,8 +33,30 @@ public class WebController { //прием HTTP запросов
     @GetMapping("/")
     public String billing(/*@RequestParam(name = "name", required = false) String name,*/ Model model, Principal principal) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        User user = rateService.getUserByPrincipal(principal);
        // model.addAttribute("rates", rateService.listRates(name));
-        model.addAttribute("user", rateService.getUserByPrincipal(principal));
+        model.addAttribute("user", user);
+
+        Double minutesInPercent = 0.0;
+        String minutes = "0%";
+        Double internetOfPercent = 0.0;
+        String internet = "0%";
+        if (user.getCurrentRate() != null) {
+            if (user.getCurrentRate().getCountOfMinutes() > 0) {
+                //log.info("user.getMinutes() = " + user.getMinutes() + " ; user.getCurrentRate() = " + user.getCurrentRate().getCountOfMinutes());
+                minutesInPercent = ((double) user.getMinutes() / (double) user.getCurrentRate().getCountOfMinutes()) * 100;
+                minutes = minutesInPercent.toString() + "%";
+            }
+            if (user.getCurrentRate().getCountOfTrafficInternet() > 0) {
+                internetOfPercent = (user.getInternet() / user.getCurrentRate().getCountOfTrafficInternet()) * 100;
+                internet = internetOfPercent.toString() + "%";
+            }
+        }
+        //log.info("!!!!!!!!!!!!!MINUTES = " + minutes);
+        //log.info("!!!!!!!!!!!!!INTERNET = " + internet);
+        model.addAttribute("minutesInPercent", minutes);
+        model.addAttribute("internetOfPercent", internet);
+
         if (principal == null) {
             return "main_page_unauthorized";
         } else {
@@ -333,5 +352,32 @@ public class WebController { //прием HTTP запросов
         model.addAttribute("user", user);
         return "topUpBalance";
     }
+
+
+
+    @GetMapping("/decrement")
+    public String getTimeManager(Model model) {
+        model.addAttribute("users", userService.list());
+        return "decrement";
+    }
+
+    @PostMapping("/decrement/create/{id}")
+    public String changeTimeManager(@PathVariable("id") Long id, @ModelAttribute("user") User user, Model model, Double internet, Integer minutes) {
+        model.addAttribute("internet", internet);
+        model.addAttribute("minutes", minutes);
+        if (internet >= 0) {
+            if (user.getInternet() >= internet) {
+                userService.changeInternet(id, user.getInternet());
+            }
+        }
+
+        if (minutes >= 0) {
+            if (user.getMinutes() >= minutes) {
+                userService.changeMinutes(id, user.getMinutes());
+            }
+        }
+        return "redirect:/decrement";
+    }
+
 
 }

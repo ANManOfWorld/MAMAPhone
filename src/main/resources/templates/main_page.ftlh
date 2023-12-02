@@ -42,48 +42,52 @@
                 <divf class="div2">Пополнить</divf>
             </a>
         </button>
-        <b class="b1">Баланс</b>
-        <div class="div1">${user.balance}₽</div>
-        <div class="dark-ring1"></div>
-        <div class="blue-ring">
-            <div class="div10">на 9 дней</div>
+
+        <div id="block1">
+            <b class="b1">Баланс</b>
+            <div id="block" class="div1">${user.balance}₽</div>
+            <div class="dark-ring1"></div>
+            <div class="blue-ring" style="--value:${internetOfPercent}">
+                <div class="div10"></div>
+            </div>
+            <div class="dark-ring2"></div> <#--ДОПИСАТЬ-->
+            <div class="green-ring" style="--value:${minutesInPercent}">
+                <div class="div9"></div> <#--ДОПИСАТЬ-->
+            </div>
+
+
+            <div class="rectangle-div"></div>
+            <b class="b2">${user.name}</b>
+            <div class="div3">${user.phoneNum}</div>
+            <img class="user-1-icon" alt="" src="/static/img/main_page_public/user-1@2x.png"/>
+
+            <a href="/callsFinance">
+                <button class="rectangle-button">
+                    <b class="b3">Звонки и финансы</b>
+                    <div class="div4">Детализированные отчёты</div>
+                    <img class="telephone-call-1-icon" alt=""
+                         src="/static/img/main_page_public/telephonecall-1@2x.png"/>
+                </button>
+            </a>
+
+            <a href="/changeRate">
+                <button class="group-child4">
+                    <b class="b4">Сменить тариф</b>
+                    <div class="div5">Настройте связь под себя</div>
+                    <img class="exchange-1-icon" alt="" src="/static/img/main_page_public/exchange-1@2x.png"/>
+                </button>
+            </a>
+
+            <a href="/settings">
+                <button class="group-child5">
+                    <b class="b5">Настройки</b>
+                    <div class="div6">Управление вашим профилем</div>
+                    <img class="cogwheel-1-icon" alt="" src="/static/img/main_page_public/cogwheel-1@2x.png"/>
+                </button>
+            </a>
+            <div class="div7">${user.minutes} мин</div>
+            <div class="div8">${user.internet} Гб</div>
         </div>
-        <div class="dark-ring2"></div> <#--ДОПИСАТЬ-->
-        <div class="green-ring">
-            <div class="div9">на 9 дней</div> <#--ДОПИСАТЬ-->
-        </div>
-
-
-        <div class="rectangle-div"></div>
-        <b class="b2">${user.name}</b>
-        <div class="div3">${user.phoneNum}</div>
-        <img class="user-1-icon" alt="" src="/static/img/main_page_public/user-1@2x.png"/>
-
-        <a href="/callsFinance">
-            <button class="rectangle-button">
-                <b class="b3">Звонки и финансы</b>
-                <div class="div4">Детализированные отчёты</div>
-                <img class="telephone-call-1-icon" alt="" src="/static/img/main_page_public/telephonecall-1@2x.png"/>
-            </button>
-        </a>
-
-        <a href="/changeRate">
-            <button class="group-child4">
-                <b class="b4">Сменить тариф</b>
-                <div class="div5">Настройте связь под себя</div>
-                <img class="exchange-1-icon" alt="" src="/static/img/main_page_public/exchange-1@2x.png"/>
-            </button>
-        </a>
-
-        <a href="/settings">
-            <button class="group-child5">
-                <b class="b5">Настройки</b>
-                <div class="div6">Управление вашим профилем</div>
-                <img class="cogwheel-1-icon" alt="" src="/static/img/main_page_public/cogwheel-1@2x.png"/>
-            </button>
-        </a>
-        <div class="div7">${user.minutes} мин</div>
-        <div class="div8">${user.internet} Гб</div>
     </div>
 
 
@@ -103,7 +107,90 @@
         </a>
     </#if>
 
-    <button class="chat-1"></button>
+
+    <button id="myButton" class="chat-1"></button>
+
+
+    <script>
+
+        const callback = () => {
+            alert("Наша эл. почта для связи: maximumega@yandex.ru");
+        };
+        const button = document.querySelector('#myButton');
+        button.addEventListener('click', callback);
+
+
+        (async function () {
+
+            var selector = '#block'; // Селектор блока, который надо обновлять
+
+            while (true) {
+
+                await new Promise(function (s) {
+                    setTimeout(s, 1 * 1000);
+                }); // Каждые 30 сек.
+
+                try {
+                    var html = await (await fetch(location.href)).text();
+                    var newdoc = new DOMParser().parseFromString(html, 'text/html');
+                    document.querySelector(selector).outerHTML = newdoc.querySelector(selector).outerHTML;
+                    console.log('Элемент ' + selector + ' был успешно обновлен');
+                } catch (err) {
+                    console.error('При обновлении элемента ' + selector + ' произошла ошибка:', err);
+                }
+
+            }
+
+        })();
+
+        (async function () {
+
+            var selector = '#block1'; // Селектор блока, который надо обновлять
+
+            while (true) {
+
+                await new Promise(function (s) {
+                    setTimeout(s, 1 * 1000);
+                }); // Каждые 30 сек.
+
+                try {
+                    var html = await (await fetch(location.href)).text();
+                    var newdoc = new DOMParser().parseFromString(html, 'text/html');
+                    document.querySelector(selector).outerHTML = newdoc.querySelector(selector).outerHTML;
+                    console.log('Элемент ' + selector + ' был успешно обновлен');
+                } catch (err) {
+                    console.error('При обновлении элемента ' + selector + ' произошла ошибка:', err);
+                }
+
+            }
+
+        })();
+
+        (async function () {
+
+            var selector = '#block2'; // Селектор блока, который надо обновлять
+
+            while (true) {
+
+                await new Promise(function (s) {
+                    setTimeout(s, 1 * 1000);
+                }); // Каждые 30 сек.
+
+                try {
+                    var html = await (await fetch(location.href)).text();
+                    var newdoc = new DOMParser().parseFromString(html, 'text/html');
+                    document.querySelector(selector).outerHTML = newdoc.querySelector(selector).outerHTML;
+                    console.log('Элемент ' + selector + ' был успешно обновлен');
+                } catch (err) {
+                    console.error('При обновлении элемента ' + selector + ' произошла ошибка:', err);
+                }
+
+            }
+
+        })();
+
+
+    </script>
 </div>
 
 

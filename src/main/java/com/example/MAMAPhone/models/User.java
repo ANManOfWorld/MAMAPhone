@@ -9,10 +9,7 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
 import java.time.LocalDateTime;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 
 @Entity // класс является сущностью и будет сохраняться в БД
@@ -29,6 +26,21 @@ public class User implements UserDetails {
     @NotEmpty(message = "Email должен быть заполнен.") //validator
     @Email(message = "Email должен быть валидным.", regexp = "^[a-zA-Z0-9_!#$%&'*+/=?`{|}~^.-]+@[a-zA-Z0-9.-]+$")
     private String email;
+
+
+    @Column(name = "dateConnect")
+    private Calendar calendar;
+
+
+
+    @Column(name = "dateOfPayment")
+    private Calendar dateOfPayment;
+
+
+    @Column(name = "sumOfDept")
+    private Integer sumOfDept = 0;
+
+
 
     @Column(name = "active")
     private boolean active;
@@ -160,6 +172,33 @@ public class User implements UserDetails {
 
 
     //отимплементированные методы
+    public Calendar getDateOfPayment() {
+        return dateOfPayment;
+    }
+
+    public void setDateOfPayment(Calendar dateOfPayment) {
+        this.dateOfPayment = dateOfPayment;
+    }
+
+    public Integer getSumOfDept() {
+        return sumOfDept;
+    }
+
+    public void setSumOfDept(Integer sumOfDept) {
+        this.sumOfDept = sumOfDept;
+    }
+
+    public Calendar getCalendar() {
+        return calendar;
+    }
+
+    public void setCalendar(Calendar calendar) {
+        this.calendar = calendar;
+    }
+
+
+
+
 
     public String getNumOfCard() {
         return numOfCard;

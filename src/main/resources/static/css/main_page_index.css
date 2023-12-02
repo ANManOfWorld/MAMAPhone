@@ -64,9 +64,13 @@
   display: inline-block;
   width: 64.5px;
 }
-.dark-ring1,
+/*.dark-ring1,
 .dark-ring2 {
   border: 1.5em solid var(--color-darkgray-200);
+}*/
+.dark-ring1,
+.dark-ring2 {
+  background-color: var(--color-darkgray-200);
 }
 .dark-ring2 {
   top: 390px;
@@ -81,16 +85,18 @@
   position: absolute;
   left: 823.6px;
   border-radius: 50%;
-  width: 100px;
-  height: 100px;
+  width: 175px;
+  height: 175px;
 }
 .green-ring {
   top: 390px;
-  border: 1.5em solid var(--color-mediumspringgreen);
+  --value: 100%;
+  background: conic-gradient(var(--color-mediumspringgreen) var(--value), transparent 0);
 }
 .blue-ring {
   top: 171px;
-  border: 1.5em solid #438bf9;
+  --value: 100%;
+  background: conic-gradient(#438bf9 var(--value), transparent 0);
 }
 .div2 {
   position: absolute;
@@ -289,12 +295,24 @@
 .div9 {
   position: absolute;
   font-size: var(--font-size-mini);
+  background-color: black;
+  display: inline-block;
+  border-radius: 50%;
+  width: 50%;
+  height: 50%;
+  top: 25%;
+  left: 25%;
+}
+/*.div10,
+.div9 {
+  position: absolute;
+  font-size: var(--font-size-mini);
   color: var(--color-darkgray-100);
   display: inline-block;
   width: 70.4px;
   top: 30%;
   left: 30%;
-}
+}*/
 .parent {
   position: absolute;
   width: 100%;

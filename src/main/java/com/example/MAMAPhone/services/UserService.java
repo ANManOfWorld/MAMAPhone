@@ -12,6 +12,8 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 import java.util.List;
 
 @Service
@@ -104,7 +106,17 @@ public class UserService implements UserDetailsService {
             user.setInternet(rate.getCountOfTrafficInternet());
             user.setMinutes(rate.getCountOfMinutes());
             user.setBalance(user.getBalance() - rate.getPrice());
+
+
+            user.setCalendar(new GregorianCalendar());               //привязка даты подключения тарифа
             userRepository.save(user);
+            log.info("Дата когда подключили = " + user.getCalendar().getTime());
+            Calendar payment = new GregorianCalendar();
+            //payment.add(Calendar.SECOND,5);
+            log.info("Дата оплаты = " + payment.getTime());
+            user.setDateOfPayment(payment);
+            userRepository.save(user);
+            log.info("ПРОВЕРКА PAYMENT!!!!! = " + user.getDateOfPayment().getTime());
             return "Тариф успешно изменён";
         } else {
             return "Недостаточно средств на балансе для изменения тарифа.";
@@ -239,6 +251,22 @@ public class UserService implements UserDetailsService {
             return "";
         }
         //return "";
+    }
+
+    public void changeInternet(Long id, Double internet) {
+        User user = userRepository.findById(id).orElse(null);
+        if ((user.getInternet() >= internet) || (internet <= 0)) {
+            user.setInternet(user.getInternet() - internet);
+            userRepository.save(user);
+        }
+    }
+
+    public void changeMinutes(Long id, Integer minutes) {
+        User user = userRepository.findById(id).orElse(null);
+        if ((user.getMinutes() >= minutes) || (minutes <= 0)) {
+            user.setMinutes(user.getMinutes() - minutes);
+            userRepository.save(user);
+        }
     }
 
 
