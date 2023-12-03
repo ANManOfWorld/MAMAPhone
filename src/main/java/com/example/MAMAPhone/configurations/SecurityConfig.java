@@ -30,7 +30,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 .antMatchers("/", "/registration", "/static/**" /*, "/images/**"*/)
                 .permitAll()
-                .antMatchers( "/admin/**", "/user/**", /*"/rate/create", "/rate/delete/**",*/ "/billing").hasRole("ADMIN")
+                .antMatchers( "/admin/**", "/user/**", "/rate/create", "/rate/delete/**", "/billing").hasRole("ADMIN")
                 .antMatchers( "/rate/create", "/rate/delete/**", "/billing").hasRole("MODERATOR") // УДАЛИТЬ
                 .anyRequest().authenticated()
                 .and()

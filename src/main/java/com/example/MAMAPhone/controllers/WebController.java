@@ -14,8 +14,8 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.security.Principal;
+import java.text.ParseException;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 @Slf4j
@@ -221,15 +221,17 @@ public class WebController { //прием HTTP запросов
     }
 
     @PostMapping("/change_personal_data/change")
-    public String func_change_personal_data(Model model, Principal principal, String name, String lastName, String fatherName, Date date, String email) {
+    public String func_change_personal_data(Model model, Principal principal, String name, String lastName, String fatherName, String birth, String email) throws ParseException {
         User user = rateService.getUserByPrincipal(principal);
         model.addAttribute("user", user);
 
         model.addAttribute("name", name);
         model.addAttribute("lastName", lastName);
         model.addAttribute("fatherName", fatherName);
-        model.addAttribute("date", date);
+        model.addAttribute("birth", birth);
         model.addAttribute("email", email);
+        log.info("(!!!) ДАТА = " + birth);
+        userService.changeBirth(user, birth);
 
 
         /*log.info("Проверка почты на уникальность и не повторяемость.");
@@ -257,7 +259,7 @@ public class WebController { //прием HTTP запросов
         log.info("errorValidLastName: " + errorValidLastName);
         log.info("errorValidFatherName: " + errorValidFatherName);
         log.info("errorValidEmail: " + errorValidEmail);
-
+        
         if (!errorValidName.equals("")) {
             model.addAttribute("errorValidName", errorValidName);
         }
@@ -282,11 +284,6 @@ public class WebController { //прием HTTP запросов
         if ((!errorValidName.equals("")) || (!errorValidLastName.equals("")) || (!errorValidFatherName.equals("")) || (!errorValidEmail.equals(""))) {
             return "change_personal_data";
         }
-
-        //userService.changePersonalData(user, name, lastName, fatherName, date);
-
-
-
 
         //return "redirect:/personal_data";
         return "personal_data";

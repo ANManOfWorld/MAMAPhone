@@ -50,9 +50,12 @@
                         </script>
                     </#if>
 
-                    <input class="rectangle-input" type="text" value="" readonly="readonly"/> <#--ВПИСАТЬ ДАТУ-->
 
-                    <input class="group-child2" type="text" value="${user.email}" readonly="readonly"/>
+                    <input class="rectangle-input" type="date" name="birth" placeholder="${user.birth}" min="1950-01-01" max="2024-01-30"/> <#--ВПИСАТЬ ДАТУ-->
+
+
+
+
                     <input class="group-child2" type="text" name="email" placeholder="${user.email}"
                            value="${user.email}">
                     <#if errorValidEmail??>

@@ -146,6 +146,9 @@ public class UserService implements UserDetailsService {
 
     public String changePassword(User user, String oldPassword, String newPassword) {
         log.info("(!из функции с encoder) Новый пароль: " + newPassword + "; Старый пароль: " + oldPassword);
+        if (newPassword.equals("")) {
+            return "Новый пароль не может быть пустым.";
+        }
         if (!passwordEncoder.matches(oldPassword, user.getPassword())) {
             return "Старый пароль введён неверно!";
         }
@@ -189,7 +192,6 @@ public class UserService implements UserDetailsService {
         }
 
         if (!user.getLastName().equals(lastName)) {
-
             user.setLastName(lastName);
             userRepository.save(user);
         } else {
@@ -219,6 +221,15 @@ public class UserService implements UserDetailsService {
     }
 
     /*ДОПИСАТЬ ДАТУ!!!*/
+    public String changeBirth (User user, String birth) {
+        log.info("Пришедшая дата рождения: " + birth);
+        user.setBirth(birth);
+        userRepository.save(user);
+        return "";
+    }
+
+
+
 
     /*String EMAIL_TEMPLATE = "^[a-zA-Z0-9_!#$%&'*+/=?`{|}~^.-]+@[a-zA-Z0-9.-]+$";*/
     String EMAIL_TEMPLATE = "[a-zA-Z0-9\\+\\.\\_\\%\\-\\+]{1,256}" +
@@ -253,21 +264,7 @@ public class UserService implements UserDetailsService {
         //return "";
     }
 
-    public void changeInternet(Long id, Double internet) {
-        User user = userRepository.findById(id).orElse(null);
-        if ((user.getInternet() >= internet) || (internet <= 0)) {
-            user.setInternet(user.getInternet() - internet);
-            userRepository.save(user);
-        }
-    }
 
-    public void changeMinutes(Long id, Integer minutes) {
-        User user = userRepository.findById(id).orElse(null);
-        if ((user.getMinutes() >= minutes) || (minutes <= 0)) {
-            user.setMinutes(user.getMinutes() - minutes);
-            userRepository.save(user);
-        }
-    }
 
 
 
@@ -306,6 +303,145 @@ public class UserService implements UserDetailsService {
 */
             /*ИЗМЕНЕНИЕ ПЕРСОНАЛЬНЫХ ДАННЫХ*/
 
+
+
+    public void changeInternet(Long id, Double internet) {
+        User user = userRepository.findById(id).orElse(null);
+        if ((user.getInternet() >= internet) || (internet <= 0)) {
+            user.setInternet(user.getInternet() - internet);
+            userRepository.save(user);
+        }
+    }
+
+    public void changeMinutes(Long id, Integer minutes) {
+        User user = userRepository.findById(id).orElse(null);
+        if ((user.getMinutes() >= minutes) || (minutes <= 0)) {
+            user.setMinutes(user.getMinutes() - minutes);
+            userRepository.save(user);
+        }
+    }
+
+
+
+
+    /* ФУНКЦИИ ДЛЯ РЕГИСТРАЦИИ (ИЗМЕНЁННЫЕ И ВЗЯТЫЕ С ИЗМЕНЕНИЯ ПЕРС. ДАННЫХ)*/
+    public String regName (User user, String name) {
+        log.info("Пришедшее имя: " + name);
+        if (name == "") {
+            return "Имя не должно быть пустым";
+        }
+        if (!((name.length() <= 12) && (name.length() >= 2))) {
+            return "Имя должно быть не менее 2 символов и не более 12";
+        }
+
+        /*if (!user.getName().equals(name)) {
+            user.setName(name);
+        } else {
+            log.info("Пришедшее имя: " + name + " == (уже установленному) " + user.getName());
+        }*/
+        return "";
+    }
+
+    public String regLastName (User user, String lastName) {
+        log.info("Пришедшая фамилия: " + lastName);
+        if (lastName.equals("")) {
+            return "Фамилия не должна быть пустой";
+        }
+        if (!((lastName.length() <= 12) && (lastName.length() >= 2))) {
+            return "Фамилия должна быть не менее 2 символов и не более 12";
+        }
+
+        /*if (!user.getLastName().equals(lastName)) {
+            user.setLastName(lastName);
+        } else {
+            log.info("Пришедшая фамилия: " + lastName + " == (уже установленной) " + user.getLastName());
+        }*/
+        return "";
+    }
+
+    public String regFartherName (User user, String fartherName) {
+        log.info("Пришедшее отчество: " + fartherName);
+        if (fartherName.equals("")) {
+            return "";
+        }
+
+        if (!((fartherName.length() <= 12) && (fartherName.length() >= 2))) {
+            return "Отчество должно быть не менее 2 символов и не более 12";
+        }
+
+       /* if (!user.getFatherName().equals(fartherName)) {
+
+            user.setFatherName(fartherName);
+        } else {
+            log.info("Пришедшее отчёство: " + fartherName + " == (уже установленному) " + user.getFatherName());
+        }*/
+        return "";
+    }
+
+    String EMAIL_TEMPLATE_REG = "[a-zA-Z0-9\\+\\.\\_\\%\\-\\+]{1,256}" +
+            "\\@" +
+            "[a-zA-Z0-9][a-zA-Z0-9\\-]{0,64}" +
+            "(" +
+            "\\." +
+            "[a-zA-Z0-9][a-zA-Z0-9\\-]{0,25}" +
+            ")+";
+    public String regEmail (User user, String email) {
+        log.info("Пришедший email: " + email);
+        if (email.equals("")) {
+            return "Email не должен быть пустым";
+        }
+        if (!email.matches(EMAIL_TEMPLATE_REG)) {
+            return "Введите email правильно";
+        }
+
+
+        //if (!user.getEmail().equals(email)) {
+            if (userRepository.findByEmail(email) != null) {
+                log.info("Эл. почта " + email + " занята!");
+                return "Эта эл. почта занята. Выберите другую.";
+            }
+            /*user.setEmail(email);
+            return "good";
+        } else {
+            log.info("Пришедший email: " + email + " == (уже установленному) " + user.getEmail());
+            return "";
+        }*/
+        return "";
+    }
+
+
+    final String PHONE_TEMPLATE = "\\+7 \\([0-9][0-9][0-9]\\)[0-9][0-9][0-9]-[0-9][0-9]-[0-9][0-9]"/*"+7\\d{10}"*/;
+    public String regPhone (User user, String phone) {
+        log.info("Пришедший телефон: " + phone);
+        if (phone.equals("")) {
+            return "Номер телефона не должен быть пустым";
+        }
+        if (!phone.matches(PHONE_TEMPLATE)) {
+            return "Введите номер телефона правильно (+7 (***)***-**-**)";
+        }
+
+
+        //if (!user.getPhoneNum().equals(phone)) {
+            if (userRepository.findByPhoneNum(phone) != null) {     // ЧЕКНУТЬ
+                log.info("Номер телефона " + phone + " занят!");
+                return "Этот номер телефона занят. Выберите другой.";
+            }
+            /*user.setEmail(email);
+            return "good";
+        } else {
+            log.info("Пришедший email: " + email + " == (уже установленному) " + user.getEmail());
+            return "";
+        }*/
+        return "";
+    }
+
+    public String regPassword (User user, String password) {
+        log.info("Пришедший пароль: " + password);
+        if (password.equals("")) {
+            return "Пароль должен быть введён";
+        }
+        return "";
+    }
 
 
 }

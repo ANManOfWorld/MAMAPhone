@@ -26,7 +26,7 @@
 
                 <input class="group-child1" type="text" value="${user.fatherName}" readonly="readonly" />
 
-                <input class="rectangle-input" type="text" value="" readonly="readonly" /> <#--ВПИСАТЬ ДАТУ-->
+                <input class="rectangle-input" type="text" value="${user.birth}" readonly="readonly" /> <#--ВПИСАТЬ ДАТУ-->
 
                 <input class="group-child2" type="text" value="${user.email}" readonly="readonly" />
 

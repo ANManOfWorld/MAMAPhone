@@ -44,7 +44,7 @@
                 </script>
             </#if>
 
-            <input class="rectangle-input"  type="number" name="balance" value="0" maxlength="5"<#--placeholder=" ${user.balance}"-->>
+            <input id="need" class="rectangle-input"  type="text" name="balance" min="1" value="1" maxlength="6"<#--placeholder=" ${user.balance}"-->>
             <#if errorBalance??>
                 <script>
                     alert("${errorBalance}");
@@ -99,6 +99,17 @@
 </#if>
 
 <script>
+
+        const input  = document.querySelector('#need');
+
+        input.addEventListener('input', function() {
+        input.value = input.value.replace(/[^0-9, ]/g,"");
+        input.setAttribute('value', input.value);
+    });
+
+
+
+
     let ccNumberInput = document.querySelector('.cc-number-input'),
         ccNumberPattern = /^\d{0,16}$/g,
         ccNumberSeparator = "-",

@@ -27,6 +27,17 @@ public class User implements UserDetails {
     @Email(message = "Email должен быть валидным.", regexp = "^[a-zA-Z0-9_!#$%&'*+/=?`{|}~^.-]+@[a-zA-Z0-9.-]+$")
     private String email;
 
+    @Column(name = "birth")
+    private String birth;
+    public String getBirth() {
+        return birth;
+    }
+
+    public void setBirth(String birth) {
+        this.birth = birth;
+    }
+
+
 
     @Column(name = "dateConnect")
     private Calendar calendar;
@@ -172,6 +183,13 @@ public class User implements UserDetails {
 
 
     //отимплементированные методы
+
+
+
+
+
+
+
     public Calendar getDateOfPayment() {
         return dateOfPayment;
     }

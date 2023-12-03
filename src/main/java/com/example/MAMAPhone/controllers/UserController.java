@@ -14,7 +14,6 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
 import java.security.Principal;
 
 @Controller //связь между компонентами и выполнение действий согласно переданных запросов
@@ -37,9 +36,72 @@ public class UserController {
         return "login";
     }
 
-    final String PHONE_TEMPLATE = "\\+7\\([0-9][0-9][0-9]\\)[0-9][0-9][0-9]-[0-9][0-9]-[0-9][0-9]"/*"+7\\d{10}"*/;
-
+    final String PHONE_TEMPLATE = "\\+7 \\([0-9][0-9][0-9]\\)[0-9][0-9][0-9]-[0-9][0-9]-[0-9][0-9]"/*"+7\\d{10}"*/;
     @PostMapping("/registration")
+    public String createUser(@ModelAttribute("user") User user, BindingResult bindingResult, Model model, String name, String lastName, String fatherName, String email/*, String phone*/, String password) {
+        String phone = user.getPhoneNum();
+        model.addAttribute("name", name);
+        model.addAttribute("lastName", lastName);
+        model.addAttribute("fatherName", fatherName);
+        model.addAttribute("email", email);
+        model.addAttribute("phone", phone);
+        model.addAttribute("password", password);
+
+        String errorValidName = userService.regName(user, name);
+        String errorValidLastName =  userService.regLastName(user, lastName);
+        String errorValidFatherName =  userService.regFartherName(user, fatherName);
+        String errorValidEmail = userService.regEmail(user, email);
+        String errorValidPhone = userService.regPhone(user, phone);
+        String errorValidPassword = userService.regPassword(user, password);
+
+        log.info("errorValidName: " + errorValidName);
+        log.info("errorValidLastName: " + errorValidLastName);
+        log.info("errorValidFatherName: " + errorValidFatherName);
+        log.info("errorValidEmail: " + errorValidEmail);
+        log.info("errorValidPhone: " + errorValidPhone);
+        log.info("errorValidPassword: " + errorValidPassword);
+
+        if (!errorValidName.equals("")) {
+            model.addAttribute("errorValidName", errorValidName);
+        }
+
+        if (!errorValidLastName.equals("")) {
+            model.addAttribute("errorValidLastName", errorValidLastName);
+        }
+
+        if (!errorValidFatherName.equals("")) {
+            model.addAttribute("errorValidFatherName", errorValidFatherName);
+        }
+
+        if (!errorValidEmail.equals("")) {
+            model.addAttribute("errorValidEmail", errorValidEmail);
+        }
+
+        if (!errorValidPhone.equals("")) {
+            model.addAttribute("errorValidPhone", errorValidPhone);
+        }
+
+        if (!errorValidPassword.equals("")) {
+            model.addAttribute("errorValidPassword", errorValidPassword);
+        }
+
+        if ((!errorValidName.equals("")) || (!errorValidLastName.equals("")) || (!errorValidFatherName.equals("")) || (!errorValidEmail.equals("")) || (!errorValidPhone.equals("")) || (!errorValidPassword.equals(""))) {
+            return "registration";
+        }
+
+        if (!userService.createUser(user)) {
+            //ДОБАВИТЬ МОДЕЛЬ - НЕ УДАЛОСЬ ЗАРЕГАТЬСЯ!!!!!!!
+            model.addAttribute("canNotReg", "Не удалось зарегистрироваться");
+            return "registration";
+        }
+
+        return "redirect:/login";
+    }
+
+
+
+
+    /*@PostMapping("/registration")
     public String createUser(@Valid @ModelAttribute("user") User user, BindingResult bindingResult, Model model) {
         String phone = user.getPhoneNum();
 
@@ -201,7 +263,7 @@ public class UserController {
             return "registration";
         }
         return "redirect:/login";
-    }
+    }*/
 
     @GetMapping("/callsFinance")
     public String showCallsAndFinance() {
