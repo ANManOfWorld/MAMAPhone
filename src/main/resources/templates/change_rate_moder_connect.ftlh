@@ -4,8 +4,8 @@
     <meta charset="utf-8"/>
     <meta name="viewport" content="initial-scale=1, width=device-width"/>
 
-    <link rel="stylesheet" href="/static/css/change_rate_moder_global.css"/>
-    <link rel="stylesheet" href="/static/css/change_rate_moder_index.css"/>
+    <link rel="stylesheet" href="/static/css/change_rate_moder_connect_global.css"/>
+    <link rel="stylesheet" href="/static/css/change_rate_moder_connect_index.css"/>
     <link
             rel="stylesheet"
             href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap"
@@ -15,27 +15,25 @@
 <div class="parent">
     <div class="div">
         <div class="child"></div>
-
         <#if errorList == true>
             <div class="custom">
                 <div class="buttons">
 
-
+                    <#--ДОПИСАТЬ ССЫЛКУ НА РЕДАЧ!!! -->
                     <button class="edit-button">
-                        <div class="edit-text">Редактировать</div> <#--ДОПИСАТЬ ССЫЛКУ НА РЕДАЧ-->
+                        <div class="edit-text">Редактировать</div>
                     </button>
 
-                    <form action="/chooseRate/${rate.id}" method="post">
-                        <button class="link-button">
-                            <div class="link-text">Подключить</div>
-                        </button>
-                    </form>
 
+                    <div class="inactive-button">
+                        <div class="inactive-text">Тариф уже подключен</div>
+                    </div>
                 </div>
                 <div class="rectangle-group">
                     <div class="group-item"></div>
                     <b class="b">${rate.name}</b>
                     <div class="sms-container">
+
                         <p class="p"></p>
                         <p class="p">
                             <span>Ежемесячная абонентская плата: </span>
@@ -59,16 +57,9 @@
                         </p>
                         <span> </span>
                         </p>
-                        <#--<p class="p"></p>
-                        <p class="p">Дополнительные услуги и опции:</p>
-                        <p class="p">
-                            - Дополнительный интернет-трафик сверх пакета: 100 рублей за 1 ГБ
-                        </p>
-                        <p class="p">- Звонки на другие номера: 0,2 рубля в минуту</p>
-                        <p class="p">- SMS на другие номера: 1 рубль за сообщение</p>-->
+
                     </div>
                 </div>
-
             </div>
         </#if>
 
@@ -80,7 +71,6 @@
             <img class="arrow-icon" alt="" src="/static/img/change_rate_public/arrow-1.svg"/>
         </button>
     </a>
-
 
     <div class="custom">
         <#if errorPointers == false>
@@ -108,6 +98,5 @@
 
 
 </div>
-
 </body>
 </html>

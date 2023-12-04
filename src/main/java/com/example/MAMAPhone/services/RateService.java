@@ -31,7 +31,7 @@ public class RateService {
     public List<Rate> takeAll() {return rateRepository.findAll();}
 
     public List<Rate> listRates(String name) {
-        if (name != null) return rateRepository.searchByName(name);
+        if (name != null) return rateRepository.findAll()/*searchByName(name)*/;
         return rateRepository.findAll();
     }
 
@@ -45,6 +45,10 @@ public class RateService {
     // ---------------------------------------------- Фотографии
     public String saveRate(Rate rate,/* MultipartFile file, */Principal principal) throws IOException {
         //getUserByPrincipal(principal);
+        if (rateRepository.searchByName(rate.getName()) != null/*findAll().contains(rate)*/) {
+            return "Тариф с таким названием уже существует.";
+        }
+
         if (rate.getPrice() > 99000) {
             return "Стоимость тарифа не может превышать 99000 руб.";
         }

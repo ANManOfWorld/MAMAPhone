@@ -74,7 +74,9 @@
 </#if>
 
 <#if errorRate??>
-    alert(${errorRate});
+    <script>
+        alert(${errorRate});
+    </script>
 </#if>
 
 

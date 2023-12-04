@@ -96,13 +96,13 @@ public class WebController { //прием HTTP запросов
             model.addAttribute("errorList", true);
             flag = true;
 
-            /*if ((user.getCurrentRate() != null) && (user.getCurrentRate().getId() == rate.getId())) {
-                return "change_rate_connect";
+            if ((user.getCurrentRate() != null) && (user.getCurrentRate().getId() == rate.getId())) {
+                return "change_rate_moder_connect";
             } else {
-                return "change_rate";
-            }*/
+                return "change_rate_moder";
+            }
 
-            return "change_rate_moder";
+            //return "change_rate_moder";
         } else {
             if (list.size() < 2) {
                 model.addAttribute("errorPointers", true);
@@ -164,10 +164,23 @@ public class WebController { //прием HTTP запросов
                     rate = list.get(index);
                     /*log.info("ЮЗЕРЫ ТЕКУЩЕГО ТАРИФА ===  " + rate);*/
                     model.addAttribute("rate", rate);
-                    return "change_rate_moder";
+                    if ((user.getCurrentRate() != null) && (user.getCurrentRate().getId() == rate.getId())) {
+                        return "change_rate_moder_connect";
+                    } else {
+                        return "change_rate_moder";
+                    }
+
+                    //return "change_rate_moder";
                 }
             }
-            return "change_rate_moder";
+            rate = list.get(index);
+            if ((user.getCurrentRate() != null) && (user.getCurrentRate().getId() == rate.getId())) {
+                return "change_rate_moder_connect";
+            } else {
+                return "change_rate_moder";
+            }
+
+            //return "change_rate_moder";
         } else {
             if (list.size() < 2) {
                 model.addAttribute("errorPointers", true);
@@ -245,10 +258,22 @@ public class WebController { //прием HTTP запросов
                     index = (index - 1 + max) % max;
                     rate = list.get(index);
                     model.addAttribute("rate", rate);
-                    return "change_rate_moder";
+                    rate = list.get(index);
+                    if ((user.getCurrentRate() != null) && (user.getCurrentRate().getId() == rate.getId())) {
+                        return "change_rate_moder_connect";
+                    } else {
+                        return "change_rate_moder";
+                    }
+                    //return "change_rate_moder";
                 }
             }
-            return "change_rate_moder";
+            rate = list.get(index);
+            if ((user.getCurrentRate() != null) && (user.getCurrentRate().getId() == rate.getId())) {
+                return "change_rate_moder_connect";
+            } else {
+                return "change_rate_moder";
+            }
+            //return "change_rate_moder";
         } else {
             if (list.size() < 2) {
                 model.addAttribute("errorPointers", true);
@@ -325,9 +350,11 @@ public class WebController { //прием HTTP запросов
     public String createRate (/*@RequestParam("file1")MultipartFile file1, */Model model, Rate rate, Principal principal) throws IOException {
         String errorRate = rateService.saveRate(rate, /*file1, */principal);
         model.addAttribute("user", rateService.getUserByPrincipal(principal));
+        model.addAttribute("rates", rateService.takeAll());
+        log.info("Ошибка создания тарифа = " + errorRate);
         if (!errorRate.equals("")) {
             model.addAttribute("errorRate", errorRate);
-            return "redirect:/billing";
+            return "/billing";
         }
         return "redirect:/"; //обновление страницы
     }
@@ -343,7 +370,7 @@ public class WebController { //прием HTTP запросов
 
     @GetMapping("/billing")
     public String billing(@RequestParam(name = "name", required = false) String name, Model model, Principal principal) {
-        model.addAttribute("rates", rateService.listRates(name));
+        model.addAttribute("rates",rateService.takeAll()/* rateService.listRates(name)*/);
         model.addAttribute("user", rateService.getUserByPrincipal(principal));
 
         return "billing";

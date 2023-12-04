@@ -53,14 +53,14 @@
 }
 .b1 {
   top: 56px;
-  left: 752.1px;
+  left: 740px/*752.1px*/;
   font-size: var(--font-size-xl);
   color: var(--color-darkgray-100);
 }
 .div1 {
   text-align: center;
   top: 82px;
-  left: 735px/*757.1px*/;
+  left: 740px/*735px*//*757.1px*/;
   display: inline-block;
   width: 64.5px;
 }

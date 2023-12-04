@@ -17,50 +17,50 @@
         <div class="child"></div>
 
         <#if errorList == true>
-        <div class="custom">
-            <div class="inactive-button">
-                <div class="inactive-text">Тариф уже подключен</div>
-            </div>
-
-            <div class="rectangle-group">
-                <div class="group-item"></div>
-                <b class="b">${rate.name}</b>
-                <div class="sms-container">
-
-                    <p class="p"></p>
-                    <p class="p">
-                        <span>Ежемесячная абонентская плата: </span>
-                        <b class="span">${rate.price} рублей/мес </b>
-                    </p>
-                    <p class="p"></p>
-                    <p class="p">Включенный пакет услуг:</p>
-                    <p class="p">
-                        <span>- Интернет-трафик: </span>
-                        <b class="span">${rate.countOfTrafficInternet} ГБ </b>
-                    </p>
-                    <p class="p">
-                        <span>- Бесплатные звонки внутри сети оператора: </span>
-                        <b class="span">${rate.countOfMinutes}</b>
-                        <span class="span"> </span>
-                    </p>
-                    <p class="p">
-                        <span class="span">- Описание: </span>
-                    <p class="span_custom">
-                        <b class="span_custom">${rate.description}</b>
-                    </p>
-                    <span> </span>
-                    </p>
-                    <#--<p class="p"></p>
-                    <p class="p">Дополнительные услуги и опции:</p>
-                    <p class="p">
-                        - Дополнительный интернет-трафик сверх пакета: 100 рублей за 1 ГБ
-                    </p>
-                    <p class="p">- Звонки на другие номера: 0,2 рубля в минуту</p>
-                    <p class="p">- SMS на другие номера: 1 рубль за сообщение</p>-->
+            <div class="custom">
+                <div class="inactive-button">
+                    <div class="inactive-text">Тариф уже подключен</div>
                 </div>
-            </div>
 
-        </div>
+                <div class="rectangle-group">
+                    <div class="group-item"></div>
+                    <b class="b">${rate.name}</b>
+                    <div class="sms-container">
+
+                        <p class="p"></p>
+                        <p class="p">
+                            <span>Ежемесячная абонентская плата: </span>
+                            <b class="span">${rate.price} рублей/мес </b>
+                        </p>
+                        <p class="p"></p>
+                        <p class="p">Включенный пакет услуг:</p>
+                        <p class="p">
+                            <span>- Интернет-трафик: </span>
+                            <b class="span">${rate.countOfTrafficInternet} ГБ </b>
+                        </p>
+                        <p class="p">
+                            <span>- Бесплатные звонки внутри сети оператора: </span>
+                            <b class="span">${rate.countOfMinutes}</b>
+                            <span class="span"> </span>
+                        </p>
+                        <p class="p">
+                            <span class="span">- Описание: </span>
+                        <p class="span_custom">
+                            <b class="span_custom">${rate.description}</b>
+                        </p>
+                        <span> </span>
+                        </p>
+                        <#--<p class="p"></p>
+                        <p class="p">Дополнительные услуги и опции:</p>
+                        <p class="p">
+                            - Дополнительный интернет-трафик сверх пакета: 100 рублей за 1 ГБ
+                        </p>
+                        <p class="p">- Звонки на другие номера: 0,2 рубля в минуту</p>
+                        <p class="p">- SMS на другие номера: 1 рубль за сообщение</p>-->
+                    </div>
+                </div>
+
+            </div>
         </#if>
 
 
@@ -74,20 +74,21 @@
         </button>
     </a>
 
-    <#if errorPointers == false>
+
     <div class="custom">
-        <form action="/changeRate/pre" method="post">
-            <button class="pre-button">
-                <img class="group-child1" alt="" src="/static/img/change_rate_public/arrow-11.svg"/>
-            </button>
-        </form>
+        <#if errorPointers == false>
+            <form action="/changeRate/pre" method="post">
+                <button class="pre-button">
+                    <img class="group-child1" alt="" src="/static/img/change_rate_public/arrow-11.svg"/>
+                </button>
+            </form>
 
 
-        <form action="/changeRate/next" method="post">
-            <button class="next-button">
-                <img class="group-child3" alt="" src="/static/img/change_rate_public/arrow-2.svg"/>
-            </button>
-        </form>
+            <form action="/changeRate/next" method="post">
+                <button class="next-button">
+                    <img class="group-child3" alt="" src="/static/img/change_rate_public/arrow-2.svg"/>
+                </button>
+            </form>
         </#if>
 
         <div class="rectangle-div">

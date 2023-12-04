@@ -208,6 +208,8 @@ public class UserService implements UserDetailsService {
     public String changeFartherName (User user, String fartherName) {
         log.info("Пришедшее отчество: " + fartherName);
         if (fartherName.equals("")) {
+            user.setFatherName(fartherName);
+            userRepository.save(user);
             return "";
         }
 
