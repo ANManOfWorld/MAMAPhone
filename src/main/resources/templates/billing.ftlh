@@ -31,10 +31,10 @@
 </#if>
 <br>
 <br>
-<form action="/" method="get">
+<#--<form action="/" method="get">
     Поиск тарифов: <input type="text" name="name"> <br>
     <input type="submit" value="Поиск">
-</form>
+</form>-->
 
 <#if user.isModerator()>
 <hr>
@@ -59,20 +59,33 @@
     <h3> Создать новый тариф</h3>
     <form action="/rate/create" method="post" enctype="multipart/form-data">
         <!-- "enctype="multipart/form-data"  " атрибут для фото-->
-        Название тарифа: <input type="text" name="name"/> <br>
-        Описание тарифа: <input type="text" name="description"/> <br>
-        Цена: <input type="number" name="price"/> <br>
-        Количество минут: <input type="number" name="countOfMinutes"/> <br>
-        Количество трафика (в ГБ): <input type="number" name="countOfTrafficInternet"/> <br>
+        Название тарифа: <input type="text" name="name" maxlength="25"/> <br>
+        Описание тарифа: <input type="text" name="description" maxlength="255"/> <br>
+        Цена: <input id="need" type="text" name="price" min="1" max="99000" maxlength="5" value="1"/> <br>
+        Количество минут: <input id="need" type="text" name="countOfMinutes" min="1" max="9999" maxlength="4" value="1"/> <br>
+        Количество трафика (в ГБ): <input id="need" type="text" name="countOfTrafficInternet" min="1" max="9999" maxlength="4" value="1"/> <br>
 
         <!-- фотография -->
-        Фотография: <input type="file" name="file1"/> <br>
+                    <#--Фотография: <input type="file" name="file1"/> <br>-->
         <!-- фотография -->
 
         <input type="submit" value="Добавить тариф"/>
     </form>
 </#if>
 
+<#if errorRate??>
+    alert(${errorRate});
+</#if>
+
+
+<script>
+    const input  = document.querySelector('#need');
+
+    input.addEventListener('input', function() {
+        input.value = input.value.replace(/[^0-9, ]/g,"");
+        input.setAttribute('value', input.value);
+    });
+</script>
 
 </body>
 </html>

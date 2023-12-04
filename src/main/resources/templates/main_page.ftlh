@@ -101,14 +101,22 @@
 
     <button class="free-icon-bell-1157000-1"></button>
 
-    <#if (user.isModerator() && user.isAdmin()) || (user.isModerator())>
+    <#if (user.isModerator() && user.isAdmin())>
         <a href="/billing">
             <button class="free-icon-control-panel-233339"></button>
         </a>
-        <#elseif user.isAdmin()>
-            <a href="/admin">
-                <button class="free-icon-control-panel-233339"></button>
-            </a>
+    <#elseif (user.isModerator())>
+        <a href="/billing">
+            <button class="free-icon-control-panel-233339"></button>
+        </a>
+    <#elseif (user.isAdmin() && user.isModerator())>
+        <a href="/billing">
+            <button class="free-icon-control-panel-233339"></button>
+        </a>
+    <#elseif user.isAdmin()>
+        <a href="/admin">
+            <button class="free-icon-control-panel-233339"></button>
+        </a>
     </#if>
 
 

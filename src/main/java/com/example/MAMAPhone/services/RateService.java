@@ -43,20 +43,40 @@ public class RateService {
     }
 
     // ---------------------------------------------- Фотографии
-    public void saveRate(Rate rate, MultipartFile file, Principal principal) throws IOException {
+    public String saveRate(Rate rate,/* MultipartFile file, */Principal principal) throws IOException {
         //getUserByPrincipal(principal);
-        Image image;
+        if (rate.getPrice() > 99000) {
+            return "Стоимость тарифа не может превышать 99000 руб.";
+        }
+        if (rate.getPrice() < 1) {
+            return "Стоимость тарифа не может быть ниже 1 руб.";
+        }
+        if (rate.getCountOfMinutes() > 9999) {
+            return "Количество минут не может превышать 9999 минут.";
+        }
+        if (rate.getCountOfTrafficInternet() > 9999) {
+            return "Количество ГБ не может превышать 9999 ГБ.";
+        }
+        if (rate.getDescription().length() > 255) {
+            return "Длина описания не может превышать 255 символов.";
+        }
+        if (rate.getName().length() > 25) {
+            return "Количество символов в названии тарифа не может превышать 25.";
+        }
+       /* Image image;
         if (file.getSize() != 0) {
             image = toImageEntity(file);
             image.setPreviewImage(true);
             rate.addImage(image);
-        }
+        }*/
         log.info("Saving new rate. name: {} || description: {}", rate.getName(), rate.getDescription());
-        Rate rateFromBaseData = rateRepository.save(rate);
+        rateRepository.save(rate);
+        /*Rate rateFromBaseData = rateRepository.save(rate);
         if (rate.getPreviewImageId() != null) { // если нет картинки
             rateFromBaseData.setPreviewImageId(rateFromBaseData.getImages().get(0).getId());
             rateRepository.save(rate);
-        }
+        }*/
+        return "";
     }
 
     public User getUserByPrincipal(Principal principal) {
@@ -78,6 +98,14 @@ public class RateService {
 
     public void deleteRate(Long id) {
         // rates.removeIf(rate -> rate.getId().equals(id));
+        Rate rate = getRateById(id);
+        List<User> users = rate.getUsers();
+        for (int i = 0; i < users.size(); i++) {
+           //        users.get(i).setCalendar(null);
+            users.get(i).setDateOfPayment(null);
+            users.get(i).setCurrentRate(null);
+        }
+        rate.setUsers(null);
         rateRepository.deleteById(id);
     }
 

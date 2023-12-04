@@ -51,7 +51,7 @@
                     </#if>
 
 
-                    <input class="rectangle-input" type="date" name="birth" placeholder="${user.birth}" min="1950-01-01" max="2024-01-30"/> <#--ВПИСАТЬ ДАТУ-->
+                    <input class="rectangle-input" type="date" name="birth" value="${user.birth}2021" placeholder="${user.birth}" min="1950-01-01" max="2024-01-30"/> <#--ВПИСАТЬ ДАТУ-->
 
 
 

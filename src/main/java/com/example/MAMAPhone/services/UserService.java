@@ -98,6 +98,9 @@ public class UserService implements UserDetailsService {
         }
     }
 
+    public void saveUser(User user) {
+        userRepository.save(user);
+    }
 
 
     public String chooseRate(User user, Rate rate) {
@@ -106,6 +109,8 @@ public class UserService implements UserDetailsService {
             user.setInternet(rate.getCountOfTrafficInternet());
             user.setMinutes(rate.getCountOfMinutes());
             user.setBalance(user.getBalance() - rate.getPrice());
+            user.setSaveMinutes(rate.getCountOfMinutes());
+            user.setSaveTraffic(rate.getCountOfTrafficInternet());
 
 
             user.setCalendar(new GregorianCalendar());               //привязка даты подключения тарифа

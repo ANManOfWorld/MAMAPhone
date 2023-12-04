@@ -8,7 +8,9 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.List;
 
 @Service
 @Slf4j
@@ -64,13 +66,20 @@ public class BillingService implements CommandLineRunner {
                 }
 
                 Calendar payment = user.getDateOfPayment();
+                if (payment == null) {
+                    user.setCurrentRate(null);
+                    user.setCalendar(null);
+                    user.setMinutes(0);
+                    user.setInternet(0.0);
+                    userService.saveUser(user);
+                }
+
 
                 java.time.LocalDateTime localDateTime = java.time.LocalDateTime.now();                              //берём текущее время
                 //log.info("ПРОВЕРКА ВРЕМЕНИ!!!! = " + localDateTime.getMinute() + localDateTime.getSecond());
                 Calendar current = Calendar.getInstance();
                 current.set(localDateTime.getYear(), localDateTime.getMonthValue() - 1, localDateTime.getDayOfMonth(), localDateTime.getHour(), localDateTime.getMinute(), localDateTime.getSecond());
                 //log.info("Calendar = " + current.getTime());                                                       //берём текущее время
-
                 if (current.after(payment)) {
 
                    //user.setBalance(100000); //УДАЛИТЬ!!!

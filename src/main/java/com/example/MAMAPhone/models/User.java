@@ -28,7 +28,7 @@ public class User implements UserDetails {
     private String email;
 
     @Column(name = "birth")
-    private String birth;
+    private String birth = "";
     public String getBirth() {
         return birth;
     }
@@ -50,6 +50,13 @@ public class User implements UserDetails {
 
     @Column(name = "sumOfDept")
     private Integer sumOfDept = 0;
+
+    @Column(name = "saveTraffic")
+    private Double saveTraffic = 0.0;
+
+    @Column(name = "saveMinutes")
+    private Integer saveMinutes = 0;
+
 
 
 
@@ -136,7 +143,7 @@ public class User implements UserDetails {
 
 
     @Column(name = "numOfCard")
-    private String numOfCard = "XXXX-XXXX-XXX-XXXX";
+    private String numOfCard = "XXXX-XXXX-XXXX-XXXX" /*= ""*/;
 
     @Column(name = "CVC")
     private String CVC = "XXX";
@@ -145,7 +152,21 @@ public class User implements UserDetails {
 
 
 
+    public Double getSaveTraffic() {
+        return saveTraffic;
+    }
 
+    public void setSaveTraffic(Double saveTraffic) {
+        this.saveTraffic = saveTraffic;
+    }
+
+    public Integer getSaveMinutes() {
+        return saveMinutes;
+    }
+
+    public void setSaveMinutes(Integer saveMinutes) {
+        this.saveMinutes = saveMinutes;
+    }
     public User(Long id, @NotEmpty @Email(message = "Email должен быть валидным.") String email, boolean active, @NotEmpty String password, @NotEmpty(message = "Телефон должен быть введён корректно.") String phoneNum, Set<Role> roles, LocalDateTime dateOfCreated, @NotEmpty(message = "ФИО должно быть заполнено") @Size(min = 2, max = 12, message = "Имя должно быть не менее 2 символов и не более 12") String name, Image imageOfUser) {
         this.id = id;
         this.email = email;

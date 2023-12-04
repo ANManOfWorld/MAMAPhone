@@ -10,7 +10,6 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.security.Principal;
@@ -41,19 +40,19 @@ public class WebController { //прием HTTP запросов
         String minutes = "0%";
         Double internetOfPercent = 0.0;
         String internet = "0%";
-        if (user.getCurrentRate() != null) {
-            if (user.getCurrentRate().getCountOfMinutes() > 0) {
+        if (user.getCurrentRate() != null || ((user.getCurrentRate() == null) && (user.getCalendar()!= null)) ) {
+            //if (user.getCurrentRate().getCountOfMinutes() > 0) {
+            if (user.getSaveMinutes() > 0) {
                 //log.info("user.getMinutes() = " + user.getMinutes() + " ; user.getCurrentRate() = " + user.getCurrentRate().getCountOfMinutes());
-                minutesInPercent = ((double) user.getMinutes() / (double) user.getCurrentRate().getCountOfMinutes()) * 100;
+                minutesInPercent = ((double) user.getMinutes() / (double) user.getSaveMinutes()/*user.getCurrentRate().getCountOfMinutes()*/) * 100;
                 minutes = minutesInPercent.toString() + "%";
             }
-            if (user.getCurrentRate().getCountOfTrafficInternet() > 0) {
-                internetOfPercent = (user.getInternet() / user.getCurrentRate().getCountOfTrafficInternet()) * 100;
+            //if (user.getCurrentRate().getCountOfTrafficInternet() > 0) {
+            if (user.getSaveTraffic() > 0) {
+                internetOfPercent = (user.getInternet() / user.getSaveTraffic()/*user.getCurrentRate().getCountOfTrafficInternet()*/) * 100;
                 internet = internetOfPercent.toString() + "%";
             }
         }
-        //log.info("!!!!!!!!!!!!!MINUTES = " + minutes);
-        //log.info("!!!!!!!!!!!!!INTERNET = " + internet);
         model.addAttribute("minutesInPercent", minutes);
         model.addAttribute("internetOfPercent", internet);
 
@@ -71,15 +70,31 @@ public class WebController { //прием HTTP запросов
     private Boolean flag = false;
     List<Rate> list;
     @GetMapping("/changeRate")
-    public String rateInfo(/*@PathVariable Long id,*/ Model model/*, Boolean next, Boolean pre*/) {
+    public String rateInfo(/*@PathVariable Long id,*/ Model model/*, Boolean next, Boolean pre*/, Principal principal) {
+        index = 0;
         list = new ArrayList<Rate>(rateService.takeAll());
+        if (list.size() < 2) {
+            model.addAttribute("errorPointers", true);
+        } else {
+            model.addAttribute("errorPointers", false);
+        }
+        if (list.size() == 0) {
+            model.addAttribute("errorList", false);
+            model.addAttribute("user", rateService.getUserByPrincipal(principal));
+            return "change_rate";
+        }
+
         max = list.size();
+        log.info("Размер массива с тарифами = " + max);
+        log.info("Размер INDEX'a = " + index);
         /*log.info("Вывод всех тарифов: " + list.toString());*/
         /*model.addAttribute("next", next);
         model.addAttribute("pre", pre);*/
 
         Rate rate = list.get(index);
         model.addAttribute("rate", rate);
+        model.addAttribute("user", rateService.getUserByPrincipal(principal));
+        model.addAttribute("errorList", true);
         flag = true;
         return "change_rate";
 
@@ -109,10 +124,24 @@ public class WebController { //прием HTTP запросов
         return "redirect:/main-page";*/
     }
     @PostMapping("/changeRate/next")
-    public String rateInfoNext(/*@PathVariable Long id,*/ Model model, String next/*, String pre*/) {
+    public String rateInfoNext(/*@PathVariable Long id,*/ Model model, String next/*, String pre*/, Principal principal) {
+        list = new ArrayList<Rate>(rateService.takeAll());
+        if (list.size() < 2) {
+            model.addAttribute("errorPointers", true);
+        } else {
+            model.addAttribute("errorPointers", false);
+        }
+        if (list.size() == 0) {
+            model.addAttribute("errorList", false);
+            model.addAttribute("user", rateService.getUserByPrincipal(principal));
+            return "change_rate";
+        }
+
+        max = list.size();
         log.info("СЧЁТ!: " + index);
         model.addAttribute("next", next);
-
+        model.addAttribute("user", rateService.getUserByPrincipal(principal));
+        model.addAttribute("errorList", true);
         Rate rate;
         if (flag) {
             if ((next == "")) {
@@ -122,6 +151,7 @@ public class WebController { //прием HTTP запросов
             if ((next != "")) {
                 index = (index + 1 + max) % max;
                 rate = list.get(index);
+                /*log.info("ЮЗЕРЫ ТЕКУЩЕГО ТАРИФА ===  " + rate);*/
                 model.addAttribute("rate", rate);
                 return "change_rate";
             }
@@ -129,10 +159,23 @@ public class WebController { //прием HTTP запросов
         return "change_rate";
     }
     @PostMapping("/changeRate/pre")
-    public String rateInfoPre(/*@PathVariable Long id,*/ Model model/*, String next*/, String pre) {
+    public String rateInfoPre(/*@PathVariable Long id,*/ Model model/*, String next*/, String pre, Principal principal) {
+        list = new ArrayList<Rate>(rateService.takeAll());
+        if (list.size() < 2) {
+            model.addAttribute("errorPointers", true);
+        } else {
+            model.addAttribute("errorPointers", false);
+        }
+        if (list.size() == 0) {
+            model.addAttribute("errorList", false);
+            model.addAttribute("user", rateService.getUserByPrincipal(principal));
+            return "change_rate";
+        }
+        max = list.size();
         log.info("СЧЁТ!: " + index);
         model.addAttribute("pre", pre);
-
+        model.addAttribute("user", rateService.getUserByPrincipal(principal));
+        model.addAttribute("errorList", true);
         Rate rate;
 
         if (flag) {
@@ -178,8 +221,13 @@ public class WebController { //прием HTTP запросов
 */
     // ---------------------------------- Картинки
     @PostMapping("/rate/create")
-    public String createRate (@RequestParam("file1")MultipartFile file1, Rate rate, Principal principal) throws IOException {
-        rateService.saveRate(rate, file1, principal);
+    public String createRate (/*@RequestParam("file1")MultipartFile file1, */Model model, Rate rate, Principal principal) throws IOException {
+        String errorRate = rateService.saveRate(rate, /*file1, */principal);
+        model.addAttribute("user", rateService.getUserByPrincipal(principal));
+        if (!errorRate.equals("")) {
+            model.addAttribute("errorRate", errorRate);
+            return "redirect:/billing";
+        }
         return "redirect:/"; //обновление страницы
     }
     // ---------------------------------- Картинки
@@ -259,7 +307,7 @@ public class WebController { //прием HTTP запросов
         log.info("errorValidLastName: " + errorValidLastName);
         log.info("errorValidFatherName: " + errorValidFatherName);
         log.info("errorValidEmail: " + errorValidEmail);
-        
+
         if (!errorValidName.equals("")) {
             model.addAttribute("errorValidName", errorValidName);
         }
