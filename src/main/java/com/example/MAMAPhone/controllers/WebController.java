@@ -70,7 +70,7 @@ public class WebController { //прием HTTP запросов
     private Boolean flag = false;
     List<Rate> list;
     @GetMapping("/changeRate")
-    public String rateInfo(/*@PathVariable Long id,*/ Model model/*, Boolean next, Boolean pre*/, Principal principal) {
+    public String rateInfo(/*@PathVariable Long id,*/ Model model, Principal principal) {
         index = 0;
         list = new ArrayList<Rate>(rateService.takeAll());
         User user = rateService.getUserByPrincipal(principal);
@@ -89,15 +89,19 @@ public class WebController { //прием HTTP запросов
             max = list.size();
             log.info("Размер массива с тарифами = " + max);
             log.info("Размер INDEX'a = " + index);
-            /*log.info("Вывод всех тарифов: " + list.toString());*/
-        /*model.addAttribute("next", next);
-        model.addAttribute("pre", pre);*/
 
             Rate rate = list.get(index);
             model.addAttribute("rate", rate);
             model.addAttribute("user", rateService.getUserByPrincipal(principal));
             model.addAttribute("errorList", true);
             flag = true;
+
+            /*if ((user.getCurrentRate() != null) && (user.getCurrentRate().getId() == rate.getId())) {
+                return "change_rate_connect";
+            } else {
+                return "change_rate";
+            }*/
+
             return "change_rate_moder";
         } else {
             if (list.size() < 2) {
@@ -114,44 +118,22 @@ public class WebController { //прием HTTP запросов
             max = list.size();
             log.info("Размер массива с тарифами = " + max);
             log.info("Размер INDEX'a = " + index);
-            /*log.info("Вывод всех тарифов: " + list.toString());*/
-        /*model.addAttribute("next", next);
-        model.addAttribute("pre", pre);*/
 
             Rate rate = list.get(index);
             model.addAttribute("rate", rate);
             model.addAttribute("user", rateService.getUserByPrincipal(principal));
             model.addAttribute("errorList", true);
             flag = true;
-            return "change_rate";
+
+            if ((user.getCurrentRate() != null) && (user.getCurrentRate().getId() == rate.getId())) {
+                return "change_rate_connect";
+            } else {
+                return "change_rate";
+            }
         }
-        /*while (flag) {
-            if ((next == false) && (pre == false)) {
-                index = 0;
-                flag = false;
-                break;
-            }
-            if (next == true) {
-                index++;
-                rate = list.get(index);
-                model.addAttribute("rate", rate);
-                return "change_rate";
-            }
-            if (pre == true) {
-                index--;
-                rate = list.get(index);
-                model.addAttribute("rate", rate);
-                return "change_rate";
-            }
-        }*/
-
-       /* Rate rate = rateService.getRateById(id);
-        model.addAttribute("rate", rate);
-
-        return "redirect:/main-page";*/
     }
     @PostMapping("/changeRate/next")
-    public String rateInfoNext(/*@PathVariable Long id,*/ Model model, String next/*, String pre*/, Principal principal) {
+    public String rateInfoNext(/*@PathVariable Long id,*/ Model model, String next, Principal principal) {
         list = new ArrayList<Rate>(rateService.takeAll());
         User user = rateService.getUserByPrincipal(principal);
         if (user.isModerator()) {
@@ -214,10 +196,21 @@ public class WebController { //прием HTTP запросов
                     rate = list.get(index);
                     /*log.info("ЮЗЕРЫ ТЕКУЩЕГО ТАРИФА ===  " + rate);*/
                     model.addAttribute("rate", rate);
-                    return "change_rate";
+                    if ((user.getCurrentRate() != null) && (user.getCurrentRate().getId() == rate.getId())) {
+                        return "change_rate_connect";
+                    } else {
+                        return "change_rate";
+                    }
+                    //return "change_rate";
                 }
             }
-            return "change_rate";
+            rate = list.get(index);
+            if ((user.getCurrentRate() != null) && (user.getCurrentRate().getId() == rate.getId())) {
+                return "change_rate_connect";
+            } else {
+                return "change_rate";
+            }
+            //return "change_rate";
         }
 
     }
@@ -283,10 +276,21 @@ public class WebController { //прием HTTP запросов
                     index = (index - 1 + max) % max;
                     rate = list.get(index);
                     model.addAttribute("rate", rate);
-                    return "change_rate";
+                    if ((user.getCurrentRate() != null) && (user.getCurrentRate().getId() == rate.getId())) {
+                        return "change_rate_connect";
+                    } else {
+                        return "change_rate";
+                    }
+                    //return "change_rate";
                 }
             }
-            return "change_rate";
+            rate = list.get(index);
+            if ((user.getCurrentRate() != null) && (user.getCurrentRate().getId() == rate.getId())) {
+                return "change_rate_connect";
+            } else {
+                return "change_rate";
+            }
+            //return "change_rate";
         }
     }
 

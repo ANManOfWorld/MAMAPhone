@@ -4,8 +4,8 @@
     <meta charset="utf-8"/>
     <meta name="viewport" content="initial-scale=1, width=device-width"/>
 
-    <link rel="stylesheet" href="/static/css/change_rate_moder_global.css"/>
-    <link rel="stylesheet" href="/static/css/change_rate_moder_index.css"/>
+    <link rel="stylesheet" href="/static/css/change_rate_connect_global.css"/>
+    <link rel="stylesheet" href="/static/css/change_rate_connect_index.css"/>
     <link
             rel="stylesheet"
             href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap"
@@ -18,24 +18,15 @@
 
         <#if errorList == true>
         <div class="custom">
-            <div class="buttons">
-
-
-                <button class="edit-button">
-                    <div class="edit-text">Редактировать</div> <#--ДОПИСАТЬ ССЫЛКУ НА РЕДАЧ-->
-                </button>
-
-                <form action="/chooseRate/${rate.id}" method="post">
-                    <button class="link-button">
-                        <div class="link-text">Подключить</div>
-                    </button>
-                </form>
-
+            <div class="inactive-button">
+                <div class="inactive-text">Тариф уже подключен</div>
             </div>
+
             <div class="rectangle-group">
                 <div class="group-item"></div>
                 <b class="b">${rate.name}</b>
                 <div class="sms-container">
+
                     <p class="p"></p>
                     <p class="p">
                         <span>Ежемесячная абонентская плата: </span>
@@ -49,7 +40,7 @@
                     </p>
                     <p class="p">
                         <span>- Бесплатные звонки внутри сети оператора: </span>
-                        <b class="span">${rate.countOfMinutes} Мин</b>
+                        <b class="span">${rate.countOfMinutes}</b>
                         <span class="span"> </span>
                     </p>
                     <p class="p">
@@ -72,7 +63,9 @@
         </div>
         </#if>
 
+
     </div>
+
 
     <a href="/">
         <button class="rectangle-container">
@@ -89,6 +82,7 @@
             </button>
         </form>
 
+
         <form action="/changeRate/next" method="post">
             <button class="next-button">
                 <img class="group-child3" alt="" src="/static/img/change_rate_public/arrow-2.svg"/>
@@ -96,17 +90,15 @@
         </form>
         </#if>
 
-
         <div class="rectangle-div">
             <b class="b6">${user.name}</b>
             <div class="div2">${user.phoneNum}</div>
         </div>
 
         <img class="user-3-icon" alt="" src="/static/img/change_rate_public/user-3@2x.png"/>
+
     </div>
 
-
 </div>
-
 </body>
 </html>
