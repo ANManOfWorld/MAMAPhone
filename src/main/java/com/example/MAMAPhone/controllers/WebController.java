@@ -73,31 +73,58 @@ public class WebController { //прием HTTP запросов
     public String rateInfo(/*@PathVariable Long id,*/ Model model/*, Boolean next, Boolean pre*/, Principal principal) {
         index = 0;
         list = new ArrayList<Rate>(rateService.takeAll());
-        if (list.size() < 2) {
-            model.addAttribute("errorPointers", true);
-        } else {
-            model.addAttribute("errorPointers", false);
-        }
-        if (list.size() == 0) {
-            model.addAttribute("errorList", false);
-            model.addAttribute("user", rateService.getUserByPrincipal(principal));
-            return "change_rate";
-        }
+        User user = rateService.getUserByPrincipal(principal);
+        if (user.isModerator()) {
+            if (list.size() < 2) {
+                model.addAttribute("errorPointers", true);
+            } else {
+                model.addAttribute("errorPointers", false);
+            }
+            if (list.size() == 0) {
+                model.addAttribute("errorList", false);
+                model.addAttribute("user", rateService.getUserByPrincipal(principal));
+                return "change_rate_moder";
+            }
 
-        max = list.size();
-        log.info("Размер массива с тарифами = " + max);
-        log.info("Размер INDEX'a = " + index);
-        /*log.info("Вывод всех тарифов: " + list.toString());*/
+            max = list.size();
+            log.info("Размер массива с тарифами = " + max);
+            log.info("Размер INDEX'a = " + index);
+            /*log.info("Вывод всех тарифов: " + list.toString());*/
         /*model.addAttribute("next", next);
         model.addAttribute("pre", pre);*/
 
-        Rate rate = list.get(index);
-        model.addAttribute("rate", rate);
-        model.addAttribute("user", rateService.getUserByPrincipal(principal));
-        model.addAttribute("errorList", true);
-        flag = true;
-        return "change_rate";
+            Rate rate = list.get(index);
+            model.addAttribute("rate", rate);
+            model.addAttribute("user", rateService.getUserByPrincipal(principal));
+            model.addAttribute("errorList", true);
+            flag = true;
+            return "change_rate_moder";
+        } else {
+            if (list.size() < 2) {
+                model.addAttribute("errorPointers", true);
+            } else {
+                model.addAttribute("errorPointers", false);
+            }
+            if (list.size() == 0) {
+                model.addAttribute("errorList", false);
+                model.addAttribute("user", rateService.getUserByPrincipal(principal));
+                return "change_rate";
+            }
 
+            max = list.size();
+            log.info("Размер массива с тарифами = " + max);
+            log.info("Размер INDEX'a = " + index);
+            /*log.info("Вывод всех тарифов: " + list.toString());*/
+        /*model.addAttribute("next", next);
+        model.addAttribute("pre", pre);*/
+
+            Rate rate = list.get(index);
+            model.addAttribute("rate", rate);
+            model.addAttribute("user", rateService.getUserByPrincipal(principal));
+            model.addAttribute("errorList", true);
+            flag = true;
+            return "change_rate";
+        }
         /*while (flag) {
             if ((next == false) && (pre == false)) {
                 index = 0;
@@ -126,71 +153,141 @@ public class WebController { //прием HTTP запросов
     @PostMapping("/changeRate/next")
     public String rateInfoNext(/*@PathVariable Long id,*/ Model model, String next/*, String pre*/, Principal principal) {
         list = new ArrayList<Rate>(rateService.takeAll());
-        if (list.size() < 2) {
-            model.addAttribute("errorPointers", true);
-        } else {
-            model.addAttribute("errorPointers", false);
-        }
-        if (list.size() == 0) {
-            model.addAttribute("errorList", false);
+        User user = rateService.getUserByPrincipal(principal);
+        if (user.isModerator()) {
+            if (list.size() < 2) {
+                model.addAttribute("errorPointers", true);
+            } else {
+                model.addAttribute("errorPointers", false);
+            }
+            if (list.size() == 0) {
+                model.addAttribute("errorList", false);
+                model.addAttribute("user", rateService.getUserByPrincipal(principal));
+                return "change_rate_moder";
+            }
+
+            max = list.size();
+            log.info("СЧЁТ!: " + index);
+            model.addAttribute("next", next);
             model.addAttribute("user", rateService.getUserByPrincipal(principal));
+            model.addAttribute("errorList", true);
+            Rate rate;
+            if (flag) {
+                if ((next == "")) {
+                    index = 0;
+                    flag = false;
+                }
+                if ((next != "")) {
+                    index = (index + 1 + max) % max;
+                    rate = list.get(index);
+                    /*log.info("ЮЗЕРЫ ТЕКУЩЕГО ТАРИФА ===  " + rate);*/
+                    model.addAttribute("rate", rate);
+                    return "change_rate_moder";
+                }
+            }
+            return "change_rate_moder";
+        } else {
+            if (list.size() < 2) {
+                model.addAttribute("errorPointers", true);
+            } else {
+                model.addAttribute("errorPointers", false);
+            }
+            if (list.size() == 0) {
+                model.addAttribute("errorList", false);
+                model.addAttribute("user", rateService.getUserByPrincipal(principal));
+                return "change_rate";
+            }
+
+            max = list.size();
+            log.info("СЧЁТ!: " + index);
+            model.addAttribute("next", next);
+            model.addAttribute("user", rateService.getUserByPrincipal(principal));
+            model.addAttribute("errorList", true);
+            Rate rate;
+            if (flag) {
+                if ((next == "")) {
+                    index = 0;
+                    flag = false;
+                }
+                if ((next != "")) {
+                    index = (index + 1 + max) % max;
+                    rate = list.get(index);
+                    /*log.info("ЮЗЕРЫ ТЕКУЩЕГО ТАРИФА ===  " + rate);*/
+                    model.addAttribute("rate", rate);
+                    return "change_rate";
+                }
+            }
             return "change_rate";
         }
 
-        max = list.size();
-        log.info("СЧЁТ!: " + index);
-        model.addAttribute("next", next);
-        model.addAttribute("user", rateService.getUserByPrincipal(principal));
-        model.addAttribute("errorList", true);
-        Rate rate;
-        if (flag) {
-            if ((next == "")) {
-                index = 0;
-                flag = false;
-            }
-            if ((next != "")) {
-                index = (index + 1 + max) % max;
-                rate = list.get(index);
-                /*log.info("ЮЗЕРЫ ТЕКУЩЕГО ТАРИФА ===  " + rate);*/
-                model.addAttribute("rate", rate);
-                return "change_rate";
-            }
-        }
-        return "change_rate";
     }
     @PostMapping("/changeRate/pre")
     public String rateInfoPre(/*@PathVariable Long id,*/ Model model/*, String next*/, String pre, Principal principal) {
         list = new ArrayList<Rate>(rateService.takeAll());
-        if (list.size() < 2) {
-            model.addAttribute("errorPointers", true);
-        } else {
-            model.addAttribute("errorPointers", false);
-        }
-        if (list.size() == 0) {
-            model.addAttribute("errorList", false);
-            model.addAttribute("user", rateService.getUserByPrincipal(principal));
-            return "change_rate";
-        }
-        max = list.size();
-        log.info("СЧЁТ!: " + index);
-        model.addAttribute("pre", pre);
-        model.addAttribute("user", rateService.getUserByPrincipal(principal));
-        model.addAttribute("errorList", true);
-        Rate rate;
-
-        if (flag) {
-            if ((pre == "")) {
-                index = 0;
-                flag = false;
+        User user = rateService.getUserByPrincipal(principal);
+        if (user.isModerator()) {
+            if (list.size() < 2) {
+                model.addAttribute("errorPointers", true);
+            } else {
+                model.addAttribute("errorPointers", false);
             }
-            if ((pre != "")){
-                index = (index - 1 + max) % max;
-                rate = list.get(index);
-                model.addAttribute("rate", rate);
+            if (list.size() == 0) {
+                model.addAttribute("errorList", false);
+                model.addAttribute("user", rateService.getUserByPrincipal(principal));
+                return "change_rate_moder";
+            }
+            max = list.size();
+            log.info("СЧЁТ!: " + index);
+            model.addAttribute("pre", pre);
+            model.addAttribute("user", rateService.getUserByPrincipal(principal));
+            model.addAttribute("errorList", true);
+            Rate rate;
+
+            if (flag) {
+                if ((pre == "")) {
+                    index = 0;
+                    flag = false;
+                }
+                if ((pre != "")) {
+                    index = (index - 1 + max) % max;
+                    rate = list.get(index);
+                    model.addAttribute("rate", rate);
+                    return "change_rate_moder";
+                }
+            }
+            return "change_rate_moder";
+        } else {
+            if (list.size() < 2) {
+                model.addAttribute("errorPointers", true);
+            } else {
+                model.addAttribute("errorPointers", false);
+            }
+            if (list.size() == 0) {
+                model.addAttribute("errorList", false);
+                model.addAttribute("user", rateService.getUserByPrincipal(principal));
                 return "change_rate";
             }
+            max = list.size();
+            log.info("СЧЁТ!: " + index);
+            model.addAttribute("pre", pre);
+            model.addAttribute("user", rateService.getUserByPrincipal(principal));
+            model.addAttribute("errorList", true);
+            Rate rate;
+
+            if (flag) {
+                if ((pre == "")) {
+                    index = 0;
+                    flag = false;
+                }
+                if ((pre != "")) {
+                    index = (index - 1 + max) % max;
+                    rate = list.get(index);
+                    model.addAttribute("rate", rate);
+                    return "change_rate";
+                }
+            }
+            return "change_rate";
         }
-        return "change_rate";
     }
 
 
