@@ -451,4 +451,51 @@ public class UserService implements UserDetailsService {
     }
 
 
+    public void statisticOfInternet(User user, Double/*String*/ internet) {
+        user.setStatisticOfInternetOne(user.getStatisticOfInternetTwo());
+        user.setStatisticOfInternetTwo(user.getStatisticOfInternetThree());
+        user.setStatisticOfInternetThree(internet);
+        //saveUser(user);
+        //log.info("ГБ за 3 месяца: " + user.getStatisticOfInternetOne() + " ; " + user.getStatisticOfInternetTwo() + " ; " + user.getStatisticOfInternetThree());
+
+
+        /*Pattern pattern = Pattern.compile("\\d+");
+        Matcher matcher = pattern.matcher(internet);
+        String our = user.getStatisticOfInternet();
+        our += internet + " ";
+        ArrayList<Double> arr = new ArrayList<>();
+        int index = 0;
+        while (matcher.find()) {
+            System.out.println(matcher.group());
+           // Collections.rotate(arr, -1);
+            arr.add(index-1, Double.valueOf(matcher.group()));
+            log.info("Вывод каждого элемента = " + arr.get(index));
+            index++;
+        }
+        String statistic = "";
+        for (int i = 0; i < arr.size(); i++) {
+            statistic = statistic +  arr.get(i) + " ";
+        }
+        user.setStatisticOfInternet(statistic);*/
+
+    }
+
+    public void statisticOfMinutes(User user, Integer minutes) {
+        user.setStatisticOfMinutesOne(user.getStatisticOfMinutesTwo());
+        user.setStatisticOfMinutesTwo(user.getStatisticOfMinutesThree());
+        user.setStatisticOfMinutesThree(minutes);
+        //saveUser(user);
+       //log.info("Минуты за каждый месяц: " + user.getStatisticOfMinutesOne() + " ; " + user.getStatisticOfMinutesTwo() + " ; " + user.getStatisticOfFinanceThree());
+    }
+
+    public void statisticOfFinance(User user, Integer finance) {
+        user.setStatisticOfFinanceOne(user.getStatisticOfFinanceTwo());
+        user.setStatisticOfFinanceTwo(user.getStatisticOfFinanceThree());
+        user.setStatisticOfFinanceThree(finance);
+        //saveUser(user);
+        //log.info("Деньги за каждый месяц: " + user.getStatisticOfFinanceOne() + " ; " + user.getStatisticOfFinanceTwo() + " ; " + user.getStatisticOfFinanceThree());
+    }
+
+
+
 }

@@ -20,8 +20,6 @@ public class Rate {
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id")
     private Long id;
-
-
     @Column(name = "name", unique = true)
     private String name;
     @Column(name = "description", columnDefinition = "text")

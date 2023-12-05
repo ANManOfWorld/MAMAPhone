@@ -266,7 +266,9 @@ public class UserController {
     }*/
 
     @GetMapping("/callsFinance")
-    public String showCallsAndFinance() {
+    public String showCallsAndFinance(Model model, Principal principal) {
+        User user = rateService.getUserByPrincipal(principal);
+        model.addAttribute("user", user);
         return "calls_finance";
     }
 

@@ -37,10 +37,116 @@ public class User implements UserDetails {
         this.birth = birth;
     }
 
-
-
     @Column(name = "dateConnect")
     private Calendar calendar;
+
+
+    @Column(name = "statisticOfInternet1")
+    private Double statisticOfInternetOne = 0.0;
+    @Column(name = "statisticOfInternet2")
+    private Double statisticOfInternetTwo = 0.0;
+    @Column(name = "statisticOfInternet3")
+    private Double statisticOfInternetThree = 0.0;
+
+
+    //private String statisticOfMinutes = "0 0 0 ";
+    @Column(name = "statisticOfMinutes1")
+    private Integer statisticOfMinutesOne = 0;
+
+    @Column(name = "statisticOfMinutes2")
+    private Integer statisticOfMinutesTwo = 0;
+
+    @Column(name = "statisticOfMinutes3")
+    private Integer statisticOfMinutesThree = 0;
+
+
+    //private String statisticOfFinance = "0 0 0 ";
+    @Column(name = "statisticOfFinance1")
+    private Integer statisticOfFinanceOne = 0;
+
+    @Column(name = "statisticOfFinance2")
+    private Integer statisticOfFinanceTwo = 0;
+
+    @Column(name = "statisticOfFinance3")
+    private Integer statisticOfFinanceThree = 0;
+    public Double getStatisticOfInternetOne() {
+        return statisticOfInternetOne;
+    }
+
+
+    public void setStatisticOfInternetOne(Double statisticOfInternetOne) {
+        this.statisticOfInternetOne = statisticOfInternetOne;
+    }
+
+    public Double getStatisticOfInternetTwo() {
+        return statisticOfInternetTwo;
+    }
+
+    public void setStatisticOfInternetTwo(Double statisticOfInternetTwo) {
+        this.statisticOfInternetTwo = statisticOfInternetTwo;
+    }
+
+    public Double getStatisticOfInternetThree() {
+        return statisticOfInternetThree;
+    }
+
+    public void setStatisticOfInternetThree(Double statisticOfInternetThree) {
+        this.statisticOfInternetThree = statisticOfInternetThree;
+    }
+
+    public Integer getStatisticOfMinutesOne() {
+        return statisticOfMinutesOne;
+    }
+
+    public void setStatisticOfMinutesOne(Integer statisticOfMinutesOne) {
+        this.statisticOfMinutesOne = statisticOfMinutesOne;
+    }
+
+    public Integer getStatisticOfMinutesTwo() {
+        return statisticOfMinutesTwo;
+    }
+
+    public void setStatisticOfMinutesTwo(Integer statisticOfMinutesTwo) {
+        this.statisticOfMinutesTwo = statisticOfMinutesTwo;
+    }
+
+    public Integer getStatisticOfMinutesThree() {
+        return statisticOfMinutesThree;
+    }
+
+    public void setStatisticOfMinutesThree(Integer statisticOfMinutesThree) {
+        this.statisticOfMinutesThree = statisticOfMinutesThree;
+    }
+
+    public Integer getStatisticOfFinanceOne() {
+        return statisticOfFinanceOne;
+    }
+
+    public void setStatisticOfFinanceOne(Integer statisticOfFinanceOne) {
+        this.statisticOfFinanceOne = statisticOfFinanceOne;
+    }
+
+    public Integer getStatisticOfFinanceTwo() {
+        return statisticOfFinanceTwo;
+    }
+
+    public void setStatisticOfFinanceTwo(Integer statisticOfFinanceTwo) {
+        this.statisticOfFinanceTwo = statisticOfFinanceTwo;
+    }
+
+    public Integer getStatisticOfFinanceThree() {
+        return statisticOfFinanceThree;
+    }
+
+    public void setStatisticOfFinanceThree(Integer statisticOfFinanceThree) {
+        this.statisticOfFinanceThree = statisticOfFinanceThree;
+    }
+
+
+
+
+
+
 
 
 

@@ -62,6 +62,9 @@ public class BillingService implements CommandLineRunner {
                 User user = users.get(i);
                 Calendar connectionDate = user.getCalendar();
                 if (connectionDate == null) {
+                    userService.statisticOfInternet(user, 0.0);
+                    userService.statisticOfMinutes(user, 0);
+                    userService.statisticOfFinance(user, 0);
                     continue;
                 }
 
@@ -92,10 +95,10 @@ public class BillingService implements CommandLineRunner {
                         user.setSumOfDept(sum);
                         userRepository.save(user);
                     }
-                    log.info("Общая сумма платежа: " + user.getSumOfDept());
+                    /*log.info("Общая сумма платежа: " + user.getSumOfDept());
                     log.info("Дата текущая = " + current.getTime());
                     log.info("Дата оплаты = " + payment.getTime());
-
+*/
                     //payment.add(Calendar.SECOND,30);
                     Long id = 1L;
                     payment.add(Calendar.SECOND, timeManagerService.findTimeManager(id).getSeconds());
@@ -108,12 +111,20 @@ public class BillingService implements CommandLineRunner {
                             user.setBalance(user.getBalance() - user.getSumOfDept()  /*user.getCurrentRate().getPrice()*/);
 
                             log.info("Оплачено = " + user.getSumOfDept());
+                            userService.statisticOfInternet(user, user.getCurrentRate().getCountOfTrafficInternet() - user.getInternet());
+                            userService.statisticOfMinutes(user, user.getCurrentRate().getCountOfMinutes() - user.getMinutes());
+                            userService.statisticOfFinance(user, user.getSumOfDept());
+
                             user.setSumOfDept(0);
                             user.setMinutes(user.getCurrentRate().getCountOfMinutes());
                             user.setInternet(user.getCurrentRate().getCountOfTrafficInternet());
                             userRepository.save(user);
                         } else {
                             user.setBalance(user.getBalance() - user.getSumOfDept()  /*user.getCurrentRate().getPrice()*/);
+
+                            userService.statisticOfInternet(user, 0.0);
+                            userService.statisticOfMinutes(user, 0);
+                            userService.statisticOfFinance(user, user.getSumOfDept());
                             log.info("Оплачено = " + user.getSumOfDept());
                             user.setSumOfDept(0);
 
