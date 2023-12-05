@@ -20,11 +20,11 @@
             <div class="custom">
                 <div class="buttons">
 
-
-                    <button class="edit-button">
-                        <div class="edit-text">Редактировать</div> <#--ДОПИСАТЬ ССЫЛКУ НА РЕДАЧ-->
-                    </button>
-
+                    <a href="/billing_change/${rate.id}">
+                        <button class="edit-button">
+                            <div class="edit-text">Редактировать</div> <#--ДОПИСАТЬ ССЫЛКУ НА РЕДАЧ-->
+                        </button>
+                    </a>
                     <form action="/chooseRate/${rate.id}" method="post">
                         <button class="link-button">
                             <div class="link-text">Подключить</div>

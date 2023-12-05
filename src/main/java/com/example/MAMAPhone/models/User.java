@@ -1,6 +1,8 @@
 package com.example.MAMAPhone.models;
 
 import com.example.MAMAPhone.models.enums.Role;
+import lombok.AllArgsConstructor;
+import lombok.Data;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -14,6 +16,8 @@ import java.util.*;
 
 @Entity // класс является сущностью и будет сохраняться в БД
 @Table(name = "users")
+@Data //аннотация сгенирует при компиляции необходимый код от LOMBOK
+@AllArgsConstructor
 //аннотация сгенирует при компиляции необходимый код от LOMBOK
 public class User implements UserDetails {
 
@@ -29,16 +33,13 @@ public class User implements UserDetails {
 
     @Column(name = "birth")
     private String birth = "";
-    public String getBirth() {
-        return birth;
-    }
-
-    public void setBirth(String birth) {
-        this.birth = birth;
-    }
 
     @Column(name = "dateConnect")
     private Calendar calendar;
+
+    @Column(name = "changeInformationRateFlag")
+    private Boolean changeInformationRateFlag = false;
+
 
 
     @Column(name = "statisticOfInternet1")
@@ -256,7 +257,13 @@ public class User implements UserDetails {
 
 
 
+    public String getBirth() {
+        return birth;
+    }
 
+    public void setBirth(String birth) {
+        this.birth = birth;
+    }
 
     public Double getSaveTraffic() {
         return saveTraffic;

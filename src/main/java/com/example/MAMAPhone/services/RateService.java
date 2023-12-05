@@ -83,6 +83,53 @@ public class RateService {
         return "";
     }
 
+    public String changeRate(Rate rateCur, Rate rate) throws IOException {
+
+        if (rateRepository.searchByName(rate.getName()) != null) {
+            return "Тариф с таким названием уже существует. Укажите новое";
+        }
+
+        if (rate.getPrice() > 99000) {
+            return "Стоимость тарифа не может превышать 99000 руб.";
+        }
+        if (rate.getPrice() < 1) {
+            return "Стоимость тарифа не может быть ниже 1 руб.";
+        }
+        if (rate.getCountOfMinutes() > 9999) {
+            return "Количество минут не может превышать 9999 минут.";
+        }
+        if (rate.getCountOfTrafficInternet() > 9999) {
+            return "Количество ГБ не может превышать 9999 ГБ.";
+        }
+        if (rate.getDescription().length() > 255) {
+            return "Длина описания не может превышать 255 символов.";
+        }
+        if (rate.getName().length() > 25) {
+            return "Количество символов в названии тарифа не может превышать 25.";
+        }
+        log.info("Saving new rate. name: {} || description: {}", rate.getName(), rate.getDescription());
+       // rate.setChangeInformationRateFlag(true);
+
+        rateCur.setName(rate.getName());
+        rateCur.setPrice(rate.getPrice());
+        rateCur.setDescription(rate.getDescription());
+        rateCur.setCountOfMinutes(rate.getCountOfMinutes());
+        rateCur.setCountOfTrafficInternet(rate.getCountOfTrafficInternet());
+
+        List<User> users = rateCur.getUsers();
+        for (int i = 0; i < users.size(); i++) {
+            users.get(i).setDateOfPayment(null);
+            users.get(i).setCurrentRate(null);
+            users.get(i).setChangeInformationRateFlag(true);
+            log.info("Email user'a, которого мы отвязываем от тарифа: " + users.get(i).getEmail());
+        }
+        rateRepository.save(rateCur);
+        return "";//"Условия тарифа были изменены. Условия стали слудеющими: " + rate.getName() + ", " + rate.getPrice() + "руб/мес, " + rate.getCountOfTrafficInternet() + "ГБ, " + rate.getCountOfMinutes() + "Мин";
+    }
+
+
+
+
     public User getUserByPrincipal(Principal principal) {
         if (principal == null) return new User();
         return userRepository.findByEmail(principal.getName());

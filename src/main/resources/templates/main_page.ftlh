@@ -31,6 +31,12 @@
 </head>
 <body>
 
+<#if changeInformationRateFlag??>
+    <script>
+        alert("Условия тарифа были изменены. Вы были отключены от тарифа. Чтобы пользоваться услугами, выберите новый тариф.");
+    </script>
+</#if>
+
 
 <div class="parent">
     <div class="group-child"></div>
@@ -124,6 +130,7 @@
 
 
     <script>
+
 
         const callback = () => {
             alert("Наша эл. почта для связи: maximumega@yandex.ru");

@@ -32,7 +32,7 @@ public class TimeManagerController {
         return "redirect:/timeManager";
     }
 
-    /*@PostMapping("/timeManager/create") //для создания первого таймера
+    /*@PostMapping("/timeManager/create")                                                       //для создания первого таймера
     public String createTimeManager(@ModelAttribute("time") TimeManager timeManager, Model model) {
         timeManagerService.createTimeManager(timeManager);
         return "redirect:/timeManager";

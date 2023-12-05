@@ -19,10 +19,11 @@
             <div class="custom">
                 <div class="buttons">
 
-                    <#--ДОПИСАТЬ ССЫЛКУ НА РЕДАЧ!!! -->
-                    <button class="edit-button">
-                        <div class="edit-text">Редактировать</div>
-                    </button>
+                    <a href="/billing_change/${rate.id}">
+                        <button class="edit-button">
+                            <div class="edit-text">Редактировать</div>
+                        </button>
+                    </a>
 
 
                     <div class="inactive-button">

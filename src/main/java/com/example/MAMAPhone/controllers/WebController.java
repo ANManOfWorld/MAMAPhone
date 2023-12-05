@@ -60,6 +60,10 @@ public class WebController { //прием HTTP запросов
             return "main_page_unauthorized";
         } else {
             //return "billing";
+            if (user.getChangeInformationRateFlag()) {
+                //log.info("ФЛАГ ДООЖЕН ВЫВЕСТИСЬ В ГЛАВНОЙ!!!");
+                model.addAttribute("changeInformationRateFlag", "Условия тарифа были изменены. Вы были отключены от тарифа. Чтобы пользоваться услугами, выберите новый тариф.");
+            }
             return "main_page";
         }
     }
@@ -375,6 +379,39 @@ public class WebController { //прием HTTP запросов
 
         return "billing";
     }
+
+
+
+    @GetMapping("/billing_change/{id}")
+    public String billing_change_delete(@PathVariable(name = "id") Long id, Model model, Principal principal) {
+        //model.addAttribute("rates",rateService.takeAll()/* rateService.listRates(name)*/);
+        model.addAttribute("rate", rateService.getRateById(id));
+        model.addAttribute("user", rateService.getUserByPrincipal(principal));
+
+        return "billing_change";
+    }
+
+    @PostMapping("/billing_change/change/{id}")
+    public String billing_change (@PathVariable(name = "id") Long id, Model model, Principal principal, Rate rate) throws IOException {
+        String errorRate = rateService.changeRate(rateService.getRateById(id), rate/*rate*/);
+        model.addAttribute("user", rateService.getUserByPrincipal(principal));
+        model.addAttribute("rate", rateService.getRateById(id));
+
+        if (!errorRate.equals("")) {
+            log.info("Ошибка изменения тарифа = " + errorRate);
+            model.addAttribute("Change", errorRate);
+            return "billing_change";
+        }
+        if (rateService.getUserByPrincipal(principal).getChangeInformationRateFlag()) {
+            //log.info("ФЛАГ ДООЖЕН ВЫВЕСТИСЬ ПОСЛЕ ИЗМЕНЕНИЯ!!!");
+            model.addAttribute("changeInformationRateFlag", "Условия тарифа были изменены. Вы были отключены от тарифа.\nЧтобы пользоваться услугами, выберите новый тариф.");
+        }
+        //model.addAttribute("errorChangeRate", errorRate);
+        return "redirect:/";
+    }
+
+
+
 
 
 /* ВКЛАДКА НАСТРОЙКИ */

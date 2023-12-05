@@ -111,7 +111,7 @@ public class UserService implements UserDetailsService {
             user.setBalance(user.getBalance() - rate.getPrice());
             user.setSaveMinutes(rate.getCountOfMinutes());
             user.setSaveTraffic(rate.getCountOfTrafficInternet());
-
+            user.setChangeInformationRateFlag(false);
 
             user.setCalendar(new GregorianCalendar());               //привязка даты подключения тарифа
             userRepository.save(user);

@@ -16,15 +16,18 @@ public class TimeManagerService {
 
     public void createTimeManager(TimeManager timeManager, Long id) {
         //Long id = timeManager.getId();
-        log.info("TimeManager with id = " + id + " был найден и изменён/создан.");
-        TimeManager time = timeManagerRepository.searchById(id);
-        time.setSeconds(timeManager.getSeconds());
-        time.setMinutes(timeManager.getMinutes());
-        time.setHours(timeManager.getHours());
-        time.setDays(timeManager.getDays());
-        time.setMonth(timeManager.getDays());
+            log.info("TimeManager with id = " + id + " был найден и изменён/создан.");
+            //TimeManager time = new TimeManager();                              //Для создания первого таймера
+        if (timeManager.getSeconds() >= 20) {
+            TimeManager time = timeManagerRepository.searchById(id);                //убрать эту надо и раскоментить вверхнюю
+            time.setSeconds(timeManager.getSeconds());
+            time.setMinutes(timeManager.getMinutes());
+            time.setHours(timeManager.getHours());
+            time.setDays(timeManager.getDays());
+            time.setMonth(timeManager.getDays());
 
-        timeManagerRepository.save(timeManager);
+            timeManagerRepository.save(timeManager);
+        }
     }
 
     public TimeManager findTimeManager(Long id) {
