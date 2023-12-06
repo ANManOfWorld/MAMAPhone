@@ -31,6 +31,22 @@ public class User implements UserDetails {
     @Email(message = "Email должен быть валидным.", regexp = "^[a-zA-Z0-9_!#$%&'*+/=?`{|}~^.-]+@[a-zA-Z0-9.-]+$")
     private String email;
 
+
+    @Column(name = "warningOfResources")
+    //private Integer warningOfResources = 0; //подключён ли флаг(уведомление)
+    private Boolean warningOfResources = false;
+
+    @Column(name = "conditionOfResources")
+    //private Integer conditionOfResources = 0;  //проверка на нуль
+    private Boolean conditionOfResources = false;
+
+    @Column(name = "warningOfPayment")
+    private Boolean warningOfPayment = false; //подключён ли флаг(уведомление)
+
+    @Column(name = "conditionOfPayment")
+    private Boolean conditionOfPayment = false; //проверка на наличие факта оплаты
+
+
     @Column(name = "birth")
     private String birth = "";
 

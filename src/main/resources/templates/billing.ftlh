@@ -117,7 +117,7 @@
 
 <#if errorRate??>
     <script>
-        alert(${errorRate});
+        alert("${errorRate}");
     </script>
 </#if>
 

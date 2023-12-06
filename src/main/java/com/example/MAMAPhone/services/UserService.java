@@ -113,6 +113,13 @@ public class UserService implements UserDetailsService {
             user.setSaveTraffic(rate.getCountOfTrafficInternet());
             user.setChangeInformationRateFlag(false);
 
+            user.setConditionOfResources(false); //флаг, говорящий о достатке ресурсов
+            if (user.getBalance() < rate.getPrice()) {
+                log.info("ПОСТАВИЛИ ФЛАГ PAYMENT на выполнение, баланс = " + user.getBalance());
+                user.setConditionOfPayment(true); //флаг, ставящий скорое предупреждение о пополнении баланса
+            } else {
+                user.setConditionOfPayment(false); //флаг, обнуляющий скорое предупреждение о пополнении баланса
+            }
             user.setCalendar(new GregorianCalendar());               //привязка даты подключения тарифа
             userRepository.save(user);
             log.info("Дата когда подключили = " + user.getCalendar().getTime());
@@ -127,6 +134,28 @@ public class UserService implements UserDetailsService {
             return "Недостаточно средств на балансе для изменения тарифа.";
         }
     }
+
+    public void conditionOfResources(User user, Boolean flag) {
+        user.setConditionOfResources(flag);
+        userRepository.save(user);
+    }
+
+    public void warningOfResources(User user, Boolean flag) {
+        user.setWarningOfResources(flag);
+        userRepository.save(user);
+    }
+
+    public void warningOfPayment(User user, Boolean flag) {
+        user.setWarningOfPayment(flag);
+        userRepository.save(user);
+    }
+
+    public void conditionOfPayment(User user, Boolean flag) {
+        user.setConditionOfPayment(flag);
+        userRepository.save(user);
+    }
+
+
 
     public String topUpBalance(User user, Integer sum) {
         if (sum > 0) {

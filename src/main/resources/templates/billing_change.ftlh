@@ -48,7 +48,7 @@
                     <div class="div7">
                         <div class="rectangle-div"></div>
                         <input class="item" type="text" name="countOfMinutes" placeholder="1" min="1" max="9999"
-                               maxlength="4" value="${rate.countOfMinutes}"/>
+                               maxlength="4" value="0<#--${rate.countOfMinutes}-->"/>
                         <script>
                             const input_item = document.querySelector('.item');
 
@@ -75,7 +75,7 @@
                             <span>Ежемесячная абонентская плата: </span>
                         </p>
                         <input class="child1" type="text" name="countOfTrafficInternet" placeholder="1" min="1"
-                               max="9999" maxlength="4" value="${rate.countOfTrafficInternet}"/>
+                               max="9999" maxlength="4" value="0<#--${rate.countOfTrafficInternet}-->"/>
 
                         <script>
                             const input_child1 = document.querySelector('.child1');
@@ -86,7 +86,7 @@
                             });
                         </script>
                         <input class="child2" type="text" name="price" min="1" max="99000" maxlength="5"
-                               placeholder="1" value="${rate.price}"/>
+                               placeholder="1" value="0<#--${rate.price}-->"/>
 
                         <script>
                             const input_child2 = document.querySelector('.child2');

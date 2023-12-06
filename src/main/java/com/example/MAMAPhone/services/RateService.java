@@ -45,8 +45,8 @@ public class RateService {
     // ---------------------------------------------- Фотографии
     public String saveRate(Rate rate,/* MultipartFile file, */Principal principal) throws IOException {
         //getUserByPrincipal(principal);
-        if (rateRepository.searchByName(rate.getName()) != null/*findAll().contains(rate)*/) {
-            return "Тариф с таким названием уже существует.";
+        if (rateRepository.searchByName(rate.getName()) != null) {
+            return "Тариф с таким названием уже существует. Укажите новое";
         }
 
         if (rate.getPrice() > 99000) {
@@ -67,6 +67,29 @@ public class RateService {
         if (rate.getName().length() > 25) {
             return "Количество символов в названии тарифа не может превышать 25.";
         }
+
+        /*if (rateRepository.searchByName(rate.getName()) != null*//*findAll().contains(rate)*//*) {
+            return "Тариф с таким названием уже существует.";
+        }
+
+        if (rate.getPrice() > 99000) {
+            return "Стоимость тарифа не может превышать 99000 руб.";
+        }
+        if (rate.getPrice() < 1) {
+            return "Стоимость тарифа не может быть ниже 1 руб.";
+        }
+        if (rate.getCountOfMinutes() > 9999) {
+            return "Количество минут не может превышать 9999 минут.";
+        }
+        if (rate.getCountOfTrafficInternet() > 9999) {
+            return "Количество ГБ не может превышать 9999 ГБ.";
+        }
+        if (rate.getDescription().length() > 255) {
+            return "Длина описания не может превышать 255 символов.";
+        }
+        if (rate.getName().length() > 25) {
+            return "Количество символов в названии тарифа не может превышать 25.";
+        }*/
        /* Image image;
         if (file.getSize() != 0) {
             image = toImageEntity(file);

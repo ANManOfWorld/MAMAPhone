@@ -37,6 +37,18 @@
     </script>
 </#if>
 
+<#if WarningOfResources == true && ConditionOfResources == true>
+    <script>
+        alert("Ваш пакет частично/полностью исчерпан.");
+    </script>
+</#if>
+
+<#if WarningOfPayment == true && ConditionOfPayment == true>
+    <script>
+        alert("На Вашем балансе недостаточно средств для следующего списания. Пополните Ваш счёт.");
+    </script>
+</#if>
+
 
 <div class="parent">
     <div class="group-child"></div>
@@ -105,7 +117,9 @@
         </button>
     </form>
 
-    <button class="free-icon-bell-1157000-1"></button>
+    <a href="/appSettings">
+        <button class="free-icon-bell-1157000-1"></button>
+    </a>
 
     <#if (user.isModerator() && user.isAdmin())>
         <a href="/billing">

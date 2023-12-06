@@ -52,8 +52,8 @@
             <th>${user.id}</th>
             <th>${user.email}</th>
             <form action="/decrement/create/${user.id}" method="post">
-                <th><input type="number" value="${user.minutes}" name="minutes" ></th>
-                <th><input type="number" value="${user.internet}" name="internet" ></th>
+                <th><input type="number" value="0" name="minutes"></th>
+                <th><input type="number" value="0" name="internet" ></th>
                 <th><input type="submit" value="Изменить"></th>
             </form>
 

@@ -33,14 +33,14 @@ public class WebController { //прием HTTP запросов
     public String billing(/*@RequestParam(name = "name", required = false) String name,*/ Model model, Principal principal) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         User user = rateService.getUserByPrincipal(principal);
-       // model.addAttribute("rates", rateService.listRates(name));
+        // model.addAttribute("rates", rateService.listRates(name));
         model.addAttribute("user", user);
 
         Double minutesInPercent = 0.0;
         String minutes = "0%";
         Double internetOfPercent = 0.0;
         String internet = "0%";
-        if (user.getCurrentRate() != null || ((user.getCurrentRate() == null) && (user.getCalendar()!= null)) ) {
+        if (user.getCurrentRate() != null || ((user.getCurrentRate() == null) && (user.getCalendar() != null))) {
             //if (user.getCurrentRate().getCountOfMinutes() > 0) {
             if (user.getSaveMinutes() > 0) {
                 //log.info("user.getMinutes() = " + user.getMinutes() + " ; user.getCurrentRate() = " + user.getCurrentRate().getCountOfMinutes());
@@ -59,11 +59,46 @@ public class WebController { //прием HTTP запросов
         if (principal == null) {
             return "main_page_unauthorized";
         } else {
-            //return "billing";
             if (user.getChangeInformationRateFlag()) {
-                //log.info("ФЛАГ ДООЖЕН ВЫВЕСТИСЬ В ГЛАВНОЙ!!!");
                 model.addAttribute("changeInformationRateFlag", "Условия тарифа были изменены. Вы были отключены от тарифа. Чтобы пользоваться услугами, выберите новый тариф.");
             }
+
+            boolean WarningOfResources = false;
+            boolean ConditionOfResources = false;
+            if (user.getWarningOfResources()) {
+                model.addAttribute("WarningOfResources", true);
+                WarningOfResources = true;
+            } else {
+                model.addAttribute("WarningOfResources", false);
+                WarningOfResources = false;
+            }
+            if (user.getConditionOfResources()) {
+                model.addAttribute("ConditionOfResources", true);
+                ConditionOfResources = true;
+            } else {
+                model.addAttribute("ConditionOfResources", false);
+                ConditionOfResources = false;
+            }
+            //log.info("Уведомление = " + WarningOfResources + ", в то время как истинное = " + user.getWarningOfResources());
+            //log.info("Весь трафик израсходован = " + ConditionOfResources + ", в то время как истинное = " + user.getConditionOfResources());
+            boolean WarningOfPayment = false;
+            boolean ConditionOfPayment = false;
+            if (user.getWarningOfPayment()) {
+                model.addAttribute("WarningOfPayment", true);
+                WarningOfPayment = true;
+            } else {
+                model.addAttribute("WarningOfPayment", false);
+                WarningOfPayment = false;
+            }
+            if (user.getConditionOfPayment()) {
+                model.addAttribute("ConditionOfPayment", true);
+                ConditionOfPayment = true;
+            } else {
+                model.addAttribute("ConditionOfPayment", false);
+                ConditionOfPayment = false;
+            }
+
+
             return "main_page";
         }
     }
@@ -73,6 +108,7 @@ public class WebController { //прием HTTP запросов
     private Integer max = 0;
     private Boolean flag = false;
     List<Rate> list;
+
     @GetMapping("/changeRate")
     public String rateInfo(/*@PathVariable Long id,*/ Model model, Principal principal) {
         index = 0;
@@ -136,6 +172,7 @@ public class WebController { //прием HTTP запросов
             }
         }
     }
+
     @PostMapping("/changeRate/next")
     public String rateInfoNext(/*@PathVariable Long id,*/ Model model, String next, Principal principal) {
         list = new ArrayList<Rate>(rateService.takeAll());
@@ -231,6 +268,7 @@ public class WebController { //прием HTTP запросов
         }
 
     }
+
     @PostMapping("/changeRate/pre")
     public String rateInfoPre(/*@PathVariable Long id,*/ Model model/*, String next*/, String pre, Principal principal) {
         list = new ArrayList<Rate>(rateService.takeAll());
@@ -342,7 +380,7 @@ public class WebController { //прием HTTP запросов
         return "rate-info-admin";
     }
 
-// ---------------------------------- ДО картинок
+    // ---------------------------------- ДО картинок
    /* @PostMapping("/rate/create")
     public String createRate (Rate rate) {
         rateService.saveRate(rate);
@@ -351,7 +389,7 @@ public class WebController { //прием HTTP запросов
 */
     // ---------------------------------- Картинки
     @PostMapping("/rate/create")
-    public String createRate (/*@RequestParam("file1")MultipartFile file1, */Model model, Rate rate, Principal principal) throws IOException {
+    public String createRate(/*@RequestParam("file1")MultipartFile file1, */Model model, Rate rate, Principal principal) throws IOException {
         String errorRate = rateService.saveRate(rate, /*file1, */principal);
         model.addAttribute("user", rateService.getUserByPrincipal(principal));
         model.addAttribute("rates", rateService.takeAll());
@@ -371,15 +409,13 @@ public class WebController { //прием HTTP запросов
     }
 
 
-
     @GetMapping("/billing")
     public String billing(@RequestParam(name = "name", required = false) String name, Model model, Principal principal) {
-        model.addAttribute("rates",rateService.takeAll()/* rateService.listRates(name)*/);
+        model.addAttribute("rates", rateService.takeAll()/* rateService.listRates(name)*/);
         model.addAttribute("user", rateService.getUserByPrincipal(principal));
 
         return "billing";
     }
-
 
 
     @GetMapping("/billing_change/{id}")
@@ -392,7 +428,7 @@ public class WebController { //прием HTTP запросов
     }
 
     @PostMapping("/billing_change/change/{id}")
-    public String billing_change (@PathVariable(name = "id") Long id, Model model, Principal principal, Rate rate) throws IOException {
+    public String billing_change(@PathVariable(name = "id") Long id, Model model, Principal principal, Rate rate) throws IOException {
         String errorRate = rateService.changeRate(rateService.getRateById(id), rate/*rate*/);
         model.addAttribute("user", rateService.getUserByPrincipal(principal));
         model.addAttribute("rate", rateService.getRateById(id));
@@ -411,10 +447,7 @@ public class WebController { //прием HTTP запросов
     }
 
 
-
-
-
-/* ВКЛАДКА НАСТРОЙКИ */
+    /* ВКЛАДКА НАСТРОЙКИ */
     @GetMapping("/settings")
     public String settings(Model model, Principal principal) {
         model.addAttribute("user", rateService.getUserByPrincipal(principal));
@@ -463,8 +496,8 @@ public class WebController { //прием HTTP запросов
 
         log.info("Передача данных в метод для дальнейшего изменения параметров пользователя.");
         String errorValidName = userService.changeName(user, name);
-        String errorValidLastName =  userService.changeLastName(user, lastName);
-        String errorValidFatherName =  userService.changeFartherName(user, fatherName);
+        String errorValidLastName = userService.changeLastName(user, lastName);
+        String errorValidFatherName = userService.changeFartherName(user, fatherName);
 
         String errorValidEmail = userService.changeEmail(user, email);
 
@@ -503,7 +536,6 @@ public class WebController { //прием HTTP запросов
     }
 
 
-
     @GetMapping("/security")
     public String security(Model model, Principal principal) {
         model.addAttribute("user", rateService.getUserByPrincipal(principal));
@@ -518,6 +550,7 @@ public class WebController { //прием HTTP запросов
 
     final String NUM_OF_CARD = "[0-9][0-9][0-9][0-9]-[0-9][0-9][0-9][0-9]-[0-9][0-9][0-9][0-9]-[0-9][0-9][0-9][0-9]";
     final String CVCstatic = "[0-9][0-9][0-9]";
+
     @PostMapping("/security/change")
     public String func_change_security(Model model, Principal principal, String CVC, String numOfCard) {
         User user = rateService.getUserByPrincipal(principal);
@@ -554,15 +587,12 @@ public class WebController { //прием HTTP запросов
     /* ВКЛАДКА НАСТРОЙКИ */
 
 
-
-
     @GetMapping("/top_up_balance")
     public String appSettings(Model model, Principal principal) {
         User user = rateService.getUserByPrincipal(principal);
         model.addAttribute("user", user);
         return "topUpBalance";
     }
-
 
 
     @GetMapping("/decrement")
@@ -572,22 +602,60 @@ public class WebController { //прием HTTP запросов
     }
 
     @PostMapping("/decrement/create/{id}")
-    public String changeTimeManager(@PathVariable("id") Long id, @ModelAttribute("user") User user, Model model, Double internet, Integer minutes) {
+    public String changeTimeManager(@PathVariable("id") Long id, @ModelAttribute("user") User user, Model model, Double internet, Integer minutes, Principal principal) {
         model.addAttribute("internet", internet);
         model.addAttribute("minutes", minutes);
-        if (internet >= 0) {
+        //if ((internet == null) || (minutes == null)) {
+        if ((internet >= 0) && (internet != null)) {
             if (user.getInternet() >= internet) {
                 userService.changeInternet(id, user.getInternet());
             }
         }
 
-        if (minutes >= 0) {
+        if ((minutes >= 0) && (minutes != null)) {
             if (user.getMinutes() >= minutes) {
                 userService.changeMinutes(id, user.getMinutes());
             }
         }
+        //}
+
+        User user2 = rateService.getUserByPrincipal(principal);
+        log.info("ОСТАЛОСЬ ИНТЕРНЕТА = " + user2.getInternet() + " ; ОСТАЛОСЬ МИНУТ = " + user2.getMinutes());
+        if ((user2.getInternet() == 0.0) || (user2.getMinutes() == 0)) {
+            userService.conditionOfResources(user2, true);
+            //log.info("БЫЛ ПОТРАЧЕН ВЕСЬ ТРАФИК = " + user.getConditionOfResources());
+        }
         return "redirect:/decrement";
     }
 
+
+    @GetMapping("/appSettings")
+    public String appWarnings(Model model, Principal principal) {
+        User user = rateService.getUserByPrincipal(principal);
+        model.addAttribute("user", user);
+        return "app_settings";
+    }
+
+    @PostMapping("/appSettings/change")
+    public String appWarnings_change(Model model, Principal principal, Boolean resources, Boolean paymentTime) {
+        User user = rateService.getUserByPrincipal(principal);
+        model.addAttribute("resources", resources);
+        model.addAttribute("paymentTime", paymentTime);
+        if ((resources == null)) {
+            resources = false;
+            userService.warningOfResources(user, resources);
+        } else if (resources) {
+            userService.warningOfResources(user, resources);
+        }
+
+        if ((paymentTime == null)) {
+            paymentTime = false;
+            userService.warningOfPayment(user, paymentTime);
+        } else if (paymentTime) {
+            userService.warningOfPayment(user, paymentTime);
+        }
+
+        return "redirect:/";
+    }
 
 }

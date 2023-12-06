@@ -339,6 +339,10 @@
     background-repeat: no-repeat;
     background-position: top;
 }
+.item {
+    white-space: nowrap;
+}
+
 .inner,
 .item,
 .rectangle-input {

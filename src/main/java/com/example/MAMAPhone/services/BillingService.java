@@ -40,7 +40,7 @@ public class BillingService implements CommandLineRunner {
             if (!flag) {
                 nextCalendarOfCorrect = calendarOfCorrector;
                 nextCalendarOfCorrect.add(Calendar.SECOND, (timeManagerService.findTimeManager(1l).getSeconds()/2)  );
-                nextCalendarOfCorrect.add(Calendar.MINUTE, timeManagerService.findTimeManager(1l).getMinutes());
+                nextCalendarOfCorrect.add(Calendar.MINUTE, timeManagerService.findTimeManager(1l).getMinutes()/2);
                 nextCalendarOfCorrect.add(Calendar.HOUR, timeManagerService.findTimeManager(1l).getHours());
                 nextCalendarOfCorrect.add(Calendar.DAY_OF_WEEK, timeManagerService.findTimeManager(1l).getDays());    //   (~~~~~) 7 ЗНАЧЕНИЙ ТОЛЬКО!!! (~~~~~)
                 nextCalendarOfCorrect.add(Calendar.MONTH, timeManagerService.findTimeManager(1l).getMonth());
@@ -51,7 +51,7 @@ public class BillingService implements CommandLineRunner {
                 users = new ArrayList<>(userService.list());
                 nextCalendarOfCorrect = calendarOfCorrector;
                 nextCalendarOfCorrect.add(Calendar.SECOND, (timeManagerService.findTimeManager(1l).getSeconds()/2)  );
-                nextCalendarOfCorrect.add(Calendar.MINUTE, timeManagerService.findTimeManager(1l).getMinutes());
+                nextCalendarOfCorrect.add(Calendar.MINUTE, timeManagerService.findTimeManager(1l).getMinutes()/2);
                 nextCalendarOfCorrect.add(Calendar.HOUR, timeManagerService.findTimeManager(1l).getHours());
                 nextCalendarOfCorrect.add(Calendar.DAY_OF_WEEK, timeManagerService.findTimeManager(1l).getDays());    //   (~~~~~) 7 ЗНАЧЕНИЙ ТОЛЬКО!!! (~~~~~)
                 nextCalendarOfCorrect.add(Calendar.MONTH, timeManagerService.findTimeManager(1l).getMonth());
@@ -74,6 +74,10 @@ public class BillingService implements CommandLineRunner {
                     user.setCalendar(null);
                     user.setMinutes(0);
                     user.setInternet(0.0);
+
+                    user.setConditionOfResources(false);
+                    user.setConditionOfPayment(false);
+
                     userService.saveUser(user);
                 }
 
@@ -118,6 +122,16 @@ public class BillingService implements CommandLineRunner {
                             user.setSumOfDept(0);
                             user.setMinutes(user.getCurrentRate().getCountOfMinutes());
                             user.setInternet(user.getCurrentRate().getCountOfTrafficInternet());
+
+                            if ((user.getCurrentRate() != null) && (user.getBalance() < user.getCurrentRate().getPrice())) {
+                                user.setConditionOfPayment(true);
+                                log.info("НАДО ЗАПЛАТИТЬ!!! = " + user.getConditionOfPayment());
+                            } else {
+                                user.setConditionOfPayment(false);
+                            }
+                            user.setConditionOfResources(false);
+
+
                             userRepository.save(user);
                         } else {
                             user.setBalance(user.getBalance() - user.getSumOfDept()  /*user.getCurrentRate().getPrice()*/);
@@ -127,6 +141,9 @@ public class BillingService implements CommandLineRunner {
                             userService.statisticOfFinance(user, user.getSumOfDept());
                             log.info("Оплачено = " + user.getSumOfDept());
                             user.setSumOfDept(0);
+
+                            user.setConditionOfResources(false);
+                            user.setConditionOfPayment(false);
 
                             user.setMinutes(0);
                             user.setInternet(0.0);
