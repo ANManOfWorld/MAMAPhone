@@ -359,7 +359,7 @@ public class UserController {
         log.info("Новый пароль: " + newPassword + "; Старый пароль: " + oldPassword);
         String answerOfPassword = userService.changePassword(rateService.getUserByPrincipal(principal), oldPassword, newPassword);
         model.addAttribute("errorAnswerOfPassword", answerOfPassword);
-        return "/change_password";
+        return "redirect:/";
     }
 
 }
