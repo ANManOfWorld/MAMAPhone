@@ -28,13 +28,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .cors().disable()
                 .csrf().disable()
                 .authorizeRequests()
-                .antMatchers("/",  "/images/**", "/registration", "/static/**")
+                .antMatchers("/", "/registration", "/static/**" /*, "/images/**"*/)
                 .permitAll()
                 .antMatchers( "/admin/**", "/user/**", "/rate/create", "/rate/delete/**", "/billing").hasRole("ADMIN")
-               /* .antMatchers( "/admin/**", "/user/**", "/rate/create", "/rate/delete/**", "/billing").hasRole("MODERATOR") // УДАЛИТЬ*/
+                .antMatchers( "/rate/create", "/rate/delete/**", "/billing").hasRole("MODERATOR") // УДАЛИТЬ
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()
+                .failureUrl("/loginError")
                 .loginPage("/login")
                 .defaultSuccessUrl("/")
                 .permitAll()
