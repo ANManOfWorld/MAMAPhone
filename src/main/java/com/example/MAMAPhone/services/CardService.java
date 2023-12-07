@@ -25,17 +25,17 @@ public class CardService {
         }
     }
 
-    public boolean updateBalanceCard(Long id, Integer balance) {
+    public String updateBalanceCard(Long id, Integer balance) {
         Card card = cardRepository.findById(id).orElse(null);
         log.info("1) номер карты: " + card.getNumOfCard() + ", ПРИШЛА СУММА: " + balance);
         if (cardRepository.findById(id) == null) {
-            return false;
+            return "Номер карты не существует.";
         } else {
             card.setBalance(card.getBalance() + balance);
             log.info("2) Баланс на карте: ", card.getBalance());
             cardRepository.save(card);
-            return true;
         }
+        return "";
     }
 
     public void deleteCard(Long id) {

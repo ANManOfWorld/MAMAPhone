@@ -1,0 +1,293 @@
+.custom {
+    position: absolute;
+    left: 7%;
+}
+
+
+.group-child,
+.group-item {
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-color: #000;
+    width: 100%;
+    height: 100%;
+}
+.group-item {
+    cursor: pointer;
+    border: 0;
+    padding: 0;
+    background-color: #3c3c3c;
+    top: 25px;
+    left: 27.8px;
+    border-radius: 21px;
+    width: 58.5px;
+    height: 59px;
+}
+.group-inner {
+    position: absolute;
+    width: 40.5px;
+    height: 36.8px;
+    top: 20%;
+    left: 15%;
+}
+.rectangle-parent {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #000;
+}
+.b,
+.child,
+.div1 {
+    position: absolute;
+}
+.child {
+    top: 0;
+    left: 0;
+    border-radius: 26px;
+    background-color: #333;
+    width: 497px;
+    height: 90px;
+}
+.b,
+.div1 {
+    top: 12px;
+    left: 116px;
+    display: inline-block;
+    width: 186.5px;
+}
+.div1 {
+    top: 46px;
+    width: 234.9px;
+}
+.user-3-icon {
+    position: absolute;
+    top: 14px;
+    left: 33px;
+    width: 65px;
+    height: 65px;
+    object-fit: cover;
+}
+.div {
+    position: absolute;
+    top: 25px;
+    left: 415px;
+    width: 497px;
+    height: 90px;
+    text-align: left;
+    font-size: var(--font-size-6xl);
+}
+.to-scroll {
+    position: absolute;
+    top: 141px;
+    left: 97px;
+    width: 1089px;
+    height: 470px;
+}
+.group-table {
+    position: absolute;
+    width: 1070px;
+    height: 100px;
+    max-height: 470px;
+}
+.rectangle-button {
+    cursor: pointer;
+    border: 0;
+    padding: 0;
+    background-color: var(--color-salmon);
+    position: absolute;
+    top: 51px;
+    left: 759px;
+    width: 100px;
+    height: 46px;
+}
+.group-child4 {
+    cursor: pointer;
+    border: 0;
+    padding: 0;
+    background-color: var(--color-mediumspringgreen);
+    position: absolute;
+    top: 51px;
+    left: 863px;
+    width: 106px;
+    height: 46px;
+}
+.div6 {
+    position: absolute;
+    top: 20%;
+    left: 10%;
+}
+.div10,
+.div11,
+.div7,
+.div8,
+.div9 {
+    position: absolute;
+    top: 66px;
+    left: 772px;
+}
+.div10,
+.div11,
+.div8,
+.div9 {
+    top: 116px;
+}
+.div10,
+.div11,
+.div9 {
+    top: 166px;
+}
+.div10,
+.div11 {
+    top: 216px;
+}
+.div11 {
+    top: 15px;
+    left: 16px;
+    font-size: var(--font-size-base);
+    font-family: var(--font-inter);
+    color: var(--color-white);
+    text-align: center;
+}
+.group-child6,
+.rectangle-group {
+    cursor: pointer;
+    border: 0;
+    padding: 0;
+    position: absolute;
+    left: 973px;
+    width: 112px;
+    height: 46px;
+}
+.rectangle-group {
+    background-color: transparent;
+    top: 51px;
+}
+.group-child6 {
+    background-color: var(--color-mediumspringgreen);
+    top: 101px;
+}
+.div12,
+.group-child7 {
+    position: absolute;
+    top: 116px;
+    left: 989px;
+}
+.group-child7 {
+    cursor: pointer;
+    border: 0;
+    padding: 0;
+    background-color: var(--color-mediumspringgreen);
+    top: 151px;
+    left: 973px;
+    width: 112px;
+    height: 46px;
+}
+.div13 {
+    position: absolute;
+    top: 166px;
+    left: 989px;
+}
+.group-child9,
+.rectangle-container {
+    cursor: pointer;
+    border: 0;
+    padding: 0;
+    position: absolute;
+    height: 46px;
+}
+.rectangle-container {
+    background-color: transparent;
+    top: 201px;
+    left: 973px;
+    width: 112px;
+}
+.group-child9 {
+    background-color: var(--color-mediumspringgreen);
+    top: 101px;
+    left: 863px;
+    width: 106px;
+}
+.div15,
+.group-child10 {
+    position: absolute;
+    top: 116px;
+    left: 874px;
+}
+.group-child10 {
+    cursor: pointer;
+    border: 0;
+    padding: 0;
+    background-color: var(--color-mediumspringgreen);
+    top: 151px;
+    left: 863px;
+    width: 106px;
+    height: 46px;
+}
+.div16,
+.group-child11 {
+    position: absolute;
+    top: 166px;
+    left: 874px;
+}
+.group-child11 {
+    cursor: pointer;
+    border: 0;
+    padding: 0;
+    background-color: var(--color-mediumspringgreen);
+    top: 201px;
+    left: 863px;
+    width: 106px;
+    height: 46px;
+}
+.div17,
+.group-container {
+    position: absolute;
+    top: 216px;
+    left: 874px;
+}
+.group-container {
+    top: 161px;
+    left: 97px;
+    width: 1089px;
+    height: 251px;
+    font-size: var(--font-size-base);
+}
+.group-parent {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    font-size: var(--font-size-xl);
+    color: var(--color-white);
+    font-family: var(--font-inter);
+}
+.ban-button {
+    background-color: #ff7465;
+    height: 100%;
+    width: 100%;
+}
+.moder-button,
+.admin-button {
+    background-color: #06f2b1;
+    height: 100%;
+    width: 100%;
+}
+.to-scroll {
+    overflow-y: scroll;
+    overflow-x: hidden;
+}
+table {
+    border-color: white;
+    border: 3px solid white;
+}
+td, th {
+    text-align: center;
+    height: 10%;
+}
+tr {
+    height: 50px;
+}

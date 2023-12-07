@@ -1,0 +1,86 @@
+.custom {
+    position: absolute;
+    left: 7%;
+}
+
+
+.group-child,
+.group-item {
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-color: #000;
+    width: 100%;
+    height: 100%;
+}
+.group-item {
+    top: 29px;
+    left: 304px;
+    border-radius: 43px;
+    background-color: #333;
+    width: 660px;
+    height: 121px;
+}
+.b,
+.div {
+    position: absolute;
+    top: 20px;
+    left: 220px;
+}
+.div {
+    top: 61px;
+}
+.user-1-icon {
+    position: absolute;
+    top: 54px;
+    left: 389px;
+    width: 71px;
+    height: 71px;
+    object-fit: cover;
+}
+.group-inner {
+    cursor: pointer;
+    border: 0;
+    padding: 0;
+    background-color: #3c3c3c;
+    position: absolute;
+    top: 25px;
+    left: 28px;
+    border-radius: 21px;
+    width: 59px;
+    height: 59px;
+}
+.arrow-icon {
+    position: absolute;
+    width: 40.5px;
+    height: 36.8px;
+    top: 20%;
+    left: 15%;
+}
+.rectangle-parent {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-color: #000;
+    text-align: left;
+    font-size: var(--font-size-13xl);
+    color: var(--color-white);
+    font-family: var(--font-inter);
+}
+.graphic1,
+.graphic2,
+.graphic3 {
+    position: absolute;
+    width: 405px;
+    height: 400px;
+    bottom: 10px;
+}
+.graphic1 {
+    left: 55px;
+}
+.graphic2 {
+    left: 480px;
+}
+.graphic3 {
+    right: 55px;
+}

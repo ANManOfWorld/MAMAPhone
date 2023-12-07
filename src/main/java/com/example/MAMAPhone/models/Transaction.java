@@ -12,10 +12,10 @@ public class Transaction {
     @Column(name = "id")
     private Long id;
 
-    @Column(name = "idUser", unique = true)
+    @Column(name = "idUser")
     private Long idUser;
 
-    @Column(name = "idCard", unique = true)
+    @Column(name = "idCard")
     private Long idCard;
 
     @Column(name = "sum")
