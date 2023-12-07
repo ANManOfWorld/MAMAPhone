@@ -12,10 +12,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
 import java.security.Principal;
 
 @Controller //связь между компонентами и выполнение действий согласно переданных запросов
@@ -38,9 +36,80 @@ public class UserController {
         return "login";
     }
 
-    final String PHONE_TEMPLATE = "\\+7\\([0-9][0-9][0-9]\\)[0-9][0-9][0-9]-[0-9][0-9]-[0-9][0-9]"/*"+7\\d{10}"*/;
+    @GetMapping("/loginError")
+    public String loginError(Model model) {
+        log.info("СОСАМАСА");
+        model.addAttribute("error", "Неправильные имя и пароль.");
+        return "login";
+    }
+
+    final String PHONE_TEMPLATE = "\\+7 \\([0-9][0-9][0-9]\\)[0-9][0-9][0-9]-[0-9][0-9]-[0-9][0-9]"/*"+7\\d{10}"*/;
     @PostMapping("/registration")
-    public  String createUser (@Valid @ModelAttribute("user") User user, BindingResult bindingResult, Model model, Errors error) {
+    public String createUser(@ModelAttribute("user") User user, BindingResult bindingResult, Model model, String name, String lastName, String fatherName, String email/*, String phone*/, String password) {
+        String phone = user.getPhoneNum();
+        model.addAttribute("name", name);
+        model.addAttribute("lastName", lastName);
+        model.addAttribute("fatherName", fatherName);
+        model.addAttribute("email", email);
+        model.addAttribute("phone", phone);
+        model.addAttribute("password", password);
+
+        String errorValidName = userService.regName(user, name);
+        String errorValidLastName =  userService.regLastName(user, lastName);
+        String errorValidFatherName =  userService.regFartherName(user, fatherName);
+        String errorValidEmail = userService.regEmail(user, email);
+        String errorValidPhone = userService.regPhone(user, phone);
+        String errorValidPassword = userService.regPassword(user, password);
+
+        log.info("errorValidName: " + errorValidName);
+        log.info("errorValidLastName: " + errorValidLastName);
+        log.info("errorValidFatherName: " + errorValidFatherName);
+        log.info("errorValidEmail: " + errorValidEmail);
+        log.info("errorValidPhone: " + errorValidPhone);
+        log.info("errorValidPassword: " + errorValidPassword);
+
+        if (!errorValidName.equals("")) {
+            model.addAttribute("errorValidName", errorValidName);
+        }
+
+        if (!errorValidLastName.equals("")) {
+            model.addAttribute("errorValidLastName", errorValidLastName);
+        }
+
+        if (!errorValidFatherName.equals("")) {
+            model.addAttribute("errorValidFatherName", errorValidFatherName);
+        }
+
+        if (!errorValidEmail.equals("")) {
+            model.addAttribute("errorValidEmail", errorValidEmail);
+        }
+
+        if (!errorValidPhone.equals("")) {
+            model.addAttribute("errorValidPhone", errorValidPhone);
+        }
+
+        if (!errorValidPassword.equals("")) {
+            model.addAttribute("errorValidPassword", errorValidPassword);
+        }
+
+        if ((!errorValidName.equals("")) || (!errorValidLastName.equals("")) || (!errorValidFatherName.equals("")) || (!errorValidEmail.equals("")) || (!errorValidPhone.equals("")) || (!errorValidPassword.equals(""))) {
+            return "registration";
+        }
+
+        if (!userService.createUser(user)) {
+            //ДОБАВИТЬ МОДЕЛЬ - НЕ УДАЛОСЬ ЗАРЕГАТЬСЯ!!!!!!!
+            model.addAttribute("canNotReg", "Не удалось зарегистрироваться");
+            return "registration";
+        }
+
+        return "redirect:/login";
+    }
+
+
+
+
+    /*@PostMapping("/registration")
+    public String createUser(@Valid @ModelAttribute("user") User user, BindingResult bindingResult, Model model) {
         String phone = user.getPhoneNum();
 
         if (bindingResult.hasFieldErrors("name")) {
@@ -201,46 +270,102 @@ public class UserController {
             return "registration";
         }
         return "redirect:/login";
-    }
+    }*/
 
     @GetMapping("/callsFinance")
-    public String showCallsAndFinance() {
+    public String showCallsAndFinance(Model model, Principal principal) {
+        User user = rateService.getUserByPrincipal(principal);
+        model.addAttribute("user", user);
         return "calls_finance";
     }
 
 
-    @GetMapping("/changeRate")
-    public String changeRate(@RequestParam(name = "name", required = false) String name,  Model model, Principal principal) {
+    /*@GetMapping("/changeRate")
+    public String changeRate(@RequestParam(name = "name", required = false) String name, Model model, Principal principal) {
         model.addAttribute("rates", rateService.listRates(name));
         model.addAttribute("user", rateService.getUserByPrincipal(principal));
         return "change_rate";
-    }
+    }*/
 
     @PostMapping("/chooseRate/{id}")
-    public String chooseRate(@PathVariable Long id, @ModelAttribute("rate") Rate rate, Principal principal) {
+    public String chooseRate(@PathVariable Long id, @ModelAttribute("rate") Rate rate, Principal principal, Model model) {
         User user = rateService.getUserByPrincipal(principal);
-        userService.chooseRate(user, rateService.getRateById(id));
+        String answerChooseRate = userService.chooseRate(user, rateService.getRateById(id));
         //return "redirect:/rate-info";
         return "redirect:/";
     }
 
 
+
     final String NUM_OF_CARD = "[0-9][0-9][0-9][0-9]-[0-9][0-9][0-9][0-9]-[0-9][0-9][0-9][0-9]-[0-9][0-9][0-9][0-9]";
-    final String CVC = "[0-9][0-9][0-9]";
+    final String CVCstatic = "[0-9][0-9][0-9]";
     @PostMapping("/top_up_balance")
-    public String topUpBalance(Integer balance, Principal principal, Model model, String numOfCard) {
+    public String topUpBalance(/*BindingResult bindingResult,*/ Principal principal, Model model, Integer balance, String numOfCard, String CVC) {
         User user = rateService.getUserByPrincipal(principal);
         model.addAttribute("user", user);
         model.addAttribute("balance", balance);
         model.addAttribute("numOfCard", numOfCard);
-        Card card = cardService.loadCardByNumOfCard(numOfCard);
-        log.info("Баланс = " + balance + "; Номер карты = " + numOfCard);
-        if (balance < 99000) {
-            log.info("Прохождение транзакции");
-            transactionService.createTransaction(user, card, balance);
-            cardService.updateBalanceCard(card.getId(), ((-1)*balance));
-            userService.topUpBalance(user, balance);
+        model.addAttribute("CVC", CVC);
+        if (!numOfCard.matches(NUM_OF_CARD)) {
+            if (!CVC.matches(CVCstatic)) {
+                model.addAttribute("errorCVC", "CVC должен быть введён корректно (***)");
+            }
+            model.addAttribute("errorNum", "Номер карты должен быть введён корректно (****-****-****-****)");
+            return "topUpBalance";
         }
+        if (!CVC.matches(CVCstatic)) {
+            if (!numOfCard.matches(NUM_OF_CARD)) {
+                model.addAttribute("errorNum", "Номер карты должен быть введён корректно (****-****-****-****)");
+            }
+            model.addAttribute("errorCVC", "CVC должен быть введён корректно (***)");
+            return "topUpBalance";
+        }
+        Card card = cardService.loadCardByNumOfCard(numOfCard);
+        if (card == null) {
+            model.addAttribute("errorNum", "Номер карты не существует.");
+            return "topUpBalance";
+        }
+        if (balance <= 0) {
+            model.addAttribute("errorBalance", "Заполните поле баланса.");
+            return "topUpBalance";
+        }
+        log.info("Баланс счёта телефона " + user.getPhoneNum() + " равен = " + user.getBalance());
+        if ((user.getBalance() + balance) > 99000) {
+            model.addAttribute("errorBalanceHigh", "Нельзя пополнить баланс мобильного счёта выше 99000 рублей.");
+            return "topUpBalance";
+        }
+
+        log.info("Баланс = " + balance + "; Номер карты = " + numOfCard);
+        log.info("Прохождение транзакции");
+
+        String answerOfTransaction = transactionService.createTransaction(user, numOfCard, CVC, balance);
+        if (answerOfTransaction != "") {
+            model.addAttribute("errorAnswerOfTransaction", answerOfTransaction);
+            return "topUpBalance";
+        }
+        cardService.updateBalanceCard(card.getId(), ((-1) * balance));
+        String answerUserTopUpBalance = userService.topUpBalance(user, balance);
+        if (answerUserTopUpBalance != "") {
+            model.addAttribute("errorAnswerUserTopUpBalance", answerUserTopUpBalance);
+            return "topUpBalance";
+        }
+        return "redirect:/";
+    }
+
+
+    @GetMapping("/change_password")
+    public String changePassword(Model model, Principal principal) {
+        model.addAttribute("user", rateService.getUserByPrincipal(principal));
+        return "change_password";
+    }
+
+
+    @PostMapping("/change_password")
+    public String funcChangePassword(@RequestParam String newPassword, @RequestParam String oldPassword, Model model, Principal principal) {
+        model.addAttribute("user", rateService.getUserByPrincipal(principal));
+        log.info("Новый пароль: " + newPassword + "; Старый пароль: " + oldPassword);
+        String answerOfPassword = userService.changePassword(rateService.getUserByPrincipal(principal), oldPassword, newPassword);
+        model.addAttribute("errorAnswerOfPassword", answerOfPassword);
         return "redirect:/";
     }
 

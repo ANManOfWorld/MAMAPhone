@@ -173,8 +173,8 @@
   text-align: center;
 }
 
-input:focus::-webkit-input-placeholder {
-  color:transparent;
+input:focus::placeholder {
+  color: transparent;
 }
 
 

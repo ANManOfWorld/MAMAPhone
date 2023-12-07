@@ -40,7 +40,7 @@
             <th>${card.balance}</th>
             <#--<th>-->
                 <form action="/card/update/${card.id}" method="post" <#--th:object="${card}"-->>
-                    <th><input type="number" name="balance" ></th>
+                    <th><input type="number" name="balance" value="0" ></th>
                     <th><input type="submit" value="Изменить"></th>
                 </form>
             <#--</th>-->

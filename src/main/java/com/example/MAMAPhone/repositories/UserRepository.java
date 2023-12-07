@@ -6,4 +6,5 @@ import org.springframework.data.jpa.repository.JpaRepository;//базовый н
 
 public interface UserRepository extends JpaRepository<User, Long> { //работа с поиском, а также для получения и хранения данных
     User findByEmail(String email);                                 // (сущность, которая хранится; обращение)
+    User findByPhoneNum(String phoneNum);
 }

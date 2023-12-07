@@ -1,6 +1,8 @@
 package com.example.MAMAPhone.models;
 
 import com.example.MAMAPhone.models.enums.Role;
+import lombok.AllArgsConstructor;
+import lombok.Data;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -9,16 +11,16 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
 import java.time.LocalDateTime;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 
 @Entity // класс является сущностью и будет сохраняться в БД
 @Table(name = "users")
+@Data //аннотация сгенирует при компиляции необходимый код от LOMBOK
+@AllArgsConstructor
 //аннотация сгенирует при компиляции необходимый код от LOMBOK
 public class User implements UserDetails {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
@@ -29,6 +31,158 @@ public class User implements UserDetails {
     @Email(message = "Email должен быть валидным.", regexp = "^[a-zA-Z0-9_!#$%&'*+/=?`{|}~^.-]+@[a-zA-Z0-9.-]+$")
     private String email;
 
+
+    @Column(name = "warningOfResources")
+    //private Integer warningOfResources = 0; //подключён ли флаг(уведомление)
+    private Boolean warningOfResources = false;
+
+    @Column(name = "conditionOfResources")
+    //private Integer conditionOfResources = 0;  //проверка на нуль
+    private Boolean conditionOfResources = false;
+
+    @Column(name = "warningOfPayment")
+    private Boolean warningOfPayment = false; //подключён ли флаг(уведомление)
+
+    @Column(name = "conditionOfPayment")
+    private Boolean conditionOfPayment = false; //проверка на наличие факта оплаты
+
+
+    @Column(name = "birth")
+    private String birth = "";
+
+    @Column(name = "dateConnect")
+    private Calendar calendar;
+
+    @Column(name = "changeInformationRateFlag")
+    private Boolean changeInformationRateFlag = false;
+
+
+
+    @Column(name = "statisticOfInternet1")
+    private Double statisticOfInternetOne = 0.0;
+    @Column(name = "statisticOfInternet2")
+    private Double statisticOfInternetTwo = 0.0;
+    @Column(name = "statisticOfInternet3")
+    private Double statisticOfInternetThree = 0.0;
+
+
+    //private String statisticOfMinutes = "0 0 0 ";
+    @Column(name = "statisticOfMinutes1")
+    private Integer statisticOfMinutesOne = 0;
+
+    @Column(name = "statisticOfMinutes2")
+    private Integer statisticOfMinutesTwo = 0;
+
+    @Column(name = "statisticOfMinutes3")
+    private Integer statisticOfMinutesThree = 0;
+
+
+    //private String statisticOfFinance = "0 0 0 ";
+    @Column(name = "statisticOfFinance1")
+    private Integer statisticOfFinanceOne = 0;
+
+    @Column(name = "statisticOfFinance2")
+    private Integer statisticOfFinanceTwo = 0;
+
+    @Column(name = "statisticOfFinance3")
+    private Integer statisticOfFinanceThree = 0;
+    public Double getStatisticOfInternetOne() {
+        return statisticOfInternetOne;
+    }
+
+
+    public void setStatisticOfInternetOne(Double statisticOfInternetOne) {
+        this.statisticOfInternetOne = statisticOfInternetOne;
+    }
+
+    public Double getStatisticOfInternetTwo() {
+        return statisticOfInternetTwo;
+    }
+
+    public void setStatisticOfInternetTwo(Double statisticOfInternetTwo) {
+        this.statisticOfInternetTwo = statisticOfInternetTwo;
+    }
+
+    public Double getStatisticOfInternetThree() {
+        return statisticOfInternetThree;
+    }
+
+    public void setStatisticOfInternetThree(Double statisticOfInternetThree) {
+        this.statisticOfInternetThree = statisticOfInternetThree;
+    }
+
+    public Integer getStatisticOfMinutesOne() {
+        return statisticOfMinutesOne;
+    }
+
+    public void setStatisticOfMinutesOne(Integer statisticOfMinutesOne) {
+        this.statisticOfMinutesOne = statisticOfMinutesOne;
+    }
+
+    public Integer getStatisticOfMinutesTwo() {
+        return statisticOfMinutesTwo;
+    }
+
+    public void setStatisticOfMinutesTwo(Integer statisticOfMinutesTwo) {
+        this.statisticOfMinutesTwo = statisticOfMinutesTwo;
+    }
+
+    public Integer getStatisticOfMinutesThree() {
+        return statisticOfMinutesThree;
+    }
+
+    public void setStatisticOfMinutesThree(Integer statisticOfMinutesThree) {
+        this.statisticOfMinutesThree = statisticOfMinutesThree;
+    }
+
+    public Integer getStatisticOfFinanceOne() {
+        return statisticOfFinanceOne;
+    }
+
+    public void setStatisticOfFinanceOne(Integer statisticOfFinanceOne) {
+        this.statisticOfFinanceOne = statisticOfFinanceOne;
+    }
+
+    public Integer getStatisticOfFinanceTwo() {
+        return statisticOfFinanceTwo;
+    }
+
+    public void setStatisticOfFinanceTwo(Integer statisticOfFinanceTwo) {
+        this.statisticOfFinanceTwo = statisticOfFinanceTwo;
+    }
+
+    public Integer getStatisticOfFinanceThree() {
+        return statisticOfFinanceThree;
+    }
+
+    public void setStatisticOfFinanceThree(Integer statisticOfFinanceThree) {
+        this.statisticOfFinanceThree = statisticOfFinanceThree;
+    }
+
+
+
+
+
+
+
+
+
+    @Column(name = "dateOfPayment")
+    private Calendar dateOfPayment;
+
+
+    @Column(name = "sumOfDept")
+    private Integer sumOfDept = 0;
+
+    @Column(name = "saveTraffic")
+    private Double saveTraffic = 0.0;
+
+    @Column(name = "saveMinutes")
+    private Integer saveMinutes = 0;
+
+
+
+
     @Column(name = "active")
     private boolean active;
 
@@ -36,18 +190,16 @@ public class User implements UserDetails {
     @NotEmpty(message = "Пароль должен быть введён.") //validator
     private String password;
 
-    @Column(name = "phoneNum")
+    @Column(name = "phoneNum", unique = true)
     @NotEmpty(message = "Телефон должен быть введён.") //validator
     private String phoneNum;
 
 
     // динамические данные
 
-
-
     @Column(name = "balance")
     //@Size(max = 99000.00, message = "Баланс нельзя пополнить больше, чем на 99 тыс. рублей")
-    private Double balance = 0.00;
+    private Integer balance = 0;
 
     @Column(name = "internet")
     //@Value("0.0")
@@ -114,16 +266,36 @@ public class User implements UserDetails {
 
 
     @Column(name = "numOfCard")
-    private String numOfCard = "XXXX-XXXX-XXX-XXXX";
+    private String numOfCard = "XXXX-XXXX-XXXX-XXXX" /*= ""*/;
 
     @Column(name = "CVC")
     private String CVC = "XXX";
 
 
 
+    public String getBirth() {
+        return birth;
+    }
 
+    public void setBirth(String birth) {
+        this.birth = birth;
+    }
 
+    public Double getSaveTraffic() {
+        return saveTraffic;
+    }
 
+    public void setSaveTraffic(Double saveTraffic) {
+        this.saveTraffic = saveTraffic;
+    }
+
+    public Integer getSaveMinutes() {
+        return saveMinutes;
+    }
+
+    public void setSaveMinutes(Integer saveMinutes) {
+        this.saveMinutes = saveMinutes;
+    }
     public User(Long id, @NotEmpty @Email(message = "Email должен быть валидным.") String email, boolean active, @NotEmpty String password, @NotEmpty(message = "Телефон должен быть введён корректно.") String phoneNum, Set<Role> roles, LocalDateTime dateOfCreated, @NotEmpty(message = "ФИО должно быть заполнено") @Size(min = 2, max = 12, message = "Имя должно быть не менее 2 символов и не более 12") String name, Image imageOfUser) {
         this.id = id;
         this.email = email;
@@ -162,6 +334,40 @@ public class User implements UserDetails {
 
     //отимплементированные методы
 
+
+
+
+
+
+
+    public Calendar getDateOfPayment() {
+        return dateOfPayment;
+    }
+
+    public void setDateOfPayment(Calendar dateOfPayment) {
+        this.dateOfPayment = dateOfPayment;
+    }
+
+    public Integer getSumOfDept() {
+        return sumOfDept;
+    }
+
+    public void setSumOfDept(Integer sumOfDept) {
+        this.sumOfDept = sumOfDept;
+    }
+
+    public Calendar getCalendar() {
+        return calendar;
+    }
+
+    public void setCalendar(Calendar calendar) {
+        this.calendar = calendar;
+    }
+
+
+
+
+
     public String getNumOfCard() {
         return numOfCard;
     }
@@ -182,11 +388,11 @@ public class User implements UserDetails {
 
 
 
-    public Double getBalance() {
+    public Integer getBalance() {
         return balance;
     }
 
-    public void setBalance(double balance) {
+    public void setBalance(Integer balance) {
         this.balance = balance;
     }
 
