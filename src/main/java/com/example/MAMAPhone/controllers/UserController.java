@@ -36,6 +36,13 @@ public class UserController {
         return "login";
     }
 
+    @GetMapping("/loginError")
+    public String loginError(Model model) {
+        log.info("СОСАМАСА");
+        model.addAttribute("error", "Неправильные имя и пароль.");
+        return "login";
+    }
+
     final String PHONE_TEMPLATE = "\\+7 \\([0-9][0-9][0-9]\\)[0-9][0-9][0-9]-[0-9][0-9]-[0-9][0-9]"/*"+7\\d{10}"*/;
     @PostMapping("/registration")
     public String createUser(@ModelAttribute("user") User user, BindingResult bindingResult, Model model, String name, String lastName, String fatherName, String email/*, String phone*/, String password) {

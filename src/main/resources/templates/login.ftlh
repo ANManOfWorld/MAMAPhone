@@ -19,6 +19,12 @@
 </head>
 <body link="#6495ed" vlink="#6495ed" alink="#6495ed">
 
+<#if error??>
+    <script>
+    alert("${error}");
+</script>
+</#if>
+
 <div class="rectangle-parent">
     <div class="group-child"></div>
     <section class="laptop-2"></section>
