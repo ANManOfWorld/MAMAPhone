@@ -9,6 +9,7 @@ import com.example.MAMAPhone.services.TransactionService;
 import com.example.MAMAPhone.services.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -32,13 +33,15 @@ public class UserController {
     }
 
     @GetMapping("/login")
-    public String login() {
+    public String login(@AuthenticationPrincipal User user) {
+        if (user != null) {
+            return "redirect:/";
+        }
         return "login";
     }
 
     @GetMapping("/loginError")
     public String loginError(Model model) {
-        log.info("СОСАМАСА");
         model.addAttribute("error", "Неправильные имя/пароль.");
         return "login";
     }
