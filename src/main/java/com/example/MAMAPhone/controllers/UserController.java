@@ -39,7 +39,7 @@ public class UserController {
     @GetMapping("/loginError")
     public String loginError(Model model) {
         log.info("СОСАМАСА");
-        model.addAttribute("error", "Неправильные имя и пароль.");
+        model.addAttribute("error", "Неправильные имя/пароль.");
         return "login";
     }
 
