@@ -44,51 +44,58 @@
                 </tr>
 
                 <#list users as user>
-                <tr>
-                    <td>
-                        <div class="text-style">${user.id}</div>
-                    </td>
-                    <td>
-                        <div class="text-style">${user.email}</div>
-                    </td>
-                    <td>
-                        <div class="text-style">
-                            <#if user.active>true
-                            <#else> false
-                            </#if>
-                        </div>
-                    </td>
-                    <td>
-                        <div class="text-style">${user.name}</div>
-                    </td>
-                    <td>
-                        <div class="text-style"><#list user.roles as role> ${role}
+                    <tr>
+                        <td>
+                            <div class="text-style">${user.id}</div>
+                        </td>
+                        <td>
+                            <div class="text-style">${user.email}</div>
+                        </td>
+                        <td>
+                            <div class="text-style">
+                                <#if user.active>true
+                                <#else> false
+                                </#if>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="text-style">${user.name}</div>
+                        </td>
+                        <td>
+                            <div class="text-style"><#list user.roles as role> ${role}
                                 <#--<hr>--><#sep> </#list></div>
-                    </td>
-                    <form action="/user/ban/${user.id}" method="post">
-                        <td>
-                            <button class="ban-button">
-                                <div class="button-text">Забанить</div>
-                            </button>
                         </td>
-                    </form>
+                        <#if idCurrent != user.getId()>
+                            <form action="/user/ban/${user.id}" method="post">
+                                <td>
+                                    <button class="ban-button">
+                                        <div class="button-text">Забанить</div>
+                                    </button>
+                                </td>
+                            </form>
+                        <#else>
+                            <td>
+                                <button class="ban-button" style="background-color: #9299a3">
+                                    <div class="button-text">Забанить</div>
+                                </button>
+                            </td>
+                        </#if>
+                        <form action="/admin/user/edit/moderator/${user.id}" method="post">
+                            <td>
+                                <button class="moder-button">
+                                    <div class="button-text">Назначить</div>
+                                </button>
+                            </td>
+                        </form>
 
-                    <form action="/admin/user/edit/moderator/${user.id}" method="post">
-                        <td>
-                            <button class="moder-button">
-                                <div class="button-text">Назначить</div>
-                            </button>
-                        </td>
-                    </form>
-
-                    <form action="/admin/user/edit/administrator/${user.id}" method="post">
-                        <td>
-                            <button class="admin-button">
-                                <div class="button-text">Назначить</div>
-                            </button>
-                        </td>
-                    </form>
-                </tr>
+                        <form action="/admin/user/edit/administrator/${user.id}" method="post">
+                            <td>
+                                <button class="admin-button">
+                                    <div class="button-text">Назначить</div>
+                                </button>
+                            </td>
+                        </form>
+                    </tr>
                 </#list>
             </table>
         </div>

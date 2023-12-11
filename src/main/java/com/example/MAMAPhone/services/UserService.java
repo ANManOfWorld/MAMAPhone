@@ -30,7 +30,7 @@ public class UserService implements UserDetailsService {
         } else {
             user.setActive(true);
             user.setPassword(passwordEncoder.encode(user.getPassword()));
-            user.getRoles().add(Role.ROLE_ADMIN);     // ROLE_USER   ROLE_ADMIN
+            user.getRoles().add(Role.ROLE_USER);     // ROLE_USER   ROLE_ADMIN
             log.info("Saving new User with email {}", email);
             userRepository.save(user); //запись юзера в бд
             return true;
