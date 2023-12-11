@@ -26,6 +26,7 @@ public class AdminController {
         User user = rateService.getUserByPrincipal(principal);
         model.addAttribute("users", userService.list());
         model.addAttribute("user", user);
+        model.addAttribute("idCurrent", user.getId());
         return "admin";
     }
 
