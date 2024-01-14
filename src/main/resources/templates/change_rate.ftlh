@@ -55,13 +55,6 @@
                         </p>
                         <span> </span>
                         </p>
-                        <#--<p class="p"></p>
-                        <p class="p">Дополнительные услуги и опции:</p>
-                        <p class="p">
-                            - Дополнительный интернет-трафик сверх пакета: 100 рублей за 1 ГБ
-                        </p>
-                        <p class="p">- Звонки на другие номера: 0,2 рубля в минуту</p>
-                        <p class="p">- SMS на другие номера: 1 рубль за сообщение</p>-->
                     </div>
                 </div>
 
@@ -92,23 +85,6 @@
                 </button>
             </form>
         </#if>
-
-        <#--<#if errorList == true>
-            <form action="/changeRate/pre" method="post">
-                <button class="pre-button">
-                    <img class="group-child1" alt="" src="/static/img/change_rate_public/arrow-11.svg"/>
-                </button>
-            </form>
-
-            <form action="/changeRate/next" method="post">
-                <button class="next-button">
-                    <img class="group-child3" alt="" src="/static/img/change_rate_public/arrow-2.svg"/>
-                </button>
-            </form>
-        </#if>-->
-
-
-
         <div class="rectangle-div">
             <b class="b6">${user.name}</b>
             <div class="div2">${user.phoneNum}</div>
@@ -117,57 +93,5 @@
 
     </div>
 </div>
-
-
-<#--<h1> MAMAPhone </h1>
-<h5>Удобное приложение по оплате счетов связи для беспрерывного общения с любимыми людьми. </h5>
-<a href="/">На главную</a>
-
-
-<hr>
-<form action="/changeRate/next" method="post">
-    <input type="submit" name="next">NEXT</input>
-</form>
-
-<hr>
-<hr>
-
-<form action="/changeRate/pre" method="post">
-    <input type="submit" name="pre">PRE</input>
-</form>
-<hr>
-
-&lt;#&ndash;<a href="/rate/${rate.id}">Вперёд</a>
-
-<a href="/rate/${rate.id}">Назад</a>&ndash;&gt;
-
-&lt;#&ndash;<#list rates as rate>&ndash;&gt;
-<div>
-    <b>Название тарифа: </b>${rate.name}
-    <br>
-    <b>Описание тарифа: </b>${rate.description}
-    <br>
-    <b>Количество минут тарифа: </b>${rate.countOfMinutes}
-    <br>
-    <b>Количество интернет трафика тарифа: </b>${rate.countOfTrafficInternet}
-    <br>
-    <b>Цена тарифа: </b>${rate.price}
-
-
-    <form action="/chooseRate/${rate.id}" method="post">
-        <input type="submit" value="Подключить"/>
-    </form>
-
-
-</div>-->
-<#--</#list>
-
-<hr>
-<#list rates as rate>
-    <div>
-        <p>${rate.name} || ${rate.description} ${rate.price} руб. | <a href="/rate/${rate.id}">Подробнее</a></p>
-    </div>
-</#list>-->
-
 </body>
 </html>

@@ -134,7 +134,8 @@ public class BillingService implements CommandLineRunner {
 
                             userRepository.save(user);
                         } else {
-                            user.setBalance(user.getBalance() - user.getSumOfDept()  /*user.getCurrentRate().getPrice()*/);
+                           // user.setBalance(user.getBalance() - user.getSumOfDept()  /*user.getCurrentRate().getPrice()*/);
+                            //лишний отрицательный баланс (когда на балансе нуль, не снимаем)
 
                             userService.statisticOfInternet(user, 0.0);
                             userService.statisticOfMinutes(user, 0);

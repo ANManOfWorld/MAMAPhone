@@ -54,15 +54,5 @@
         </button>
     </a>
 </div>
-
-<#--
-
-<a href="/">На главную</a>
-<a href="/personalData"> Личные данные </a>
-<a href="/security"> Безопасность </a>
-<a href="/appSettings"> Приложение </a>
--->
-
-
 </body>
 </html>

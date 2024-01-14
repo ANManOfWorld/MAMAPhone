@@ -68,41 +68,8 @@ public class RateService {
             return "Количество символов в названии тарифа не может превышать 25.";
         }
 
-        /*if (rateRepository.searchByName(rate.getName()) != null*//*findAll().contains(rate)*//*) {
-            return "Тариф с таким названием уже существует.";
-        }
-
-        if (rate.getPrice() > 99000) {
-            return "Стоимость тарифа не может превышать 99000 руб.";
-        }
-        if (rate.getPrice() < 1) {
-            return "Стоимость тарифа не может быть ниже 1 руб.";
-        }
-        if (rate.getCountOfMinutes() > 9999) {
-            return "Количество минут не может превышать 9999 минут.";
-        }
-        if (rate.getCountOfTrafficInternet() > 9999) {
-            return "Количество ГБ не может превышать 9999 ГБ.";
-        }
-        if (rate.getDescription().length() > 255) {
-            return "Длина описания не может превышать 255 символов.";
-        }
-        if (rate.getName().length() > 25) {
-            return "Количество символов в названии тарифа не может превышать 25.";
-        }*/
-       /* Image image;
-        if (file.getSize() != 0) {
-            image = toImageEntity(file);
-            image.setPreviewImage(true);
-            rate.addImage(image);
-        }*/
         log.info("Saving new rate. name: {} || description: {}", rate.getName(), rate.getDescription());
         rateRepository.save(rate);
-        /*Rate rateFromBaseData = rateRepository.save(rate);
-        if (rate.getPreviewImageId() != null) { // если нет картинки
-            rateFromBaseData.setPreviewImageId(rateFromBaseData.getImages().get(0).getId());
-            rateRepository.save(rate);
-        }*/
         return "";
     }
 

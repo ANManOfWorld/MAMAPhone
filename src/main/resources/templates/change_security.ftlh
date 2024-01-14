@@ -77,40 +77,6 @@
 
 </div>
 
-
-<#--
-<h1> MAMAPhone </h1>
-<h3 color="darkred">Безопасность.</h3>
-
-<a href="/security">На главную</a>
-
-<form action="/security/change" method="post" th:object="${user}">
-    <br>
-    Данные карты:
-    <hr>
-    * <input type="text" name="numOfCard" placeholder="${user.numOfCard}">
-    <#if errorNum??>
-        <script>
-            alert("${errorNum}");
-        </script>
-    </#if>
-    <hr>
-    * <input type="text" name="CVC" placeholder="${user.CVC}">
-    <#if errorCVC??>
-        <script>
-            alert("${errorCVC}");
-        </script>
-    </#if>
-    <hr>
-    <input type="submit" value="Изменить">
-</form>
-
-
-<form action="/security/delete" method="post">
-    <input type="submit" value="Удалить">
-</form>
--->
-
 <script>
     let ccNumberInput = document.querySelector('.cc-number-input'),
         ccNumberPattern = /^\d{0,16}$/g,
@@ -188,12 +154,6 @@
                     break;
                 }
             }
-
-          /*  let activeCC = document.querySelector('.cc-types__img--active'),
-                newActiveCC = document.querySelector(`.cc-types__img--<#--${ccCardType}-->`);
-
-            if (activeCC) activeCC.classList.remove('cc-types__img--active');
-            if (newActiveCC) newActiveCC.classList.add('cc-types__img--active');*/
         },
         ccExpiryInputKeyDownHandler = (e) => {
             let el = e.target;

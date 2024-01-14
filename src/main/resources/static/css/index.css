@@ -31,6 +31,22 @@
   display: inline-block;
   width: 128px;
 }
+.custom-button {
+  cursor: pointer;
+  border: 0;
+  padding: 0;
+  background-color: transparent;
+  position: absolute;
+  top: 342px;
+  left: 75px;
+  font-size: var(--font-size-xl);
+  font-family: var(--font-inter);
+  color: #438bf9;
+  text-align: left;
+  display: inline-block;
+  width: 188px;
+}
+
 .group-item {
   border: 0;
   background-color: var(--color-white);

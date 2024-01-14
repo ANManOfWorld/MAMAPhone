@@ -62,29 +62,5 @@
     </a>
 
 </div>
-
-
-<#--<h1> MAMAPhone </h1>
-<h3 color="darkred">Безопасность.</h3>
-<a href="/security">На главную</a>
-<br>
-
-<form action="/change_password" method="post">
-    <br>
-    Изменение пароля:
-    <hr>
-    Старый пароль <input type="text" name="oldPassword">
-    <hr>
-    Новый пароль <input type="text" name="newPassword">
-    <hr>
-    <input type="submit" value="Изменить">
-</form>
-
-<#if errorAnswerOfPassword??>
-    <script>
-        alert("${errorAnswerOfPassword}");
-    </script>
-</#if>-->
-
 </body>
 </html>
