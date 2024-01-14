@@ -22,7 +22,7 @@
 
                     <a href="/billing_change/${rate.id}">
                         <button class="edit-button">
-                            <div class="edit-text">Редактировать</div> <#--ДОПИСАТЬ ССЫЛКУ НА РЕДАЧ-->
+                            <div class="edit-text">Редактировать</div>
                         </button>
                     </a>
                     <form action="/chooseRate/${rate.id}" method="post">
@@ -59,13 +59,6 @@
                         </p>
                         <span> </span>
                         </p>
-                        <#--<p class="p"></p>
-                        <p class="p">Дополнительные услуги и опции:</p>
-                        <p class="p">
-                            - Дополнительный интернет-трафик сверх пакета: 100 рублей за 1 ГБ
-                        </p>
-                        <p class="p">- Звонки на другие номера: 0,2 рубля в минуту</p>
-                        <p class="p">- SMS на другие номера: 1 рубль за сообщение</p>-->
                     </div>
                 </div>
 
