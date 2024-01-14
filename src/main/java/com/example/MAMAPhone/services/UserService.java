@@ -12,6 +12,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.security.SecureRandom;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.List;
@@ -194,6 +195,37 @@ public class UserService implements UserDetailsService {
     }
 
 
+    public String generatePassword() {
+        int length = 11;
+        String characters = "qwertyuiopasdfghjklzxcvbnm1234567890";
+
+        StringBuilder password = new StringBuilder();
+        SecureRandom random = new SecureRandom();
+
+        for (int i = 0; i < length; i++) {
+            int index = random.nextInt(characters.length());
+            password.append(characters.charAt(index));
+        }
+        return password.toString();
+    }
+
+    public String emailChangePassword(String email) {
+        User user = userRepository.findByEmail(email);
+        //String newPassword = "bbqq";
+        String newPassword = generatePassword();
+        user.setPassword(passwordEncoder.encode(newPassword));
+        userRepository.save(user);
+        //log.info("Стал хеш: " + user.getPassword());
+        return newPassword;
+    }
+
+    public User findUser (String email) {
+        if (userRepository.findByEmail(email) == null) {
+            return null;
+        } else {
+            return userRepository.findByEmail(email);
+        }
+    }
 
 
     /*ИЗМЕНЕНИЕ ПЕРСОНАЛЬНЫХ ДАННЫХ*/

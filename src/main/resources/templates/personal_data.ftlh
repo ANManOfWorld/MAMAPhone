@@ -26,7 +26,7 @@
 
                 <input class="group-child1" type="text" value="${user.fatherName}" readonly="readonly" />
 
-                <input class="rectangle-input" type="text" value="${user.birth}" readonly="readonly" /> <#--ВПИСАТЬ ДАТУ-->
+                <input class="rectangle-input" type="text" value="${user.birth}" readonly="readonly" />
 
                 <input class="group-child2" type="text" value="${user.email}" readonly="readonly" />
 
@@ -60,29 +60,5 @@
         </button>
     </a>
 </div>
-
-<#--
-<a href = "/settings">На главную</a>
-<br>
-* Имя: ${user.name}
-<br>
-<br>
-* Фамилия: ${user.lastName}
-<br>
-<br>
-* Отчество: ${user.fatherName}
-<br>
-<br>
-* Дата рождения: &lt;#&ndash;${user.name}&ndash;&gt; &lt;#&ndash;ДОПИСАТЬ&ndash;&gt;
-<br>
-<br>
-* Эл. почта: ${user.email}
-<br>
-
-
-<a href="/change_personal_data">
-    <button>Изменить</button>
-</a>-->
-
 </body>
 </html>

@@ -56,26 +56,5 @@
         </button>
     </a>
 </div>
-
-
-<#--<a href="/settings">На главную</a>
-<br>
-Пароль:
-<hr>
-* <a href="/change_password">
-    <button>Изменить пароль</button>
-</a>
-<br>
-Данные карты:
-<hr>
-* ${user.numOfCard}
-<hr>
-* ${user.CVC}
-<hr>
-<a href="/change_security">
-    <button>Изменить</button>
-</a>-->
-
-
 </body>
 </html>

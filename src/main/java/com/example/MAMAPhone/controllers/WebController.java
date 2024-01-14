@@ -2,9 +2,11 @@ package com.example.MAMAPhone.controllers;
 
 import com.example.MAMAPhone.models.Rate;
 import com.example.MAMAPhone.models.User;
+import com.example.MAMAPhone.services.DefaultEmailService;
 import com.example.MAMAPhone.services.RateService;
 import com.example.MAMAPhone.services.UserService;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -479,21 +481,6 @@ public class WebController { //прием HTTP запросов
         log.info("(!!!) ДАТА = " + birth);
         userService.changeBirth(user, birth);
 
-
-        /*log.info("Проверка почты на уникальность и не повторяемость.");
-        if (!user.getEmail().equals(email) ) {
-            log.info("Первая проверка: " + user.getEmail().equals(email));
-            if (userService.loadUserByUsername(email) != null) {
-                log.info("Вторая проверка: " + userService.loadUserByUsername(email).toString());
-                model.addAttribute("errorMessage", "Email: " + user.getEmail() + " уже используется. Выберите другую эл. почту");
-                return "change_personal_data";
-            }
-        }*/
-       /* if ((userService.loadUserByUsername(email) != null) && (user.getEmail() == email)) {
-            model.addAttribute("errorMessage", "Email: " + user.getEmail() + " уже используется. Выберите другую эл. почту");
-            return "change_personal_data";
-        }*/
-
         log.info("Передача данных в метод для дальнейшего изменения параметров пользователя.");
         String errorValidName = userService.changeName(user, name);
         String errorValidLastName = userService.changeLastName(user, lastName);
@@ -656,6 +643,31 @@ public class WebController { //прием HTTP запросов
         }
 
         return "redirect:/";
+    }
+
+
+    @Autowired
+    private DefaultEmailService defaultEmailService;
+
+    @PostMapping("/email/send")
+    public String sendEmail(Model model, Principal principal, String email) {
+        //String email = "letitop27@gmail.com";
+
+        if ((userService.findUser(email) == null) || (email == null)) {
+            model.addAttribute("errorEmailPas", "Пользователя с таким Email не существует.");
+            return "email_password";
+        }
+        String answer = userService.emailChangePassword(email);
+        defaultEmailService.sendSimpleEmail(email, "Сброс старого пароля в аккаунте MAMAPhone", "Новый пароль = " + answer);
+        model.addAttribute("errorEmailPas", "Пароль успешно сброшен.");
+
+
+        return "redirect:/login";
+    }
+
+    @GetMapping("/email")
+    public String Email() {
+        return "email_password";
     }
 
 }

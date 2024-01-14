@@ -100,180 +100,12 @@ public class UserController {
         }
 
         if (!userService.createUser(user)) {
-            //ДОБАВИТЬ МОДЕЛЬ - НЕ УДАЛОСЬ ЗАРЕГАТЬСЯ!!!!!!!
             model.addAttribute("canNotReg", "Не удалось зарегистрироваться");
             return "registration";
         }
 
         return "redirect:/login";
     }
-
-
-
-
-    /*@PostMapping("/registration")
-    public String createUser(@Valid @ModelAttribute("user") User user, BindingResult bindingResult, Model model) {
-        String phone = user.getPhoneNum();
-
-        if (bindingResult.hasFieldErrors("name")) {
-            //error.rejectValue("name", "user.exist", "Имя должно быть не менее 2 символов и не более 12");
-            model.addAttribute("errorName", "Имя должно быть заполнено; Имя должно быть не менее 2 символов и не более 12");
-
-            if (bindingResult.hasFieldErrors("lastName")) {
-                model.addAttribute("errorLastName", "Фамилия должна быть заполнена; Фамилия должна быть не менее 2 символов и не более 12");
-            }
-
-            if (bindingResult.hasFieldErrors("fatherName")) {
-                model.addAttribute("errorFatherName", "Отчество должно быть не более 12");
-            }
-
-            if (bindingResult.hasFieldErrors("email")) {
-                model.addAttribute("errorEmail", "Email должен быть заполнен; Email должен быть валидным");
-            }
-            if ((bindingResult.hasFieldErrors("phoneNum")) || (!phone.matches(PHONE_TEMPLATE))) {
-                model.addAttribute("errorNum", "Телефон должен быть введён; Телефон должен быть введён корректно (+7(***)***-**-**)");
-            }
-            if (bindingResult.hasFieldErrors("password")) {
-                model.addAttribute("errorPas", "Пароль должен быть введён");
-            }
-
-            return "registration";
-        }
-
-        if (bindingResult.hasFieldErrors("lastName")) {
-            model.addAttribute("errorLastName", "Фамилия должна быть заполнена; Фамилия должна быть не менее 2 символов и не более 12");
-
-            if (bindingResult.hasFieldErrors("name")) {
-                model.addAttribute("errorName", "Имя должно быть заполнено; Имя должно быть не менее 2 символов и не более 12");
-            }
-
-            if (bindingResult.hasFieldErrors("fatherName")) {
-                model.addAttribute("errorFatherName", "Отчество должно быть не более 12");
-            }
-
-            if (bindingResult.hasFieldErrors("email")) {
-                model.addAttribute("errorEmail", "Email должен быть заполнен; Email должен быть валидным");
-            }
-
-            if ((bindingResult.hasFieldErrors("phoneNum")) || (!phone.matches(PHONE_TEMPLATE))) {
-                model.addAttribute("errorNum", "Телефон должен быть введён; Телефон должен быть введён корректно (+7(***)***-**-**)");
-            }
-            if (bindingResult.hasFieldErrors("password")) {
-                model.addAttribute("errorPas", "Пароль должен быть введён");
-            }
-
-            return "registration";
-        }
-
-        if (bindingResult.hasFieldErrors("fatherName")) {
-            model.addAttribute("errorFatherName", "Отчество должно быть не более 12");
-
-            if (bindingResult.hasFieldErrors("name")) {
-                model.addAttribute("errorName", "Имя должно быть заполнено; Имя должно быть не менее 2 символов и не более 12");
-            }
-
-            if (bindingResult.hasFieldErrors("lastName")) {
-                model.addAttribute("errorLastName", "Фамилия должна быть заполнена; Фамилия должна быть не менее 2 символов и не более 12");
-            }
-
-            if (bindingResult.hasFieldErrors("email")) {
-                model.addAttribute("errorEmail", "Email должен быть заполнен; Email должен быть валидным");
-            }
-
-            if ((bindingResult.hasFieldErrors("phoneNum")) || (!phone.matches(PHONE_TEMPLATE))) {
-                model.addAttribute("errorNum", "Телефон должен быть введён; Телефон должен быть введён корректно (+7(***)***-**-**)");
-            }
-            if (bindingResult.hasFieldErrors("password")) {
-                model.addAttribute("errorPas", "Пароль должен быть введён");
-            }
-
-            return "registration";
-        }
-
-
-        if (bindingResult.hasFieldErrors("email")) {
-            model.addAttribute("errorEmail", "Email должен быть заполнен; Email должен быть валидным");
-
-            if (bindingResult.hasFieldErrors("name")) {
-                model.addAttribute("errorName", "Имя должно быть заполнено; Имя должно быть не менее 2 символов и не более 12");
-            }
-
-            if (bindingResult.hasFieldErrors("lastName")) {
-                model.addAttribute("errorLastName", "Фамилия должна быть заполнена; Фамилия должна быть не менее 2 символов и не более 12");
-            }
-
-            if (bindingResult.hasFieldErrors("fatherName")) {
-                model.addAttribute("errorFatherName", "Отчество должно быть не более 12");
-            }
-
-            if ((bindingResult.hasFieldErrors("phoneNum")) || (!phone.matches(PHONE_TEMPLATE))) {
-                model.addAttribute("errorNum", "Телефон должен быть введён; Телефон должен быть введён корректно (+7(***)***-**-**)");
-            }
-            if (bindingResult.hasFieldErrors("password")) {
-                model.addAttribute("errorPas", "Пароль должен быть введён");
-            }
-
-            return "registration";
-        }
-
-
-        if ((bindingResult.hasFieldErrors("phoneNum")) || (!phone.matches(PHONE_TEMPLATE))) {
-            model.addAttribute("errorNum", "Телефон должен быть введён; Телефон должен быть введён корректно (+7(***)***-**-**)");
-
-            if (bindingResult.hasFieldErrors("name")) {
-                model.addAttribute("errorName", "Имя должно быть заполнено; Имя должно быть не менее 2 символов и не более 12");
-            }
-
-            if (bindingResult.hasFieldErrors("lastName")) {
-                model.addAttribute("errorLastName", "Фамилия должна быть заполнена; Фамилия должна быть не менее 2 символов и не более 12");
-            }
-
-            if (bindingResult.hasFieldErrors("fatherName")) {
-                model.addAttribute("errorFatherName", "Отчество должно быть не более 12");
-            }
-            if (bindingResult.hasFieldErrors("email")) {
-                model.addAttribute("errorEmail", "Email должен быть заполнен; Email должен быть валидным");
-            }
-            if (bindingResult.hasFieldErrors("password")) {
-                model.addAttribute("errorPas", "Пароль должен быть введён");
-            }
-            return "registration";
-        }
-
-        if (bindingResult.hasFieldErrors("password")) {
-            model.addAttribute("errorPas", "Пароль должен быть введён");
-
-            if (bindingResult.hasFieldErrors("name")) {
-                model.addAttribute("errorName", "Имя должно быть заполнено; Имя должно быть не менее 2 символов и не более 12");
-            }
-
-            if (bindingResult.hasFieldErrors("lastName")) {
-                model.addAttribute("errorLastName", "Фамилия должна быть заполнена; Фамилия должна быть не менее 2 символов и не более 12");
-            }
-
-            if (bindingResult.hasFieldErrors("fatherName")) {
-                model.addAttribute("errorFatherName", "Отчество должно быть не более 12");
-            }
-
-            if (bindingResult.hasFieldErrors("email")) {
-                model.addAttribute("errorEmail", "Email должен быть заполнен; Email должен быть валидным");
-            }
-            if ((bindingResult.hasFieldErrors("phoneNum")) || (!phone.matches(PHONE_TEMPLATE))) {
-                model.addAttribute("errorNum", "Телефон должен быть введён; Телефон должен быть введён корректно (+7(***)***-**-**)");
-            }
-            return "registration";
-        }
-        if (bindingResult.hasErrors()) {
-            //return "redirect:/registration";
-            return "registration";
-        }
-
-        if (!userService.createUser(user)) {
-            model.addAttribute("errorMessage", "Пользователь с email: " + user.getEmail() + " уже существует");
-            return "registration";
-        }
-        return "redirect:/login";
-    }*/
 
     @GetMapping("/callsFinance")
     public String showCallsAndFinance(Model model, Principal principal) {
@@ -282,13 +114,6 @@ public class UserController {
         return "calls_finance";
     }
 
-
-    /*@GetMapping("/changeRate")
-    public String changeRate(@RequestParam(name = "name", required = false) String name, Model model, Principal principal) {
-        model.addAttribute("rates", rateService.listRates(name));
-        model.addAttribute("user", rateService.getUserByPrincipal(principal));
-        return "change_rate";
-    }*/
 
     @PostMapping("/chooseRate/{id}")
     public String chooseRate(@PathVariable Long id, @ModelAttribute("rate") Rate rate, Principal principal, Model model) {
@@ -369,7 +194,7 @@ public class UserController {
         log.info("Новый пароль: " + newPassword + "; Старый пароль: " + oldPassword);
         String answerOfPassword = userService.changePassword(rateService.getUserByPrincipal(principal), oldPassword, newPassword);
         model.addAttribute("errorAnswerOfPassword", answerOfPassword);
-        return "redirect:/";
+        return "change_password";
     }
 
 }

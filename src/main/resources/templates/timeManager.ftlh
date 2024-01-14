@@ -65,28 +65,5 @@
 
 
 </table>
-
-<#--
-<table>
-    <tr>
-        <th>Секунды</th>
-        <th>Минуты</th>
-        <th>Часы</th>
-        <th>Дни</th>
-        <th>Месяца</th>
-        <th>Изменить</th>
-    </tr>
-    <form action="/timeManager/create/" method="post">
-        <th><input type="number" value="0" name="seconds" ></th>
-        <th><input type="number" value="0" name="minutes" ></th>
-        <th><input type="number" value="0" name="hours" ></th>
-        <th><input type="number" value="0" name="days" ></th>
-        <th><input type="number" value="0" name="month" ></th>
-        <th><input type="submit" value="Изменить"></th>
-    </form>
-</table>
--->
-
-
 </body>
 </html>
