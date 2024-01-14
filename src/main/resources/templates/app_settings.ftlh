@@ -37,10 +37,6 @@
             <#else>
                 <input class="group-inner" name="resources" type="checkbox" />
             </#if>
-
-           <#-- <input name="paymentTime" class="group-item" type="checkbox"/>-->
-            <#--<input name="resources" class="group-inner" type="checkbox"/>-->
-
             <button  type="submit" class="group-child2">
                 <div class="div3">Изменить</div>
             </button>
